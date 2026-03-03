@@ -109,6 +109,48 @@
         .subject-item i { width: 25px; text-align: center; font-size: 1.2rem; color: var(--primary); }
 
         footer { background: #111827; color: #FFFFFF; text-align: center; padding: 25px 5%; margin-top: 50px; }
+
+        /* --- NEW: Premium Instagram Profile Animation --- */
+        .creator-connect {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .insta-profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 20px 8px 8px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #FFFFFF;
+            font-weight: 600;
+            font-size: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .insta-profile-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 10px 20px rgba(220, 39, 67, 0.4);
+            border-color: transparent;
+        }
+        .insta-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #FFFFFF;
+            transition: transform 0.5s ease;
+        }
+        .insta-profile-btn:hover .insta-pic {
+            transform: rotate(360deg);
+        }
+        .insta-icon {
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
@@ -201,7 +243,7 @@
             <div class="subject-list">
                 <a href="2023-science-paper.html " class="subject-item"><i class="fas fa-calculator"></i> Physical science (2023)</a>
                 <a href="2024-science-paper.html" class="subject-item"><i class="fas fa-flask"></i> Physical Science (2024)</a>
-                
+                <a href="2025-science-paper.html" class="subject-item"><i class="fas fa-flask"></i> Physical Science (2025)</a>
                 <a href="#" target="_blank" class="subject-item"><i class="fas fa-dna"></i> Biological Science</a>
                 <a href="#" target="_blank" class="subject-item"><i class="fas fa-globe-asia"></i> Social Studies</a>
                 <a href="#" target="_blank" class="subject-item"><i class="fas fa-language"></i> English</a>
@@ -229,6 +271,14 @@
 
     <footer>
         <p>&copy; 2026 SSC Master. Built for Students.</p>
+        
+        <div class="creator-connect">
+            <a href="https://www.instagram.com/y._siddartha_/" target="_blank" class="insta-profile-btn">
+                <img src="sidhuinstgramlogo.jpg" alt="Siddartha" class="insta-pic">
+                <i class="fab fa-instagram insta-icon"></i>
+                <span>y._siddartha_</span>
+            </a>
+        </div>
     </footer>
 
     <script>
