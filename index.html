@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC Master | Class 10 Learning Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- Core Variables & Reset --- */
+        :root {
+            --primary: #4F46E5;
+            --secondary: #7C3AED;
+            --dark: #1F2937;
+            --light: #F3F4F6;
+            --white: #FFFFFF;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --text-muted: #4B5563;
+        }
+
+        /* --- Dark Mode Variables --- */
+        body.dark-theme {
+            --dark: #F9FAFB;       
+            --light: #111827;      
+            --white: #1F2937;      
+            --nav-bg: rgba(31, 41, 55, 0.9);
+            --text-muted: #9CA3AF; 
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUP {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Navigation Bar --- */
+        nav {
+            position: fixed;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            transition: background-color 0.4s ease;
+        }
+        .logo { font-size: 24px; font-weight: 700; color: var(--primary); }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            margin-left: 30px;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+
+        .theme-btn {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            cursor: pointer;
+            color: var(--dark);
+            transition: transform 0.3s, color 0.3s;
+            margin-left: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .theme-btn:hover {
+            transform: scale(1.1);
+            color: var(--primary);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(79,70,229,0.1) 0%, rgba(124,58,237,0.1) 100%);
+            padding: 0 20px;
+        }
+        .hero-content {
+            max-width: 800px;
+            animation: fadeInUP 1s ease-out;
+        }
+        .hero h1 { font-size: 3rem; margin-bottom: 20px; color: var(--dark); }
+        .hero h1 span { color: var(--primary); }
+        .hero p { font-size: 1.2rem; margin-bottom: 30px; color: var(--text-muted); line-height: 1.6; }
+        .btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #FFFFFF;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: inline-block;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(79,70,229,0.3);
+        }
+
+        /* --- Sections --- */
+        section { padding: 80px 50px; }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--dark);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* --- Premium Cards --- */
+        .card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.4s ease, box-shadow 0.4s ease, background-color 0.4s ease;
+            text-align: center;
+            border: 1px solid rgba(0,0,0,0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(79,70,229,0.15);
+        }
+        .card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        .card h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--dark); }
+        .card p { color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem; flex-grow: 1; }
+        .card-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: auto;
+        }
+        .card-btn:hover {
+            background: var(--primary);
+            color: #FFFFFF;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: #111827;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+        }
+
+        /* --- Mobile Responsiveness --- */
+        @media (max-width: 768px) {
+            nav { padding: 20px; flex-direction: column; gap: 15px; }
+            .nav-right { flex-direction: column; gap: 15px; }
+            .nav-links a { margin: 0 10px; }
+            .theme-btn { margin-left: 0; margin-top: 10px; }
+            .hero h1 { font-size: 2.2rem; }
+            section { padding: 60px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo"><i class="fas fa-graduation-cap"></i> SSC Master</div>
+        <div class="nav-right">
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#notes">Smart Notes</a>
+                <a href="#syllabus">Syllabus</a>
+                <a href="#papers">5-Year PYQs</a>
+                <a href="#books">Textbooks</a>
+            </div>
+            <button id="theme-toggle" class="theme-btn"><i class="fas fa-moon"></i></button>
+        </div>
+    </nav>
+
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <h1>Score 10/10 GPA with <span>Ease</span></h1>
+            <p>Your one-stop premium hub for Class 10 SSC. Get crystal clear notes, the official syllabus, last 5 years of question papers, and official textbooks all in one place.</p>
+            <a href="#notes" class="btn">Start Learning Now <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </header>
+
+    <section id="notes">
+        <h2 class="section-title">Easy-to-Understand Notes</h2>
+        <div class="grid">
+            <div class="card">
+                <i class="fas fa-square-root-variable"></i>
+                <h3>Mathematics</h3>
+                <p>Simplified formulas, step-by-step theorem proofs, and easy logic.</p>
+                <a href="#" target="_blank" class="card-btn">View PDF</a> 
+            </div>
+            <div class="card">
+                <i class="fas fa-flask"></i>
+                <h3>Physical Science</h3>
+                <p>Physics and Chemistry concepts explained with brief, real-life examples.</p>
+                <a href="#" target="_blank" class="card-btn">View PDF</a>
+            </div>
+            <div class="card">
+                <i class="fas fa-leaf"></i>
+                <h3>Biological Science</h3>
+                <p>Clean diagrams and bullet-point summaries for perfect memorization.</p>
+                <a href="#" target="_blank" class="card-btn">View PDF</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="syllabus" style="background-color: var(--white); transition: background-color 0.4s ease;">
+        <h2 class="section-title">Official Syllabus & Blueprints</h2>
+        <div class="grid">
+            <div class="card" style="background-color: var(--light);">
+                <i class="fas fa-list-ol"></i>
+                <h3>Mathematics Blueprint</h3>
+                <p>Know exactly which chapters carry 8-mark long answer questions.</p>
+                <a href="#" target="_blank" class="card-btn">View Math Blueprint</a>
+            </div>
+            <div class="card" style="background-color: var(--light);">
+                <i class="fas fa-microscope"></i>
+                <h3>Science Blueprint</h3>
+                <p>Detailed weightage for Physics, Chemistry, and Biology chapters.</p>
+                <a href="#" target="_blank" class="card-btn">View Science Blueprint</a>
+            </div>
+            <div class="card" style="background-color: var(--light);">
+                <i class="fas fa-globe-asia"></i>
+                <h3>Social Studies Map Pointing</h3>
+                <p>List of all important map locations asked in previous board exams.</p>
+                <a href="#" target="_blank" class="card-btn">View Map Syllabus</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="papers">
+        <h2 class="section-title">Previous 5 Years Papers</h2>
+        <div class="grid">
+            
+            <div class="card">
+                <i class="fas fa-calculator"></i>
+                <h3>2019 Math Paper</h3>
+                <p>Digital version of the official 2019 board exam. Loads instantly on mobile.</p>
+                <a href="2024-science-paper.html" class="card-btn">Start Practicing</a>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-flask"></i>
+                <h3>2023 Science Paper</h3>
+                <p>Digital version of the official 2023 Physical Science board exam.</p>
+                <a href="2023-science-paper.html" class="card-btn">Start Practicing</a>
+            </div>
+
+            <div class="card">
+                <i class="fas fa-file-pdf"></i>
+                <h3>All Subjects PDF Bundle</h3>
+                <p>Prefer original scanned copies? Download all 5 years in one PDF file.</p>
+                <a href="#" target="_blank" class="card-btn">Download PDF</a>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="books" style="background-color: var(--white); transition: background-color 0.4s ease;">
+        <h2 class="section-title">Official Textbooks</h2>
+        <div class="grid">
+            <div class="card" style="background-color: var(--light);">
+                <i class="fas fa-book-open"></i>
+                <h3>English Medium</h3>
+                <p>Complete set of official state board textbooks in English.</p>
+                <a href="#" target="_blank" class="card-btn">Open Drive Folder</a>
+            </div>
+            <div class="card" style="background-color: var(--light);">
+                <i class="fas fa-language"></i>
+                <h3>Telugu / Hindi Medium</h3>
+                <p>Complete set of official state board textbooks for regional mediums.</p>
+                <a href="#" target="_blank" class="card-btn">Open Drive Folder</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 SSC Master. Built for Students.</p>
+    </footer>
+
+    <script>
+        // 1. Scroll Animations
+        const cards = document.querySelectorAll('.card');
+        
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        cards.forEach(card => {
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(50px)';
+            observer.observe(card);
+        });
+
+        // 2. Dark Mode Toggle Logic
+        const themeBtn = document.getElementById('theme-toggle');
+        const bodyElement = document.body;
+
+        themeBtn.addEventListener('click', () => {
+            bodyElement.classList.toggle('dark-theme');
+            
+            // Swap the icon between moon and sun smoothly
+            if(bodyElement.classList.contains('dark-theme')) {
+                themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                themeBtn.style.color = '#FBBF24'; // Yellow sun color
+            } else {
+                themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                themeBtn.style.color = 'var(--dark)'; // Back to dark color
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+
