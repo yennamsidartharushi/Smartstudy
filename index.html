@@ -4,160 +4,229 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SSC Master | Class 10 Learning Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* --- Core Variables & Reset --- */
+        /* --- Premium Core Variables --- */
         :root {
             --primary: #4F46E5;
+            --primary-glow: rgba(79, 70, 229, 0.4);
             --secondary: #7C3AED;
-            --dark: #1F2937;
-            --light: #F3F4F6;
+            --dark: #111827;
+            --light: #F8FAFC;
             --white: #FFFFFF;
-            --nav-bg: rgba(255, 255, 255, 0.95);
-            --text-muted: #4B5563;
+            --nav-bg: rgba(255, 255, 255, 0.85);
+            --card-bg: #FFFFFF;
+            --text-main: #1E293B;
+            --text-muted: #64748B;
+            --border-color: rgba(0, 0, 0, 0.05);
+            --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
         }
 
-        /* --- Dark Mode Variables --- */
+        /* --- Premium Dark Mode Variables --- */
         body.dark-theme {
-            --dark: #F9FAFB;       
-            --light: #111827;      
-            --white: #1F2937;      
-            --nav-bg: rgba(31, 41, 55, 0.95);
-            --text-muted: #9CA3AF; 
+            --dark: #F8FAFC;       
+            --light: #0B0F19;      
+            --white: #111827;
+            --card-bg: #151E2E;      
+            --nav-bg: rgba(11, 15, 25, 0.85);
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8; 
+            --border-color: rgba(255, 255, 255, 0.05);
+            --glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
-        body { background-color: var(--light); color: var(--dark); overflow-x: hidden; transition: background-color 0.4s ease, color 0.4s ease; width: 100%; }
+        
+        body { 
+            background-color: var(--light); 
+            color: var(--text-main); 
+            overflow-x: hidden; 
+            transition: background-color 0.5s ease, color 0.5s ease; 
+            width: 100%; 
+            background-image: radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.05) 0px, transparent 50%),
+                              radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
 
         /* --- Animations --- */
-        @keyframes fadeInUP { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUP { 
+            from { opacity: 0; transform: translateY(40px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.95) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
 
-        /* --- Navigation Bar --- */
+        /* --- Glassmorphism Navigation Bar --- */
         nav {
             position: fixed; top: 0; left: 0; width: 100%;
-            background: var(--nav-bg); backdrop-filter: blur(10px);
-            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05); z-index: 1000; transition: background-color 0.4s ease;
+            background: var(--nav-bg); 
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            padding: 18px 5%; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            box-shadow: var(--glass-shadow); z-index: 1000; transition: all 0.5s ease;
         }
-        .logo { font-size: clamp(1.2rem, 4vw, 1.5rem); font-weight: 700; color: var(--primary); }
-        .theme-btn { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--dark); transition: transform 0.3s; }
-        .theme-btn:hover { transform: scale(1.1); color: var(--primary); }
+        .logo { 
+            font-size: clamp(1.2rem, 4vw, 1.5rem); 
+            font-weight: 700; 
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .theme-btn { 
+            background: var(--border-color); border: none; width: 45px; height: 45px; border-radius: 50%;
+            font-size: 1.2rem; cursor: pointer; color: var(--text-main); 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .theme-btn:hover { transform: rotate(15deg) scale(1.1); background: var(--primary-glow); color: var(--primary); }
 
         /* --- Hero Section --- */
         .hero {
-            min-height: 80vh; display: flex; align-items: center; justify-content: center; text-align: center;
-            background: linear-gradient(135deg, rgba(79,70,229,0.1) 0%, rgba(124,58,237,0.1) 100%);
-            padding: 100px 5% 40px 5%;
+            min-height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center;
+            padding: 100px 5% 40px 5%; position: relative;
         }
-        .hero-content { max-width: 800px; animation: fadeInUP 1s ease-out; width: 100%; }
-        .hero h1 { font-size: clamp(2rem, 6vw, 3.5rem); margin-bottom: 20px; color: var(--dark); line-height: 1.2; }
-        .hero h1 span { color: var(--primary); }
-        .hero p { font-size: clamp(1rem, 3vw, 1.2rem); margin-bottom: 30px; color: var(--text-muted); line-height: 1.6; }
+        .hero-content { max-width: 800px; animation: fadeInUP 1s cubic-bezier(0.2, 0.8, 0.2, 1); width: 100%; }
+        .hero h1 { 
+            font-size: clamp(2.5rem, 7vw, 4.5rem); 
+            margin-bottom: 20px; color: var(--text-main); line-height: 1.1; 
+            letter-spacing: -1px; font-weight: 700;
+        }
+        .hero h1 span { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+        .hero p { 
+            font-size: clamp(1rem, 3vw, 1.25rem); margin-bottom: 40px; color: var(--text-muted); 
+            line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto;
+        }
 
         /* --- Dashboard Grid --- */
-        section { padding: 60px 5%; width: 100%; max-width: 1200px; margin: 0 auto; }
-        .section-title { text-align: center; font-size: clamp(1.8rem, 5vw, 2.5rem); margin-bottom: 50px; color: var(--dark); }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 25px; }
+        section { padding: 80px 5%; width: 100%; max-width: 1250px; margin: 0 auto; }
+        .section-title { 
+            text-align: center; font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 60px; 
+            color: var(--text-main); font-weight: 700; letter-spacing: -0.5px;
+        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 30px; }
 
-        /* --- Category Cards (Now act as buttons) --- */
+        /* --- Premium Cards --- */
         .card {
-            background: var(--white); padding: 30px 20px; border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); text-align: center;
-            border: 1px solid rgba(0,0,0,0.02); display: flex; flex-direction: column;
-            cursor: pointer; transition: all 0.3s ease;
+            background: var(--card-bg); padding: 40px 30px; border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03); text-align: center;
+            border: 1px solid var(--border-color); display: flex; flex-direction: column;
+            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden; z-index: 1;
         }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(79,70,229,0.2); border-color: var(--primary); }
-        .card i { font-size: 3rem; color: var(--primary); margin-bottom: 15px; }
-        .card h3 { font-size: 1.4rem; margin-bottom: 10px; color: var(--dark); }
-        .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; flex-grow: 1; }
+        .card::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(124, 58, 237, 0.05));
+            opacity: 0; transition: opacity 0.4s ease; z-index: -1;
+        }
+        .card:hover::before { opacity: 1; }
+        .card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: 0 20px 40px var(--primary-glow); 
+            border-color: var(--primary); 
+        }
+        .card i { 
+            font-size: 3.5rem; margin-bottom: 20px; 
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            transition: transform 0.4s ease;
+        }
+        .card:hover i { transform: scale(1.1); }
+        .card h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--text-main); font-weight: 600; }
+        .card p { color: var(--text-muted); font-size: 1rem; margin-bottom: 30px; flex-grow: 1; line-height: 1.6; }
+        
         .card-btn {
-            background: var(--light); color: var(--primary); padding: 10px; border-radius: 8px; font-weight: 600;
-            transition: all 0.3s;
+            background: var(--light); color: var(--primary); padding: 12px; border-radius: 12px; 
+            font-weight: 600; transition: all 0.3s ease; border: 1px solid transparent;
         }
-        .card:hover .card-btn { background: var(--primary); color: #FFF; }
+        .card:hover .card-btn { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            color: #FFF; box-shadow: 0 8px 20px var(--primary-glow);
+        }
 
-        /* --- Modals (Popups) --- */
+        /* --- Premium Modals (Popups) --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5); backdrop-filter: blur(5px);
-            display: flex; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 2000;
+            background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            display: flex; align-items: center; justify-content: center; padding: 20px;
+            opacity: 0; visibility: hidden; transition: all 0.4s ease; z-index: 2000;
         }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         
         .modal-content {
-            background: var(--white); padding: 25px; border-radius: 20px;
-            width: 90%; max-width: 400px; transform: translateY(50px);
-            transition: all 0.4s ease; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            background: var(--card-bg); padding: 30px; border-radius: 24px;
+            width: 100%; max-width: 450px; 
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid var(--border-color);
         }
-        .modal-overlay.active .modal-content { transform: translateY(0); }
+        .modal-overlay.active .modal-content { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 10px; }
-        .modal-header h3 { font-size: 1.3rem; color: var(--dark); display: flex; align-items: center; gap: 10px; }
-        .close-btn { background: var(--light); border: none; width: 35px; height: 35px; border-radius: 50%; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; transition: all 0.2s; }
-        .close-btn:hover { background: #EF4444; color: white; }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; }
+        .modal-header h3 { font-size: 1.5rem; color: var(--text-main); display: flex; align-items: center; gap: 12px; font-weight: 600; }
+        .modal-header h3 i { color: var(--primary); }
+        .close-btn { 
+            background: var(--light); border: none; width: 40px; height: 40px; border-radius: 50%; 
+            color: var(--text-muted); font-size: 1.2rem; cursor: pointer; transition: all 0.3s ease; 
+        }
+        .close-btn:hover { background: #EF4444; color: white; transform: rotate(90deg); }
 
-        /* --- Subject List Buttons --- */
-        .subject-list { display: flex; flex-direction: column; gap: 10px; }
+        /* --- Subject List Links --- */
+        .subject-list { display: flex; flex-direction: column; gap: 12px; }
         .subject-item {
-            display: flex; align-items: center; gap: 15px; padding: 15px;
-            background: var(--light); border-radius: 12px; text-decoration: none;
-            color: var(--dark); font-weight: 600; transition: all 0.2s; border: 1px solid transparent;
+            display: flex; align-items: center; gap: 15px; padding: 16px 20px;
+            background: var(--light); border-radius: 16px; text-decoration: none;
+            color: var(--text-main); font-weight: 500; transition: all 0.3s ease; 
+            border: 1px solid transparent; position: relative; overflow: hidden;
         }
-        .subject-item:hover { background: var(--white); border-color: var(--primary); transform: translateX(5px); color: var(--primary); }
-        .subject-item i { width: 25px; text-align: center; font-size: 1.2rem; color: var(--primary); }
-
-        footer { background: #111827; color: #FFFFFF; text-align: center; padding: 25px 5%; margin-top: 50px; }
-
-        /* --- NEW: Premium Instagram Profile Animation --- */
-        .creator-connect {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .subject-item:hover { 
+            background: var(--card-bg); border-color: var(--primary); 
+            transform: translateX(5px); color: var(--primary); 
+            box-shadow: 0 5px 15px var(--glass-shadow);
         }
+        .subject-item i { width: 30px; text-align: center; font-size: 1.3rem; color: var(--text-muted); transition: color 0.3s ease;}
+        .subject-item:hover i { color: var(--primary); }
+
+        /* --- Footer & Instagram Button --- */
+        footer { 
+            background: var(--card-bg); border-top: 1px solid var(--border-color);
+            color: var(--text-muted); text-align: center; padding: 40px 5%; margin-top: 50px; 
+            display: flex; flex-direction: column; align-items: center; gap: 20px;
+        }
+
+        .creator-connect { display: flex; justify-content: center; align-items: center; }
+        
         .insta-profile-btn {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px 20px 8px 8px;
-            border-radius: 50px;
-            text-decoration: none;
-            color: #FFFFFF;
-            font-weight: 600;
-            font-size: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex; align-items: center; gap: 12px;
+            background: var(--light); padding: 6px 24px 6px 6px; border-radius: 50px;
+            text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1rem;
+            border: 1px solid var(--border-color);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         .insta-profile-btn:hover {
             transform: translateY(-5px) scale(1.05);
             background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            box-shadow: 0 10px 20px rgba(220, 39, 67, 0.4);
-            border-color: transparent;
+            color: #FFF; box-shadow: 0 15px 30px rgba(220, 39, 67, 0.3); border-color: transparent;
         }
         .insta-pic {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #FFFFFF;
-            transition: transform 0.5s ease;
+            width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+            border: 2px solid #FFF; transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
-        .insta-profile-btn:hover .insta-pic {
-            transform: rotate(360deg);
-        }
-        .insta-icon {
-            font-size: 1.2rem;
-        }
+        .insta-profile-btn:hover .insta-pic { transform: rotate(360deg); }
+        .insta-icon { font-size: 1.3rem; }
     </style>
 </head>
 <body>
 
     <nav>
         <div class="logo"><i class="fas fa-graduation-cap"></i> SSC Master</div>
-        <button id="theme-toggle" class="theme-btn"><i class="fas fa-moon"></i></button>
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
     </nav>
 
     <header class="hero" id="home">
@@ -171,28 +240,28 @@
         <h2 class="section-title">Study Material</h2>
         <div class="grid">
             
-            <div class="card" onclick="openModal('modal-notes')">
+            <div class="card" onclick="openModal('modal-notes')" role="button" tabindex="0">
                 <i class="fas fa-book-reader"></i>
                 <h3>Smart Notes</h3>
                 <p>Easy-to-understand, brief notes for all subjects to score high.</p>
                 <div class="card-btn">Select Subject</div>
             </div>
 
-            <div class="card" onclick="openModal('modal-syllabus')">
+            <div class="card" onclick="openModal('modal-syllabus')" role="button" tabindex="0">
                 <i class="fas fa-bullseye"></i>
                 <h3>Syllabus & Blueprints</h3>
                 <p>Official weightage of marks so you can study the right chapters.</p>
                 <div class="card-btn">Select Subject</div>
             </div>
 
-            <div class="card" onclick="openModal('modal-papers')">
+            <div class="card" onclick="openModal('modal-papers')" role="button" tabindex="0">
                 <i class="fas fa-file-alt"></i>
                 <h3>Previous Papers</h3>
                 <p>Last 5 years of official board exam papers to practice.</p>
                 <div class="card-btn">Select Subject</div>
             </div>
 
-            <div class="card" onclick="openModal('modal-books')">
+            <div class="card" onclick="openModal('modal-books')" role="button" tabindex="0">
                 <i class="fas fa-book"></i>
                 <h3>Official Textbooks</h3>
                 <p>Complete set of state board textbooks stored safely on Drive.</p>
@@ -206,7 +275,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fas fa-book-reader"></i> Smart Notes</h3>
-                <button class="close-btn" onclick="closeModal('modal-notes')"><i class="fas fa-times"></i></button>
+                <button class="close-btn" onclick="closeModal('modal-notes')" aria-label="Close Notes"><i class="fas fa-times"></i></button>
             </div>
             <div class="subject-list">
                 <a href="#" target="_blank" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a>
@@ -223,7 +292,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fas fa-bullseye"></i> Blueprints</h3>
-                <button class="close-btn" onclick="closeModal('modal-syllabus')"><i class="fas fa-times"></i></button>
+                <button class="close-btn" onclick="closeModal('modal-syllabus')" aria-label="Close Syllabus"><i class="fas fa-times"></i></button>
             </div>
             <div class="subject-list">
                 <a href="#" target="_blank" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a>
@@ -238,10 +307,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fas fa-file-alt"></i> Previous Papers</h3>
-                <button class="close-btn" onclick="closeModal('modal-papers')"><i class="fas fa-times"></i></button>
+                <button class="close-btn" onclick="closeModal('modal-papers')" aria-label="Close Papers"><i class="fas fa-times"></i></button>
             </div>
             <div class="subject-list">
-                <a href="2023-science-paper.html " class="subject-item"><i class="fas fa-calculator"></i> Physical science (2023)</a>
+                <a href="2023-science-paper.html" class="subject-item"><i class="fas fa-calculator"></i> Physical science (2023)</a>
                 <a href="2024-science-paper.html" class="subject-item"><i class="fas fa-flask"></i> Physical Science (2024)</a>
                 <a href="2025-science-paper.html" class="subject-item"><i class="fas fa-flask"></i> Physical Science (2025)</a>
                 <a href="#" target="_blank" class="subject-item"><i class="fas fa-dna"></i> Biological Science</a>
@@ -255,12 +324,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3><i class="fas fa-book"></i> Textbooks</h3>
-                <button class="close-btn" onclick="closeModal('modal-books')"><i class="fas fa-times"></i></button>
+                <button class="close-btn" onclick="closeModal('modal-books')" aria-label="Close Books"><i class="fas fa-times"></i></button>
             </div>
             <div class="subject-list">
                 <a href="https://drive.google.com/file/d/1YIke_RvoC7IEZ30ClbNUVtUEDHl_IScZ/preview" target="_blank" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a>
                 <a href="https://drive.google.com/file/d/1RFNzvLATarkwva0zQ_HwcycYDbPlMZw9/preview" target="_blank" class="subject-item"><i class="fas fa-flask"></i> Physical Science</a>
-                <a href="https://drive.google://drive.google.com/file/d/1BolgtZ3bLeKYVIY0roBJPDCSyT4bopsU/preview" target="_blank" class="subject-item"><i class="fas fa-dna"></i> Biological Science</a>
+                <a href="https://drive.google.com/file/d/1BolgtZ3bLeKYVIY0roBJPDCSyT4bopsU/preview" target="_blank" class="subject-item"><i class="fas fa-dna"></i> Biological Science</a>
                 <a href="https://drive.google.com/file/d/1pTVee0lq0uf9V9kwOWI_Ye2BiAfbFP-L/preview" target="_blank" class="subject-item"><i class="fas fa-globe-asia"></i> Social Studies</a>
                 <a href="https://drive.google.com/file/d/1yE9IfzPApK5UDDuF8rDZM21jSUSqVtYx/preview" target="_blank" class="subject-item"><i class="fas fa-language"></i> English</a>
                 <a href="https://drive.google.com/file/d/1SMfecAzbpT9vm_qbVh2KmyrrbQSUQIXv/preview" target="_blank" class="subject-item"><i class="fas fa-om"></i> Telugu </a>
@@ -273,7 +342,7 @@
         <p>&copy; 2026 SSC Master. Built for Students.</p>
         
         <div class="creator-connect">
-            <a href="https://www.instagram.com/y._siddartha_/" target="_blank" class="insta-profile-btn">
+            <a href="https://www.instagram.com/y._siddartha_/" target="_blank" class="insta-profile-btn" aria-label="Follow Siddartha on Instagram">
                 <img src="sidhuinstgramlogo.jpg" alt="Siddartha" class="insta-pic">
                 <i class="fab fa-instagram insta-icon"></i>
                 <span>y._siddartha_</span>
@@ -285,17 +354,14 @@
         // Modal Logic
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
-            // Prevent background from scrolling when modal is open
             document.body.style.overflow = 'hidden'; 
         }
 
         function closeModal(modalId) {
             document.getElementById(modalId).classList.remove('active');
-            // Re-enable background scrolling
             document.body.style.overflow = 'auto'; 
         }
 
-        // Close modal if user clicks outside the white box
         window.onclick = function(event) {
             if (event.target.classList.contains('modal-overlay')) {
                 event.target.classList.remove('active');
@@ -314,7 +380,7 @@
                 themeBtn.style.color = '#FBBF24'; 
             } else {
                 themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
-                themeBtn.style.color = 'var(--dark)'; 
+                themeBtn.style.color = 'var(--text-main)'; 
             }
         });
     </script>
