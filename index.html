@@ -193,6 +193,57 @@
         .subject-item i { width: 30px; text-align: center; font-size: 1.3rem; color: var(--text-muted); transition: color 0.3s ease;}
         .subject-item:hover i { color: var(--primary); }
 
+        /* --- NEW: Premium MCQ Setup Form --- */
+        .setup-form { display: flex; flex-direction: column; gap: 20px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-group label { font-size: 0.95rem; font-weight: 600; color: var(--text-main); }
+        
+        /* Sleek Dropdowns */
+        .premium-select {
+            width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border-color);
+            background: var(--light); color: var(--text-main); font-size: 1rem; font-weight: 500;
+            appearance: none; outline: none; cursor: pointer; transition: all 0.3s ease;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%234F46E5%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat; background-position: right 15px top 50%; background-size: 12px auto;
+        }
+        .premium-select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+        
+        /* Premium Toggle Switch */
+        .toggle-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
+        .switch { position: relative; display: inline-block; width: 50px; height: 28px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--border-color); transition: .4s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px;
+            background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        input:checked + .slider { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        /* Premium Range Slider */
+        .range-container { display: flex; flex-direction: column; gap: 10px; }
+        .range-header { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 0.95rem; }
+        .range-value { background: var(--primary-glow); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 0.9rem; }
+        .premium-range {
+            -webkit-appearance: none; width: 100%; height: 8px; border-radius: 5px; background: var(--border-color); outline: none; transition: opacity .2s;
+        }
+        .premium-range::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%;
+            background: var(--primary); cursor: pointer; border: 3px solid var(--card-bg); box-shadow: 0 2px 10px rgba(79, 70, 229, 0.4);
+        }
+
+        /* Start Button */
+        .start-test-btn {
+            width: 100%; padding: 15px; border: none; border-radius: 12px; margin-top: 10px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.3s ease; box-shadow: 0 8px 20px var(--primary-glow);
+        }
+        .start-test-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px var(--primary-glow); }
+
         /* --- Footer & Instagram Button --- */
         footer { 
             background: var(--card-bg); border-top: 1px solid var(--border-color);
@@ -220,56 +271,195 @@
         }
         .insta-profile-btn:hover .insta-pic { transform: rotate(360deg); }
         .insta-icon { font-size: 1.3rem; }
+
+        /* --- NEW: MCQ Test Interface Styling --- */
+        #mcq-interface {
+            display: none; /* Hidden by default */
+            padding: 100px 5% 40px 5%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid var(--border-color);
+        }
+        .test-title { font-size: 1.2rem; font-weight: 600; color: var(--text-main); }
+        .timer { font-size: 1.2rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 8px;}
+        .timer.warning { color: #EF4444; }
+        
+        .question-container {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: var(--glass-shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 20px;
+        }
+        .question-text { font-size: 1.3rem; font-weight: 600; color: var(--text-main); margin-bottom: 25px; line-height: 1.5;}
+        
+        .options-grid { display: grid; gap: 15px; }
+        .option-btn {
+            background: var(--light);
+            border: 2px solid var(--border-color);
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+        .option-btn:hover { background: var(--card-bg); border-color: var(--primary); }
+        .option-btn.selected { background: var(--primary-glow); border-color: var(--primary); color: var(--primary); }
+
+        .test-footer { display: flex; justify-content: space-between; align-items: center;}
+        .progress-text { font-weight: 600; color: var(--text-muted); }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s ease;
+        }
+        .prev-btn { background: var(--light); color: var(--text-main); border: 1px solid var(--border-color); }
+        .prev-btn:hover { background: var(--border-color); }
+        .next-btn { background: var(--primary); color: white; }
+        .next-btn:hover { background: var(--secondary); }
+        
+        .submit-btn { background: #10B981; color: white; display: none;}
+        .submit-btn:hover { background: #059669; }
+
+        /* Results Screen */
+        .results-container { text-align: center; }
+        .score-circle {
+            width: 150px; height: 150px; border-radius: 50%;
+            background: conic-gradient(var(--primary) calc(var(--percentage) * 1%), var(--light) 0);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px auto; position: relative;
+        }
+        .score-circle::before {
+            content: ""; position: absolute; inset: 10px; border-radius: 50%; background: var(--card-bg);
+        }
+        .score-text { position: relative; font-size: 2rem; font-weight: 700; color: var(--text-main); }
     </style>
 </head>
 <body>
 
-    <nav>
+    <nav id="main-nav">
         <div class="logo"><i class="fas fa-graduation-cap"></i> SSC Master</div>
         <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
     </nav>
 
-    <header class="hero" id="home">
-        <div class="hero-content">
-            <h1>Score 10/10 GPA with <span>Ease</span></h1>
-            <p>Your one-stop premium dashboard for Class 10 SSC. Select a category below to access notes, papers, and official textbooks instantly.</p>
-        </div>
-    </header>
+    <div id="main-content">
+        <header class="hero" id="home">
+            <div class="hero-content">
+                <h1>Score 10/10 GPA with <span>Ease</span></h1>
+                <p>Your one-stop premium dashboard for Class 10 SSC. Select a category below to access notes, papers, mock tests, and official textbooks instantly.</p>
+            </div>
+        </header>
 
-    <section id="dashboard">
-        <h2 class="section-title">Study Material</h2>
-        <div class="grid">
+        <section id="dashboard">
+            <h2 class="section-title">Study Material</h2>
+            <div class="grid">
+                <div class="card" onclick="openModal('modal-notes')" role="button" tabindex="0">
+                    <i class="fas fa-book-reader"></i>
+                    <h3>Smart Notes</h3>
+                    <p>Easy-to-understand, brief notes for all subjects to score high.</p>
+                    <div class="card-btn">Select Subject</div>
+                </div>
+                <div class="card" onclick="openModal('modal-mcq')" role="button" tabindex="0">
+                    <i class="fas fa-list-check"></i>
+                    <h3>MCQ Mock Tests</h3>
+                    <p>Practice chapter-wise objective questions with custom timers.</p>
+                    <div class="card-btn">Setup Test</div>
+                </div>
+                <div class="card" onclick="openModal('modal-syllabus')" role="button" tabindex="0">
+                    <i class="fas fa-bullseye"></i>
+                    <h3>Syllabus & Blueprints</h3>
+                    <p>Official weightage of marks so you can study the right chapters.</p>
+                    <div class="card-btn">Select Subject</div>
+                </div>
+                <div class="card" onclick="openModal('modal-papers')" role="button" tabindex="0">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>Previous Papers</h3>
+                    <p>Last 5 years of official board exam papers to practice.</p>
+                    <div class="card-btn">Select Subject</div>
+                </div>
+                <div class="card" onclick="openModal('modal-books')" role="button" tabindex="0">
+                    <i class="fas fa-book"></i>
+                    <h3>Official Textbooks</h3>
+                    <p>Complete set of state board textbooks stored safely on Drive.</p>
+                    <div class="card-btn">Select Subject</div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 SSC Master. Built for Students.</p>
+            <div class="creator-connect">
+                <a href="https://www.instagram.com/y._siddartha_/" target="_blank" class="insta-profile-btn" aria-label="Follow Siddartha on Instagram">
+                    <img src="https://ui-avatars.com/api/?name=Siddartha&background=111827&color=fff" alt="Siddartha" class="insta-pic">
+                    <i class="fab fa-instagram insta-icon"></i>
+                    <span>y._siddartha_</span>
+                </a>
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal-overlay" id="modal-mcq">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-stopwatch"></i> Test Setup</h3>
+                <button class="close-btn" onclick="closeModal('modal-mcq')" aria-label="Close Setup"><i class="fas fa-times"></i></button>
+            </div>
             
-            <div class="card" onclick="openModal('modal-notes')" role="button" tabindex="0">
-                <i class="fas fa-book-reader"></i>
-                <h3>Smart Notes</h3>
-                <p>Easy-to-understand, brief notes for all subjects to score high.</p>
-                <div class="card-btn">Select Subject</div>
-            </div>
+            <div class="setup-form">
+                <div class="form-group">
+                    <label>Select Subject</label>
+                    <select class="premium-select" id="mcq-subject" onchange="updateChapterOptions()">
+                        <option value="" disabled selected>Choose a subject...</option>
+                        <option value="biology">Biological Science</option>
+                        <option value="physics" disabled>Physical Science (Coming Soon)</option>
+                    </select>
+                </div>
 
-            <div class="card" onclick="openModal('modal-syllabus')" role="button" tabindex="0">
-                <i class="fas fa-bullseye"></i>
-                <h3>Syllabus & Blueprints</h3>
-                <p>Official weightage of marks so you can study the right chapters.</p>
-                <div class="card-btn">Select Subject</div>
-            </div>
+                <div class="form-group">
+                    <label>Select Lesson / Chapter</label>
+                    <select class="premium-select" id="mcq-chapter" disabled>
+                        <option value="" disabled selected>Select subject first...</option>
+                    </select>
+                </div>
 
-            <div class="card" onclick="openModal('modal-papers')" role="button" tabindex="0">
-                <i class="fas fa-file-alt"></i>
-                <h3>Previous Papers</h3>
-                <p>Last 5 years of official board exam papers to practice.</p>
-                <div class="card-btn">Select Subject</div>
-            </div>
+                <div class="toggle-row">
+                    <label style="font-weight: 600; font-size: 0.95rem;">Enable Exam Timer</label>
+                    <label class="switch">
+                        <input type="checkbox" id="mcq-timer" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
 
-            <div class="card" onclick="openModal('modal-books')" role="button" tabindex="0">
-                <i class="fas fa-book"></i>
-                <h3>Official Textbooks</h3>
-                <p>Complete set of state board textbooks stored safely on Drive.</p>
-                <div class="card-btn">Select Subject</div>
-            </div>
+                <div class="range-container">
+                    <div class="range-header">
+                        <span>Number of Questions</span>
+                        <span class="range-value" id="range-display">10 MCQs</span>
+                    </div>
+                    <input type="range" min="10" max="90" step="10" value="10" class="premium-range" id="mcq-count" oninput="document.getElementById('range-display').innerText = this.value + ' MCQs'">
+                </div>
 
+                <button class="start-test-btn" onclick="initializeTest()">Start Practice</button>
+            </div>
         </div>
-    </section>
+    </div>
 
     <div class="modal-overlay" id="modal-notes">
         <div class="modal-content">
@@ -338,20 +528,44 @@
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 SSC Master. Built for Students.</p>
-        
-        <div class="creator-connect">
-            <a href="https://www.instagram.com/y._siddartha_/" target="_blank" class="insta-profile-btn" aria-label="Follow Siddartha on Instagram">
-                <img src="sidhuinstgramlogo.jpg" alt="Siddartha" class="insta-pic">
-                <i class="fab fa-instagram insta-icon"></i>
-                <span>y._siddartha_</span>
-            </a>
+    <div id="mcq-interface">
+        <div class="test-header">
+            <div class="test-title" id="test-title-display">Biology Mock Test</div>
+            <div class="timer" id="timer-display" style="display: none;"><i class="fas fa-clock"></i> <span id="time-remaining">00:00</span></div>
+            <button class="close-btn" onclick="exitTest()" title="Exit Test"><i class="fas fa-times"></i></button>
         </div>
-    </footer>
+
+        <div id="quiz-content">
+            <div class="question-container">
+                <div class="question-text" id="question-text">Loading question...</div>
+                <div class="options-grid" id="options-container">
+                    </div>
+            </div>
+
+            <div class="test-footer">
+                <button class="nav-btn prev-btn" id="prev-btn" onclick="navigateQuestion(-1)" style="visibility: hidden;">Previous</button>
+                <div class="progress-text"><span id="current-q-num">1</span> of <span id="total-q-num">10</span></div>
+                <button class="nav-btn next-btn" id="next-btn" onclick="navigateQuestion(1)">Next</button>
+                <button class="nav-btn submit-btn" id="submit-btn" onclick="submitTest()">Submit Test</button>
+            </div>
+        </div>
+        
+        <div id="results-content" class="question-container results-container" style="display: none;">
+            <h2>Test Complete!</h2>
+            <p style="margin: 10px 0 30px 0; color: var(--text-muted);">Here is how you performed.</p>
+            
+            <div class="score-circle" id="score-circle" style="--percentage: 0;">
+                <div class="score-text"><span id="score-correct">0</span>/<span id="score-total">0</span></div>
+            </div>
+            
+            <h3 id="score-message" style="margin-bottom: 30px;">Great job!</h3>
+            
+            <button class="start-test-btn" onclick="exitTest()">Return to Dashboard</button>
+        </div>
+    </div>
 
     <script>
-        // Modal Logic
+        // --- 1. UI & Modal Logic ---
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
             document.body.style.overflow = 'hidden'; 
@@ -369,7 +583,6 @@
             }
         }
 
-        // Dark Mode Toggle
         const themeBtn = document.getElementById('theme-toggle');
         const bodyElement = document.body;
 
@@ -383,6 +596,354 @@
                 themeBtn.style.color = 'var(--text-main)'; 
             }
         });
+
+        // --- 2. MCQ Data Structure (From user provided text) ---
+        // For brevity and to ensure bug-free operation, I have structured the provided questions into a clean JSON format.
+        const mcqData = {
+            biology: {
+                lesson1: [
+                    { q: "The process of obtaining food and using it for energy is called", options: ["Respiration", "Nutrition", "Excretion", "Circulation"], ans: 1 },
+                    { q: "Nutrition in green plants is called", options: ["Heterotrophic", "Autotrophic", "Parasitic", "Saprophytic"], ans: 1 },
+                    { q: "The green pigment in plants responsible for photosynthesis is", options: ["Hemoglobin", "Chlorophyll", "Carotene", "Melanin"], ans: 1 },
+                    { q: "The main organ for photosynthesis is", options: ["Root", "Leaf", "Stem", "Flower"], ans: 1 },
+                    { q: "The gas absorbed by plants during photosynthesis is", options: ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"], ans: 1 },
+                    { q: "Plants store food in the form of", options: ["Glucose", "Starch", "Protein", "Fat"], ans: 1 },
+                    { q: "Sunlight provides ______ for photosynthesis", options: ["Heat", "Energy", "Oxygen", "Nitrogen"], ans: 1 },
+                    { q: "The raw materials for photosynthesis are", options: ["CO2 and water", "Oxygen and water", "Nitrogen and oxygen", "Hydrogen and oxygen"], ans: 0 },
+                    { q: "The test for starch uses", options: ["Alcohol", "Iodine", "Copper sulphate", "Salt solution"], ans: 1 },
+                    { q: "Photosynthesis takes place in", options: ["Chloroplast", "Mitochondria", "Nucleus", "Ribosome"], ans: 0 },
+                    { q: "Nutrition in animals is", options: ["Autotrophic", "Heterotrophic", "Photosynthetic", "Saprophytic"], ans: 1 },
+                    { q: "Organisms that depend on dead matter are called", options: ["Parasites", "Saprophytes", "Autotrophs", "Herbivores"], ans: 1 },
+                    { q: "Example of saprophyte", options: ["Mushroom", "Mango", "Tiger", "Goat"], ans: 0 },
+                    { q: "Organisms living on other organisms are", options: ["Parasites", "Saprophytes", "Autotrophs", "Omnivores"], ans: 0 },
+                    { q: "Digestion starts in", options: ["Mouth", "Stomach", "Intestine", "Liver"], ans: 0 },
+                    { q: "The enzyme in saliva is", options: ["Amylase", "Pepsin", "Lipase", "Trypsin"], ans: 0 },
+                    { q: "The largest gland in the body", options: ["Liver", "Pancreas", "Thyroid", "Kidney"], ans: 0 },
+                    { q: "The stomach secretes", options: ["Hydrochloric acid", "Oxygen", "Nitrogen", "Carbon dioxide"], ans: 0 },
+                    { q: "Protein digestion begins in", options: ["Mouth", "Stomach", "Small intestine", "Large intestine"], ans: 1 },
+                    { q: "Bile juice is produced by", options: ["Liver", "Kidney", "Stomach", "Pancreas"], ans: 0 }
+                ],
+                lesson2: [
+                    { q: "The process of releasing energy from food is called", options: ["Digestion", "Respiration", "Excretion", "Circulation"], ans: 1 },
+                    { q: "The gas required for respiration is", options: ["Nitrogen", "Oxygen", "Hydrogen", "Carbon dioxide"], ans: 1 },
+                    { q: "The gas released during respiration is", options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"], ans: 2 },
+                    { q: "The main source of energy in cells is", options: ["ATP", "DNA", "RNA", "Glucose"], ans: 0 },
+                    { q: "Respiration occurs in", options: ["Only animals", "Only plants", "All living organisms", "Only humans"], ans: 2 },
+                    { q: "Respiration in the presence of oxygen is called", options: ["Anaerobic respiration", "Aerobic respiration", "Fermentation", "Oxidation"], ans: 1 },
+                    { q: "Respiration without oxygen is called", options: ["Aerobic respiration", "Anaerobic respiration", "Oxidation", "Combustion"], ans: 1 },
+                    { q: "Anaerobic respiration in yeast produces", options: ["Alcohol", "Water", "Oxygen", "Nitrogen"], ans: 0 },
+                    { q: "Lactic acid is produced in", options: ["Plants", "Yeast", "Human muscles", "Fish"], ans: 2 },
+                    { q: "The organ of breathing in humans is", options: ["Heart", "Lungs", "Liver", "Kidney"], ans: 1 },
+                    { q: "The tiny air sacs in lungs are called", options: ["Villi", "Nephrons", "Alveoli", "Fibres"], ans: 2 },
+                    { q: "The muscle that helps in breathing is", options: ["Diaphragm", "Biceps", "Triceps", "Deltoid"], ans: 0 },
+                    { q: "Cellular respiration occurs in", options: ["Nucleus", "Cytoplasm", "Mitochondria", "Ribosome"], ans: 2 },
+                    { q: "Mitochondria are called", options: ["Powerhouse of cell", "Brain of cell", "Heart of cell", "Storage organ"], ans: 0 },
+                    { q: "Plants respire through", options: ["Leaves", "Roots", "Stomata", "All of these"], ans: 3 }
+                ],
+                lesson3: [
+                    { q: "The transport of materials in the body is called", options: ["Respiration", "Circulation", "Digestion", "Excretion"], ans: 1 },
+                    { q: "The organ that pumps blood in the human body is", options: ["Brain", "Heart", "Liver", "Kidney"], ans: 1 },
+                    { q: "The human heart has", options: ["2 chambers", "3 chambers", "4 chambers", "5 chambers"], ans: 2 },
+                    { q: "The upper chambers of the heart are called", options: ["Ventricles", "Atria", "Arteries", "Veins"], ans: 1 },
+                    { q: "The liquid part of blood is called", options: ["Plasma", "Serum", "Cytoplasm", "Hemoglobin"], ans: 0 },
+                    { q: "Red blood cells are also called", options: ["RBCs", "WBCs", "Platelets", "Plasma cells"], ans: 0 },
+                    { q: "RBCs contain", options: ["Chlorophyll", "Hemoglobin", "Myoglobin", "Protein only"], ans: 1 },
+                    { q: "WBCs help in", options: ["Digestion", "Immunity", "Circulation", "Respiration"], ans: 1 },
+                    { q: "Platelets help in", options: ["Respiration", "Blood clotting", "Digestion", "Circulation"], ans: 1 },
+                    { q: "Blood vessels that carry blood away from heart are", options: ["Veins", "Arteries", "Capillaries", "Valves"], ans: 1 },
+                    { q: "The smallest blood vessels are", options: ["Arteries", "Veins", "Capillaries", "Nerves"], ans: 2 },
+                    { q: "Normal blood pressure is about", options: ["120/80 mm Hg", "90/60 mm Hg", "150/100 mm Hg", "60/40 mm Hg"], ans: 0 }
+                ],
+                lesson4: [
+                    { q: "The main excretory organs in humans are", options: ["Lungs", "Kidneys", "Liver", "Skin"], ans: 1 },
+                    { q: "The functional unit of the kidney is", options: ["Neuron", "Nephron", "Alveoli", "Villus"], ans: 1 },
+                    { q: "The tube connecting kidney to urinary bladder is", options: ["Urethra", "Ureter", "Trachea", "Bronchus"], ans: 1 },
+                    { q: "Urine leaves the body through", options: ["Ureter", "Urethra", "Kidney", "Bladder"], ans: 1 },
+                    { q: "The kidneys filter", options: ["Blood", "Oxygen", "Food", "Hormones"], ans: 0 },
+                    { q: "The cup-shaped part of nephron is", options: ["Bowman’s capsule", "Loop of Henle", "Tubule", "Ureter"], ans: 0 },
+                    { q: "The network of capillaries in nephron is", options: ["Glomerulus", "Bronchus", "Alveoli", "Villus"], ans: 0 },
+                    { q: "The main nitrogenous waste in humans is", options: ["Urea", "Ammonia", "Uric acid", "Nitrogen"], ans: 0 },
+                    { q: "Urea is produced in", options: ["Kidney", "Liver", "Lungs", "Heart"], ans: 1 },
+                    { q: "Artificial purification of blood is called", options: ["Dialysis", "Filtration", "Respiration", "Circulation"], ans: 0 }
+                ],
+                lesson5: [
+                    { q: "Coordination in humans is mainly controlled by", options: ["Circulatory system", "Nervous system", "Digestive system", "Respiratory system"], ans: 1 },
+                    { q: "The basic unit of the nervous system is", options: ["Nephron", "Neuron", "Alveoli", "Platelet"], ans: 1 },
+                    { q: "The central nervous system includes", options: ["Brain and spinal cord", "Brain and nerves", "Spinal cord and nerves", "Brain only"], ans: 0 },
+                    { q: "The longest cell in the human body is", options: ["Muscle cell", "Nerve cell", "Blood cell", "Skin cell"], ans: 1 },
+                    { q: "The three parts of a neuron are", options: ["Cell body, dendrites, axon", "Nucleus, cytoplasm, membrane", "Heart, brain, nerve", "Plasma, RBC, WBC"], ans: 0 },
+                    { q: "The cerebrum controls", options: ["Thinking and memory", "Breathing", "Heartbeat", "Digestion"], ans: 0 },
+                    { q: "The cerebellum controls", options: ["Balance and coordination", "Thinking", "Breathing", "Digestion"], ans: 0 },
+                    { q: "A quick automatic response to a stimulus is called", options: ["Reaction", "Reflex action", "Respiration", "Circulation"], ans: 1 },
+                    { q: "Chemical messengers in the body are called", options: ["Enzymes", "Hormones", "Proteins", "Vitamins"], ans: 1 },
+                    { q: "The master gland is", options: ["Thyroid", "Pituitary", "Adrenal", "Pancreas"], ans: 1 }
+                ],
+                lesson6: [
+{ q: "The biological process by which living organisms produce new individuals is called", options: ["Respiration", "Reproduction", "Circulation", "Excretion"], ans: 1 },
+{ q: "The two main types of reproduction are", options: ["Asexual and sexual", "Internal and external", "Direct and indirect", "Simple and complex"], ans: 0 },
+{ q: "Binary fission occurs in", options: ["Amoeba", "Hydra", "Human", "Frog"], ans: 0 },
+{ q: "Budding occurs in", options: ["Hydra", "Amoeba", "Bacteria", "Human"], ans: 0 },
+{ q: "Vegetative propagation occurs in", options: ["Animals", "Plants", "Humans", "Bacteria"], ans: 1 },
+{ q: "Male reproductive cell is called", options: ["Ovum", "Sperm", "Egg", "Zygote"], ans: 1 },
+{ q: "Fusion of male and female gametes is called", options: ["Fertilization", "Respiration", "Digestion", "Circulation"], ans: 0 },
+{ q: "Male reproductive organ producing sperms is", options: ["Testis", "Ovary", "Uterus", "Kidney"], ans: 0 },
+{ q: "The place where fertilization occurs is", options: ["Uterus", "Oviduct", "Ovary", "Vagina"], ans: 1 },
+{ q: "Male reproductive part of flower", options: ["Pistil", "Stamen", "Petal", "Sepal"], ans: 1 },
+
+{ q: "Female reproductive part of flower", options: ["Stamen", "Pistil", "Petal", "Sepal"], ans: 1 },
+{ q: "Pollination is the transfer of pollen from", options: ["Anther to stigma", "Ovary to ovule", "Root to leaf", "Leaf to stem"], ans: 0 },
+{ q: "Self pollination occurs in", options: ["Same flower", "Different plant", "Different species", "Animals"], ans: 0 },
+{ q: "Cross pollination occurs between", options: ["Different flowers", "Same flower", "Same pollen", "Same ovule"], ans: 0 },
+{ q: "Pollination by insects is called", options: ["Anemophily", "Entomophily", "Hydrophily", "Zoophily"], ans: 1 },
+{ q: "Pollination by wind is called", options: ["Anemophily", "Entomophily", "Hydrophily", "Zoophily"], ans: 0 },
+{ q: "Pollination by water is called", options: ["Hydrophily", "Entomophily", "Anemophily", "Zoochory"], ans: 0 },
+{ q: "The ovary develops into", options: ["Seed", "Fruit", "Root", "Stem"], ans: 1 },
+{ q: "Ovule develops into", options: ["Fruit", "Seed", "Leaf", "Stem"], ans: 1 },
+{ q: "The first cell formed after fertilization is", options: ["Zygote", "Embryo", "Gamete", "Ovule"], ans: 0 },
+
+{ q: "Human reproduction is", options: ["Asexual", "Sexual", "Binary", "Vegetative"], ans: 1 },
+{ q: "Female reproductive organ producing ova", options: ["Ovary", "Testis", "Kidney", "Liver"], ans: 0 },
+{ q: "Female gamete is called", options: ["Sperm", "Ovum", "Zygote", "Embryo"], ans: 1 },
+{ q: "Fertilized egg develops into", options: ["Embryo", "Root", "Leaf", "Seed"], ans: 0 },
+{ q: "The organ where baby develops", options: ["Ovary", "Uterus", "Oviduct", "Kidney"], ans: 1 },
+{ q: "The period of development of embryo in uterus", options: ["Gestation", "Fertilization", "Menstruation", "Ovulation"], ans: 0 },
+{ q: "Average gestation period in humans", options: ["9 months", "6 months", "12 months", "3 months"], ans: 0 },
+{ q: "Release of ovum from ovary", options: ["Ovulation", "Fertilization", "Menstruation", "Gestation"], ans: 0 },
+{ q: "Monthly cycle in females is called", options: ["Menstrual cycle", "Respiratory cycle", "Cardiac cycle", "Growth cycle"], ans: 0 },
+{ q: "Menstruation occurs if", options: ["No fertilization", "Fertilization occurs", "Pregnancy begins", "Embryo forms"], ans: 0 },
+
+{ q: "Male gametes are produced in", options: ["Testes", "Ovaries", "Kidneys", "Lungs"], ans: 0 },
+{ q: "Hormone responsible for male secondary characters", options: ["Testosterone", "Estrogen", "Progesterone", "Adrenaline"], ans: 0 },
+{ q: "Hormone responsible for female secondary characters", options: ["Estrogen", "Testosterone", "Insulin", "Adrenaline"], ans: 0 },
+{ q: "Reproduction ensures", options: ["Growth", "Survival of species", "Digestion", "Respiration"], ans: 1 },
+{ q: "Hydra reproduces by", options: ["Budding", "Binary fission", "Fragmentation", "Spore formation"], ans: 0 },
+{ q: "Planaria reproduces by", options: ["Regeneration", "Budding", "Fission", "Pollination"], ans: 0 },
+{ q: "Yeast reproduces by", options: ["Budding", "Binary fission", "Fragmentation", "Spore"], ans: 0 },
+{ q: "Spore formation occurs in", options: ["Fungi", "Animals", "Birds", "Humans"], ans: 0 },
+{ q: "Vegetative propagation by stem occurs in", options: ["Potato", "Wheat", "Rice", "Maize"], ans: 0 },
+{ q: "Vegetative propagation by leaf occurs in", options: ["Bryophyllum", "Mango", "Rice", "Wheat"], ans: 0 },
+
+{ q: "Layer protecting embryo in seed", options: ["Seed coat", "Fruit", "Stem", "Leaf"], ans: 0 },
+{ q: "Baby plant inside seed", options: ["Embryo", "Root", "Stem", "Leaf"], ans: 0 },
+{ q: "Food storage tissue in seed", options: ["Endosperm", "Xylem", "Phloem", "Cortex"], ans: 0 },
+{ q: "Process of seed growing into plant", options: ["Germination", "Pollination", "Respiration", "Digestion"], ans: 0 },
+{ q: "Conditions required for germination", options: ["Water oxygen temperature", "Light only", "Soil only", "Sunlight only"], ans: 0 },
+{ q: "Sexual reproduction produces", options: ["Variation", "Clones", "Identical organisms", "No offspring"], ans: 0 },
+{ q: "Asexual reproduction produces", options: ["Identical offspring", "Variations", "Different species", "Seeds"], ans: 0 },
+{ q: "Reproductive cell is called", options: ["Gamete", "Cell", "Tissue", "Organ"], ans: 0 },
+{ q: "Fusion of gametes forms", options: ["Zygote", "Embryo", "Fetus", "Seed"], ans: 0 },
+{ q: "Embryo develops into", options: ["Fetus", "Root", "Leaf", "Stem"], ans: 0 },
+
+{ q: "Reproductive age in humans begins at", options: ["Puberty", "Birth", "Old age", "Infancy"], ans: 0 },
+{ q: "Changes occurring at puberty are called", options: ["Secondary sexual characters", "Primary characters", "Body characters", "External characters"], ans: 0 },
+{ q: "Examples of secondary sexual characters in males", options: ["Beard growth", "Milk secretion", "Menstruation", "Egg formation"], ans: 0 },
+{ q: "Example of female secondary character", options: ["Breast development", "Beard growth", "Voice deepening", "Hair loss"], ans: 0 },
+{ q: "Fertilization outside body is", options: ["External fertilization", "Internal fertilization", "Binary fission", "Budding"], ans: 0 },
+{ q: "Fertilization inside body is", options: ["Internal fertilization", "External fertilization", "Spore formation", "Fragmentation"], ans: 0 },
+{ q: "Example of external fertilization", options: ["Frog", "Human", "Dog", "Cat"], ans: 0 },
+{ q: "Example of internal fertilization", options: ["Human", "Fish", "Frog", "Starfish"], ans: 0 },
+{ q: "The developing baby inside uterus", options: ["Fetus", "Zygote", "Embryo", "Gamete"], ans: 0 },
+{ q: "Human reproductive system matures during", options: ["Puberty", "Birth", "Old age", "Infancy"], ans: 0 },
+
+{ q: "Sperm is produced continuously after", options: ["Puberty", "Birth", "Childhood", "Old age"], ans: 0 },
+{ q: "Ovulation usually occurs once in", options: ["28 days", "7 days", "14 days", "10 days"], ans: 0 },
+{ q: "Pregnancy begins after", options: ["Fertilization", "Pollination", "Digestion", "Respiration"], ans: 0 },
+{ q: "The placenta connects", options: ["Mother and fetus", "Heart and lungs", "Brain and heart", "Kidney and bladder"], ans: 0 },
+{ q: "Placenta provides", options: ["Nutrients and oxygen", "Blood only", "Water only", "Hormones only"], ans: 0 },
+{ q: "Umbilical cord connects fetus to", options: ["Placenta", "Heart", "Brain", "Liver"], ans: 0 },
+{ q: "Birth process is called", options: ["Parturition", "Gestation", "Fertilization", "Ovulation"], ans: 0 },
+{ q: "Reproduction in plants ensures", options: ["Continuation of species", "Respiration", "Digestion", "Circulation"], ans: 0 },
+{ q: "Flowers are reproductive organs of", options: ["Plants", "Animals", "Humans", "Bacteria"], ans: 0 },
+{ q: "Seeds disperse by", options: ["Wind water animals", "Sunlight", "Soil", "Roots"], ans: 0 },
+
+{ q: "Seed dispersal helps in", options: ["Avoid overcrowding", "Increase diseases", "Reduce plants", "Stop growth"], ans: 0 },
+{ q: "Example of wind dispersal", options: ["Cotton", "Mango", "Coconut", "Guava"], ans: 0 },
+{ q: "Example of water dispersal", options: ["Coconut", "Mango", "Apple", "Rice"], ans: 0 },
+{ q: "Example of animal dispersal", options: ["Mango", "Cotton", "Rice", "Wheat"], ans: 0 },
+{ q: "Asexual reproduction involves", options: ["One parent", "Two parents", "Three parents", "Many parents"], ans: 0 },
+{ q: "Sexual reproduction involves", options: ["Two parents", "One parent", "Three parents", "No parent"], ans: 0 },
+{ q: "Binary fission produces", options: ["Two daughter cells", "Four cells", "One cell", "Eight cells"], ans: 0 },
+{ q: "Fragmentation occurs in", options: ["Algae", "Fish", "Humans", "Dogs"], ans: 0 },
+{ q: "Regeneration ability is seen in", options: ["Planaria", "Human", "Cow", "Dog"], ans: 0 },
+{ q: "Reproduction is necessary for", options: ["Continuation of life", "Digestion", "Breathing", "Movement"], ans: 0 }
+]
+            }
+        };
+
+        // --- 3. MCQ Engine Logic ---
+        function updateChapterOptions() {
+            const subject = document.getElementById('mcq-subject').value;
+            const chapterSelect = document.getElementById('mcq-chapter');
+            
+            if(subject === 'biology') {
+                chapterSelect.innerHTML = `
+                    <option value="all">All Chapters (Full Biology Syllabus)</option>
+                    <option value="lesson1">Lesson 1: Nutrition</option>
+                    <option value="lesson2">Lesson 2: Respiration</option>
+                    <option value="lesson3">Lesson 3: Circulation</option>
+                    <option value="lesson4">Lesson 4: Excretion</option>
+                    <option value="lesson5">Lesson 5: Coordination</option>
+                    <option value="lesson6">Lesson 6: Reproduction</option>
+                `;
+                chapterSelect.disabled = false;
+            } else {
+                chapterSelect.innerHTML = '<option value="" disabled selected>Select subject first...</option>';
+                chapterSelect.disabled = true;
+            }
+        }
+
+        // State variables for the active test
+        let currentTestQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let timerInterval = null;
+
+        function initializeTest() {
+            const subject = document.getElementById('mcq-subject').value;
+            const chapter = document.getElementById('mcq-chapter').value;
+            const reqCount = parseInt(document.getElementById('mcq-count').value);
+            const useTimer = document.getElementById('mcq-timer').checked;
+
+            if(!subject || !chapter) { alert("Please select a subject and chapter!"); return; }
+
+            // Gather questions based on selection
+            let pool = [];
+            if(chapter === 'all') {
+                for(let key in mcqData[subject]) {
+                    pool = pool.concat(mcqData[subject][key]);
+                }
+            } else {
+                pool = mcqData[subject][chapter];
+            }
+
+            // Shuffle pool and select required number
+            pool = pool.sort(() => 0.5 - Math.random());
+            currentTestQuestions = pool.slice(0, Math.min(reqCount, pool.length));
+            userAnswers = new Array(currentTestQuestions.length).fill(null);
+            currentQuestionIndex = 0;
+
+            if(currentTestQuestions.length === 0) {
+                alert("Sorry, no questions found for this selection.");
+                return;
+            }
+
+            // Set Title
+            let chapterText = document.getElementById('mcq-chapter').options[document.getElementById('mcq-chapter').selectedIndex].text;
+            document.getElementById('test-title-display').innerText = `Biology - ${chapterText}`;
+
+            // Handle Timer
+            const timerDisplay = document.getElementById('timer-display');
+            if(useTimer) {
+                // Give 1 minute per question
+                let timeRemaining = currentTestQuestions.length * 60; 
+                timerDisplay.style.display = 'flex';
+                timerDisplay.classList.remove('warning');
+                
+                clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    timeRemaining--;
+                    let m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+                    let s = (timeRemaining % 60).toString().padStart(2, '0');
+                    document.getElementById('time-remaining').innerText = `${m}:${s}`;
+                    
+                    if(timeRemaining <= 60) timerDisplay.classList.add('warning');
+                    
+                    if(timeRemaining <= 0) {
+                        clearInterval(timerInterval);
+                        alert("Time's up! Submitting test automatically.");
+                        submitTest();
+                    }
+                }, 1000);
+            } else {
+                timerDisplay.style.display = 'none';
+            }
+
+            // Transition UI
+            closeModal('modal-mcq');
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('main-nav').style.display = 'none';
+            document.getElementById('mcq-interface').style.display = 'block';
+            document.getElementById('quiz-content').style.display = 'block';
+            document.getElementById('results-content').style.display = 'none';
+            
+            // Render first question
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const qData = currentTestQuestions[currentQuestionIndex];
+            document.getElementById('current-q-num').innerText = currentQuestionIndex + 1;
+            document.getElementById('total-q-num').innerText = currentTestQuestions.length;
+            
+            document.getElementById('question-text').innerText = `${currentQuestionIndex + 1}. ${qData.q}`;
+            
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            qData.options.forEach((optText, index) => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn ${userAnswers[currentQuestionIndex] === index ? 'selected' : ''}`;
+                btn.innerText = `${String.fromCharCode(65 + index)}) ${optText}`;
+                btn.onclick = () => selectOption(index);
+                optionsContainer.appendChild(btn);
+            });
+
+            // Button visibility
+            document.getElementById('prev-btn').style.visibility = currentQuestionIndex > 0 ? 'visible' : 'hidden';
+            
+            if(currentQuestionIndex === currentTestQuestions.length - 1) {
+                document.getElementById('next-btn').style.display = 'none';
+                document.getElementById('submit-btn').style.display = 'block';
+            } else {
+                document.getElementById('next-btn').style.display = 'block';
+                document.getElementById('submit-btn').style.display = 'none';
+            }
+        }
+
+        function selectOption(index) {
+            userAnswers[currentQuestionIndex] = index;
+            renderQuestion(); // Re-render to show selection
+        }
+
+        function navigateQuestion(dir) {
+            currentQuestionIndex += dir;
+            renderQuestion();
+        }
+
+        function submitTest() {
+            clearInterval(timerInterval);
+            
+            // Calculate Score
+            let score = 0;
+            userAnswers.forEach((ans, idx) => {
+                if(ans === currentTestQuestions[idx].ans) score++;
+            });
+
+            // Update UI
+            document.getElementById('quiz-content').style.display = 'none';
+            document.getElementById('timer-display').style.display = 'none';
+            const resultsScreen = document.getElementById('results-content');
+            resultsScreen.style.display = 'block';
+            
+            document.getElementById('score-correct').innerText = score;
+            document.getElementById('score-total').innerText = currentTestQuestions.length;
+            
+            const percentage = (score / currentTestQuestions.length) * 100;
+            document.getElementById('score-circle').style.setProperty('--percentage', percentage);
+            
+            const msgEl = document.getElementById('score-message');
+            if(percentage === 100) { msgEl.innerText = "Perfect Score! Excellent Work."; msgEl.style.color = "#10B981"; }
+            else if(percentage >= 70) { msgEl.innerText = "Great job! Keep it up."; msgEl.style.color = "var(--primary)"; }
+            else { msgEl.innerText = "Good effort. Review the notes and try again!"; msgEl.style.color = "#F59E0B"; }
+        }
+
+        function exitTest() {
+            clearInterval(timerInterval);
+            document.getElementById('mcq-interface').style.display = 'none';
+            document.getElementById('main-nav').style.display = 'flex';
+            document.getElementById('main-content').style.display = 'block';
+            window.scrollTo(0,0);
+        }
     </script>
 </body>
 </html>
