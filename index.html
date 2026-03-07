@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SSC Master | Class 10 Learning Hub</title>
+    <title>EduNova | Class 10 Learning Hub</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#4F46E5">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="SSC Master">
+    <meta name="apple-mobile-web-app-title" content="EduNova">
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -59,6 +59,7 @@
         /* --- Animations --- */
         @keyframes fadeInUP { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.95) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
 
         /* --- Navigation Bar --- */
         nav {
@@ -71,12 +72,71 @@
         .theme-btn { background: var(--border-color); border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; color: var(--text-main); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; justify-content: center; }
         .theme-btn:hover { transform: rotate(15deg) scale(1.1); background: var(--primary-glow); color: var(--primary); }
 
-        /* --- Hero Section --- */
-        .hero { min-height: 85vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 100px 5% 40px 5%; position: relative; }
-        .hero-content { max-width: 800px; animation: fadeInUP 1s cubic-bezier(0.2, 0.8, 0.2, 1); width: 100%; }
-        .hero h1 { font-size: clamp(2.5rem, 7vw, 4.5rem); margin-bottom: 20px; color: var(--text-main); line-height: 1.1; letter-spacing: -1px; font-weight: 700; }
+        /* --- NEW: App-Style Hero Section --- */
+        .hero { 
+            min-height: 90vh; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 120px 5% 40px 5%; 
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 50px;
+        }
+        .hero-content { 
+            flex: 1; 
+            max-width: 600px; 
+            animation: fadeInUP 1s cubic-bezier(0.2, 0.8, 0.2, 1); 
+        }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 20px; color: var(--text-main); line-height: 1.1; letter-spacing: -1px; font-weight: 700; }
         .hero h1 span { background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; position: relative; }
-        .hero p { font-size: clamp(1rem, 3vw, 1.25rem); margin-bottom: 40px; color: var(--text-muted); line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero p { font-size: clamp(1rem, 2.5vw, 1.25rem); margin-bottom: 30px; color: var(--text-muted); line-height: 1.6; }
+        
+        .hero-image-container {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInUP 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .hero-image-container img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(79, 70, 229, 0.2);
+            animation: float 6s ease-in-out infinite;
+            border: 4px solid var(--nav-bg);
+        }
+        
+        /* Floating App Badges */
+        .floating-badge {
+            position: absolute;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            font-weight: 600;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--border-color);
+            animation: float 5s ease-in-out infinite;
+            z-index: 2;
+        }
+        .badge-1 { top: 15%; left: -20px; animation-delay: 0s; color: #10B981; }
+        .badge-2 { bottom: 15%; right: -20px; animation-delay: 2.5s; color: var(--primary); }
+
+        /* Responsive Hero */
+        @media (max-width: 900px) {
+            .hero { flex-direction: column; text-align: center; justify-content: center; padding-top: 140px; gap: 40px; }
+            .hero-content { align-items: center; display: flex; flex-direction: column; }
+            .badge-1 { left: 5%; }
+            .badge-2 { right: 5%; }
+        }
 
         /* --- Dashboard Grid --- */
         section { padding: 80px 5%; width: 100%; max-width: 1250px; margin: 0 auto; }
@@ -95,6 +155,10 @@
         .card-btn { background: var(--light); color: var(--primary); padding: 12px; border-radius: 12px; font-weight: 600; transition: all 0.3s ease; border: 1px solid transparent; }
         .card:hover .card-btn { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #FFF; box-shadow: 0 8px 20px var(--primary-glow); }
 
+        /* General Button */
+        .btn-primary { display: inline-block; padding: 15px 35px; border-radius: 50px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-weight: 600; font-size: 1.1rem; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 10px 25px var(--primary-glow); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 35px var(--primary-glow); color: white;}
+
         /* --- Modals (Popups) --- */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; visibility: hidden; transition: all 0.4s ease; z-index: 2000; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
@@ -111,7 +175,7 @@
         .subject-item i { width: 30px; text-align: center; font-size: 1.3rem; color: var(--text-muted); transition: color 0.3s ease;}
         .subject-item:hover i { color: var(--primary); }
 
-        /* --- NEW: Tracker List Styles --- */
+        /* --- Tracker List Styles --- */
         .tracker-section-title { font-size: 1.1rem; color: var(--primary); margin: 15px 0 10px 0; font-weight: 600; border-bottom: 1px dashed var(--border-color); padding-bottom: 5px;}
         .tracker-item { display: flex; align-items: center; gap: 12px; padding: 12px 15px; background: var(--light); border-radius: 12px; margin-bottom: 8px; cursor: pointer; border: 1px solid transparent; transition: all 0.2s ease; color: var(--text-main); font-weight: 500;}
         .tracker-item:hover { border-color: var(--primary); background: var(--card-bg); }
@@ -149,7 +213,7 @@
         .insta-icon { font-size: 1.3rem; }
 
         /* --- WhatsApp Floating Button --- */
-        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background-color: #25D366; color: #FFF; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); z-index: 1000; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; }
+        .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: linear-gradient(135deg, #25D366, #128C7E); color: #FFF; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); z-index: 1000; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; }
         .whatsapp-float:hover { transform: translateY(-8px) scale(1.1); box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4); color: #FFF; }
 
         /* --- MCQ Test Interface Styling --- */
@@ -194,7 +258,7 @@
 <body>
 
     <nav id="main-nav">
-        <div class="logo"><i class="fas fa-graduation-cap"></i> SSC Prime</div>
+        <div class="logo"><i class="fas fa-graduation-cap"></i> EduNova</div>
         <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode"><i class="fas fa-moon"></i></button>
     </nav>
 
@@ -203,55 +267,56 @@
             <div class="hero-content">
                 <h1>Score 10/10 GPA with <span>Ease</span></h1>
                 <p>Your one-stop premium dashboard for Class 10 SSC. Access notes, tests, video lectures, and track your syllabus progress all in one place.</p>
+                <div style="margin-top: 30px;">
+                    <a href="#dashboard" class="btn-primary">Explore Materials <i class="fas fa-arrow-right" style="margin-left: 5px;"></i></a>
+                </div>
+            </div>
+            <div class="hero-image-container">
+                <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Student learning on tablet">
+                <div class="floating-badge badge-1"><i class="fas fa-check-circle"></i> 100% Free</div>
+                <div class="floating-badge badge-2"><i class="fas fa-star"></i> Premium UI</div>
             </div>
         </header>
 
         <section id="dashboard">
             <h2 class="section-title">Study Material</h2>
             <div class="grid">
-                
                 <div class="card" onclick="openModal('modal-notes')" role="button" tabindex="0">
                     <i class="fas fa-book-reader"></i>
                     <h3>Smart Notes</h3>
                     <p>Easy-to-understand, brief notes for all subjects to score high.</p>
                     <div class="card-btn">Select Subject</div>
                 </div>
-                
                 <div class="card" onclick="openModal('modal-mcq')" role="button" tabindex="0">
                     <i class="fas fa-list-check"></i>
                     <h3>MCQ Mock Tests</h3>
                     <p>Practice chapter-wise objective questions with custom timers.</p>
                     <div class="card-btn">Setup Test</div>
                 </div>
-
                 <div class="card" onclick="openModal('modal-videos')" role="button" tabindex="0">
                     <i class="fas fa-play-circle" style="color: #EF4444;"></i>
                     <h3>Video Masterclasses</h3>
                     <p>Watch premium animated lectures and one-shot revisions on YouTube.</p>
                     <div class="card-btn" style="color: #EF4444;">Watch Now</div>
                 </div>
-
                 <div class="card" onclick="openModal('modal-tracker')" role="button" tabindex="0">
                     <i class="fas fa-tasks" style="color: #10B981;"></i>
                     <h3>Progress Tracker</h3>
                     <p>Track your syllabus completion. Your progress saves automatically!</p>
                     <div class="card-btn" style="color: #10B981;">Track Syllabus</div>
                 </div>
-
                 <div class="card" onclick="openModal('modal-syllabus')" role="button" tabindex="0">
                     <i class="fas fa-bullseye"></i>
                     <h3>Syllabus & Blueprints</h3>
                     <p>Official weightage of marks so you can study the right chapters.</p>
                     <div class="card-btn">Select Subject</div>
                 </div>
-
                 <div class="card" onclick="openModal('modal-papers')" role="button" tabindex="0">
                     <i class="fas fa-file-alt"></i>
                     <h3>Previous Papers</h3>
                     <p>Last 5 years of official board exam papers to practice.</p>
                     <div class="card-btn">Select Subject</div>
                 </div>
-
                 <div class="card" onclick="openModal('modal-books')" role="button" tabindex="0">
                     <i class="fas fa-book"></i>
                     <h3>Official Textbooks</h3>
@@ -262,7 +327,7 @@
         </section>
 
         <footer>
-            <p>&copy; 2026 SSC Prime. Built for Students.</p>
+            <p>&copy; 2026 EduNova. Built for Students.</p>
             <div class="creator-connect">
                 <a href="https://www.instagram.com/y._siddartha_/" target="_blank" class="insta-profile-btn" aria-label="Follow Siddartha on Instagram">
                     <img src="sidhuinstgramlogo.jpg" alt="Siddartha" class="insta-pic">
@@ -295,7 +360,6 @@
                 <button class="close-btn" onclick="closeModal('modal-tracker')" aria-label="Close Tracker"><i class="fas fa-times"></i></button>
             </div>
             <div class="subject-list" style="max-height: 60vh; overflow-y: auto; padding-right: 10px;">
-                
                 <h4 class="tracker-section-title">Biological Science</h4>
                 <label class="tracker-item" id="lbl-bio1"><input type="checkbox" id="bio1" onchange="saveProgress()"> Lesson 1: Nutrition</label>
                 <label class="tracker-item" id="lbl-bio2"><input type="checkbox" id="bio2" onchange="saveProgress()"> Lesson 2: Respiration</label>
@@ -312,7 +376,7 @@
                 <label class="tracker-item" id="lbl-phy1"><input type="checkbox" id="phy1" onchange="saveProgress()"> Ch 1: Heat</label>
                 <label class="tracker-item" id="lbl-phy2"><input type="checkbox" id="phy2" onchange="saveProgress()"> Ch 2: Acids, Bases & Salts</label>
                 <label class="tracker-item" id="lbl-phy3"><input type="checkbox" id="phy3" onchange="saveProgress()"> Ch 3: Refraction of Light</label>
-                </div>
+            </div>
         </div>
     </div>
 
@@ -322,6 +386,7 @@
                 <h3><i class="fas fa-stopwatch"></i> Test Setup</h3>
                 <button class="close-btn" onclick="closeModal('modal-mcq')" aria-label="Close Setup"><i class="fas fa-times"></i></button>
             </div>
+            
             <div class="setup-form">
                 <div class="form-group">
                     <label>Select Subject</label>
@@ -331,12 +396,14 @@
                         <option value="physics" disabled>Physical Science (Coming Soon)</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label>Select Lesson / Chapter</label>
                     <select class="premium-select" id="mcq-chapter" disabled>
                         <option value="" disabled selected>Select subject first...</option>
                     </select>
                 </div>
+
                 <div class="toggle-row">
                     <label style="font-weight: 600; font-size: 0.95rem;">Enable Exam Timer</label>
                     <label class="switch">
@@ -344,6 +411,7 @@
                         <span class="slider"></span>
                     </label>
                 </div>
+
                 <div class="range-container">
                     <div class="range-header">
                         <span>Number of Questions</span>
@@ -351,6 +419,7 @@
                     </div>
                     <input type="range" min="10" max="90" step="10" value="10" class="premium-range" id="mcq-count" oninput="document.getElementById('range-display').innerText = this.value + ' MCQs'">
                 </div>
+
                 <button class="start-test-btn" onclick="initializeTest()">Start Practice</button>
             </div>
         </div>
@@ -469,7 +538,7 @@
         </div>
     </div>
 
-    <a href="https://wa.me/?text=Hey!%20I'm%20using%20SSC%20Prime%20to%20prepare%20for%20board%20exams.%20It%20has%20free%20notes,%20mock%20tests,%20video%20classes%20and%20previous%20papers%20without%20any%20lag.%20Check%20it%20out!" target="_blank" class="whatsapp-float" aria-label="Share on WhatsApp">
+    <a href="https://wa.me/?text=Hey!%20I'm%20using%20EduNova%20to%20prepare%20for%20board%20exams.%20It%20has%20free%20notes,%20mock%20tests,%20video%20classes%20and%20previous%20papers%20without%20any%20lag.%20Check%20it%20out!%20https://edu-nova-714d82.netlify.app/" target="_blank" class="whatsapp-float" aria-label="Share on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
@@ -477,7 +546,7 @@
         // --- PWA Service Worker Registration ---
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(err => console.log('Service Worker not registered yet (Requires sw.js file)'));
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log('Service Worker not registered yet'));
             });
         }
 
@@ -489,7 +558,6 @@
             const progress = {};
             checkboxes.forEach(cb => {
                 progress[cb.id] = cb.checked;
-                // Add visual strike-through effect
                 const label = document.getElementById('lbl-' + cb.id);
                 if(label) {
                     if(cb.checked) label.classList.add('completed');
