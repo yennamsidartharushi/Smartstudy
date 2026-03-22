@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -74,6 +74,7 @@
         @keyframes fadeInUP { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.95) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* --- Navigation Bar --- */
         nav {
@@ -200,6 +201,38 @@
         .video-close { position: absolute; top: -45px; right: 0; background: var(--card-bg); color: var(--text-main); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; border: 1px solid var(--border-color); transition: all 0.3s ease; z-index: 10; }
         .video-close:hover { background: #EF4444; color: white; transform: rotate(90deg); }
 
+        /* --- Custom Music Player Modal --- */
+        .music-player-container { text-align: center; }
+        .album-art-container { width: 160px; height: 160px; margin: 0 auto 25px auto; border-radius: 50%; overflow: hidden; border: 4px solid var(--card-bg); box-shadow: 0 10px 30px var(--primary-glow); position: relative; display: flex; justify-content: center; align-items: center;}
+        .album-art-container::after { content: ''; position: absolute; width: 35px; height: 35px; background: var(--card-bg); border-radius: 50%; border: 2px solid var(--border-color); }
+        .album-art { width: 100%; height: 100%; object-fit: cover; animation: spin 8s linear infinite; animation-play-state: paused; }
+        .album-art.playing { animation-play-state: running; }
+        .track-title { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-bottom: 5px; }
+        .track-artist { font-size: 0.95rem; color: var(--primary); margin-bottom: 25px; font-weight: 500;}
+        .music-progress { width: 100%; height: 6px; background: var(--border-color); border-radius: 10px; margin-bottom: 10px; cursor: pointer; position: relative; overflow: hidden; }
+        .music-progress-filled { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0%; transition: width 0.1s linear; border-radius: 10px;}
+        .time-display { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 25px; font-weight: 600; }
+        .music-controls { display: flex; justify-content: center; align-items: center; gap: 25px; margin-bottom: 30px; }
+        .ctrl-btn { background: var(--light); border: none; width: 45px; height: 45px; border-radius: 50%; color: var(--text-main); font-size: 1.1rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; justify-content: center; align-items: center; border: 1px solid var(--border-color); }
+        .ctrl-btn:hover { background: var(--card-bg); color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 15px var(--glass-shadow); border-color: var(--primary);}
+        .ctrl-btn.play-pause { width: 65px; height: 65px; font-size: 1.6rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; box-shadow: 0 10px 20px var(--primary-glow); border: none;}
+        .ctrl-btn.play-pause:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 25px var(--primary-glow); }
+        .playlist-header { text-align: left; font-size: 1rem; font-weight: 600; color: var(--text-main); margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed var(--border-color);}
+        .playlist-container { text-align: left; max-height: 200px; overflow-y: auto; padding-right: 5px; display: flex; flex-direction: column; gap: 8px;}
+        .playlist-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; border-radius: 14px; cursor: pointer; transition: all 0.3s; background: var(--light); border: 1px solid transparent; }
+        .playlist-item:hover { transform: translateX(5px); border-color: var(--primary); background: var(--card-bg); }
+        .playlist-item.active { background: var(--card-bg); border-color: var(--primary); box-shadow: 0 5px 15px var(--glass-shadow); }
+        .playlist-item-icon { width: 30px; height: 30px; border-radius: 50%; background: var(--primary-glow); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 0.8rem; }
+        .playlist-info { flex: 1; }
+        .pl-title { font-weight: 600; color: var(--text-main); font-size: 0.95rem; margin-bottom: 3px;}
+        .pl-artist { font-size: 0.8rem; color: var(--text-muted); }
+        .music-wave { display: flex; align-items: center; gap: 3px; height: 15px; opacity: 0; }
+        .playlist-item.active .music-wave { opacity: 1; }
+        .wave-bar { width: 3px; background: var(--primary); border-radius: 3px; animation: soundWave 1.2s ease-in-out infinite alternate; }
+        .wave-bar:nth-child(2) { animation-delay: 0.2s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes soundWave { 0% { height: 3px; } 100% { height: 15px; } }
+
         /* --- Leaderboard Styles --- */
         .leaderboard-list { display: flex; flex-direction: column; gap: 10px; }
         .leaderboard-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: var(--light); border-radius: 16px; border: 1px solid var(--border-color); transition: transform 0.2s ease; }
@@ -273,7 +306,7 @@
         .switch-timer input { opacity: 0; width: 0; height: 0; }
         .slider-timer { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-color); transition: .4s; border-radius: 34px; }
         .slider-timer:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        input:checked + .slider-timer { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+        .input:checked + .slider-timer { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
         input:checked + .slider-timer:before { transform: translateX(22px); }
         .range-container { display: flex; flex-direction: column; gap: 10px; }
         .range-header { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 0.95rem; }
@@ -448,7 +481,7 @@
                 <p>Your one-stop premium dashboard for Class 10 SSC. Access notes, tests, video lectures, and track your syllabus progress all in one place.</p>
                 <div style="margin-top: 30px;">
                     <a href="#dashboard" class="Btn" style="text-decoration: none;">
-                        Get started       
+                        Get started        
                     </a>
                 </div>
             </div>
@@ -539,6 +572,13 @@
                     <p>Complete set of state board textbooks stored safely on Drive.</p>
                     <div class="card-btn">Select Subject</div>
                 </div>
+                
+                <div class="card reveal" onclick="openModal('modal-music')" role="button" tabindex="0">
+                    <i class="fas fa-headphones-alt" style="color: #8B5CF6;"></i>
+                    <h3>Study Beats</h3>
+                    <p>Lofi music & chill beats to refresh your mood during breaks.</p>
+                    <div class="card-btn" style="color: #8B5CF6;">Listen Now</div>
+                </div>
 
             </div>
         </section>
@@ -570,7 +610,7 @@
             <p>&copy; 2026 EduNova. Built for Students.</p>
             <div class="creator-connect">
                 <a href="https://www.instagram.com/y._siddartha_/" target="_blank" class="insta-profile-btn" aria-label="Follow Siddartha on Instagram">
-                    <img src="sidhuinstgramlogo.jpg" alt="Siddartha" class="insta-pic">
+                    <img src="sidhuinstgramlogo.jpg" alt="Siddartha" class="insta-pic" onerror="this.src='https://ui-avatars.com/api/?name=Siddartha&background=random'">
                     <i class="fab fa-instagram insta-icon"></i>
                     <span>y._siddartha_</span>
                 </a>
@@ -683,67 +723,14 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="modal-questions">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-award" style="color: #F59E0B;"></i> Important Questions</h3>
-                <button class="close-btn" onclick="closeModal('modal-questions')" aria-label="Close Questions"><i class="fas fa-times"></i></button>
-            </div>
-            <div style="max-height: 65vh; overflow-y: auto; padding-right: 5px;">
-                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Repeated questions from the last 10 years of SSC TS Board Exams.</p>
-                <details class="premium-accordion"><summary><i class="fas fa-square-root-variable"></i> Mathematics</summary><div class="accordion-content"><h4>1. Real Numbers</h4><ul><li>Prove that √3 is irrational.</li><li>Prove that √5 is irrational.</li><li>Show that 3 + 2√5 is irrational.</li><li>Find HCF and LCM of 306 and 657 using Euclid’s algorithm.</li><li>Use Euclid’s Division Algorithm to find the HCF of 135 and 225.</li></ul><h4>2. Polynomials</h4><ul><li>Find the zeroes of the quadratic polynomial x² - 7x + 10.</li><li>Find the zeroes of the quadratic polynomial x² - 5x + 6.</li><li>Verify the relationship between zeroes and coefficients.</li></ul><h4>3. Pair of Linear Equations</h4><ul><li>Solve the system: 2x + 3y = 13 and 3x - y = 5.</li></ul><h4>4. Quadratic Equations</h4><ul><li>Solve using quadratic formula: x² - 7x + 10 = 0.</li><li>Solve using quadratic formula: x² - 5x + 6 = 0.</li></ul><h4>5. Arithmetic Progressions</h4><ul><li>Find the sum of first 20 terms of an AP: 3, 7, 11, 15...</li><li>Find the 20th term of AP: 3, 7, 11, 15...</li><li>Find the sum of first 30 terms of AP.</li></ul><h4>6. Trigonometry</h4><ul><li>Prove the trigonometric identity: 1/sinθ - 1/cscθ = 0.</li><li>Prove that (1 - tan²θ) / (1 + tan²θ) = cos 2θ.</li></ul><h4>7. Coordinate Geometry & Statistics</h4><ul><li>Find area of triangle formed by points (5,2), (4,7), (7,-4).</li><li>Find mean, median, and mode of grouped data.</li></ul><h4>8. Mensuration</h4><ul><li>Find the surface area and volume of a cone.</li></ul></div></details>
-                <details class="premium-accordion"><summary><i class="fas fa-flask"></i> Science</summary><div class="accordion-content"><h4>Physics</h4><ul><li>State Ohm’s Law and explain with a graph.</li><li>Difference between AC and DC current.</li><li>Explain the Electric Motor with a labelled diagram.</li><li>What is the refraction of light?</li><li>Define focal length and power of a lens. Find focal length when power is given.</li></ul><h4>Chemistry</h4><ul><li>Write types of chemical reactions with examples.</li><li>Explain corrosion and rancidity.</li><li>Write the chemical properties of acids and bases.</li><li>Explain the electrolysis of water with a diagram.</li></ul><h4>Biology</h4><ul><li>Explain the Human Digestive System with a diagram.</li><li>Explain Respiration in human beings.</li><li>Describe Blood circulation in the human heart.</li><li>Explain Reproduction in plants.</li><li>Explain the Human reproductive system.</li></ul></div></details>
-                <details class="premium-accordion"><summary><i class="fas fa-globe-asia"></i> Social Studies</summary><div class="accordion-content"><h4>History</h4><ul><li>Causes and results of World War I.</li><li>Consequences & effects of World War II.</li><li>Importance of the Bandung Conference.</li></ul><h4>Civics</h4><ul><li>What is Democracy? Explain its features.</li><li>Functions of the Election Commission.</li></ul><h4>Geography</h4><ul><li>Explain major rivers of India.</li><li>Explain types of soils in India.</li><li>Explain Water resources in India.</li></ul><h4>Economics</h4><ul><li>What is Globalisation? Explain.</li><li>Role of Banks in economic development.</li></ul></div></details>
-                <details class="premium-accordion"><summary><i class="fas fa-language"></i> English & Hindi</summary><div class="accordion-content"><h4>English</h4><ul><li>Write a summary of "The Dear Departed".</li><li>Character sketch of Mrs. Slater.</li><li>Write a Notice for a school event.</li><li>Write an Invitation letter for a school function.</li><li>Change Active voice to Passive voice.</li><li>Write an Essay on Environmental Pollution.</li><li>Write a letter to the headmaster requesting leave.</li></ul><h4>Hindi</h4><ul><li>Write सारांश (Summary) of a lesson.</li><li>पत्र लेखन (Letter writing).</li><li>निबंध लेखन (Essay writing) on पर्यावरण संरक्षण (Environment).</li><li>अपठित गद्यांश (Unseen passage).</li><li>कविता का भावार्थ (Poem explanation).</li></ul></div></details>
-                <details class="premium-accordion"><summary><i class="fas fa-pen-nib"></i> Important Diagrams to Practice</summary><div class="accordion-content" style="text-align: center;"><p style="text-align: left; margin-bottom: 15px;">Make sure to practice labeling these highly repeated diagrams:</p><h4>1. Human Digestive System</h4><br>
-
-[Image of the human digestive system]
-<br><h4>2. Electric Motor</h4><br>
-
-[Image of an electric motor diagram]
-<br><h4>3. Human Heart</h4><br>
-
-[Image of the human heart internal structure]
-<br><h4>4. Refraction through Lens</h4><br><br><h4>5. Neuron Structure</h4><br>
-
-[Image of a neuron structure diagram]
-</div></details>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modal-videos">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-play-circle" style="color: #EF4444;"></i> Video Classes</h3>
-                <button class="close-btn" onclick="closeModal('modal-videos')" aria-label="Close Videos"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="subject-list">
-                <a href="https://youtube.com/results?search_query=ssc+class+10+maths" target="_blank" class="subject-item"><i class="fab fa-youtube" style="color: #EF4444;"></i> Mathematics</a>
-                <a href="https://youtube.com/results?search_query=ssc+class+10+physics" target="_blank" class="subject-item"><i class="fab fa-youtube" style="color: #EF4444;"></i> Physical Science</a>
-                <a href="https://youtube.com/results?search_query=ssc+class+10+biology" target="_blank" class="subject-item"><i class="fab fa-youtube" style="color: #EF4444;"></i> Biological Science</a>
-                <a href="https://youtube.com/results?search_query=ssc+class+10+social" target="_blank" class="subject-item"><i class="fab fa-youtube" style="color: #EF4444;"></i> Social Studies</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modal-notes">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-book-reader"></i> Smart Notes</h3>
-                <button class="close-btn" onclick="closeModal('modal-notes')" aria-label="Close Notes"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="subject-list">
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a>
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-flask"></i> Physical Science</a>
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-dna"></i> Biological Science</a>
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-globe-asia"></i> Social Studies</a>
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-language"></i> English</a>
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-om"></i> Telugu / Hindi</a>
-            </div>
-        </div>
-    </div>
-
+    <div class="modal-overlay" id="modal-questions"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-award" style="color: #F59E0B;"></i> Important Questions</h3><button class="close-btn" onclick="closeModal('modal-questions')"><i class="fas fa-times"></i></button></div><div style="max-height: 65vh; overflow-y: auto; padding-right: 5px;"><p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Repeated questions from the last 10 years of SSC TS Board Exams.</p><details class="premium-accordion"><summary><i class="fas fa-square-root-variable"></i> Mathematics</summary><div class="accordion-content"><h4>1. Real Numbers</h4><ul><li>Prove that √3 is irrational.</li></ul></div></details></div></div></div>
+    
+    <div class="modal-overlay" id="modal-videos"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-play-circle" style="color: #EF4444;"></i> Video Classes</h3><button class="close-btn" onclick="closeModal('modal-videos')"><i class="fas fa-times"></i></button></div><div class="subject-list"><a href="https://youtube.com/results?search_query=ssc+class+10+maths" target="_blank" class="subject-item"><i class="fab fa-youtube" style="color: #EF4444;"></i> Mathematics</a><a href="https://youtube.com/results?search_query=ssc+class+10+physics" target="_blank" class="subject-item"><i class="fab fa-youtube" style="color: #EF4444;"></i> Physical Science</a></div></div></div>
+    <div class="modal-overlay" id="modal-notes"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-book-reader"></i> Smart Notes</h3><button class="close-btn" onclick="closeModal('modal-notes')"><i class="fas fa-times"></i></button></div><div class="subject-list"><a href="#" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a><a href="#" class="subject-item"><i class="fas fa-flask"></i> Science</a></div></div></div>
+    <div class="modal-overlay" id="modal-syllabus"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-bullseye"></i> Blueprints</h3><button class="close-btn" onclick="closeModal('modal-syllabus')"><i class="fas fa-times"></i></button></div><div class="subject-list"><a href="#" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a><a href="#" class="subject-item"><i class="fas fa-globe-asia"></i> Social Studies</a></div></div></div>
+    <div class="modal-overlay" id="modal-papers"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-file-alt"></i> Previous Papers</h3><button class="close-btn" onclick="closeModal('modal-papers')"><i class="fas fa-times"></i></button></div><div class="subject-list"><a href="#" class="subject-item"><i class="fas fa-calculator"></i> Mathematics (2023)</a><a href="#" class="subject-item"><i class="fas fa-flask"></i> Science (2024)</a></div></div></div>
+    <div class="modal-overlay" id="modal-books"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-book"></i> Textbooks</h3><button class="close-btn" onclick="closeModal('modal-books')"><i class="fas fa-times"></i></button></div><div class="subject-list"><a href="#" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a><a href="#" class="subject-item"><i class="fas fa-flask"></i> Science</a></div></div></div>
+    
     <div class="modal-overlay" id="modal-tracker">
         <div class="modal-content">
             <div class="modal-header">
@@ -754,69 +741,8 @@
                 <h4 class="tracker-section-title">Biological Science</h4>
                 <label class="tracker-item" id="lbl-bio1"><input type="checkbox" id="bio1" onchange="saveProgress()"> Lesson 1: Nutrition</label>
                 <label class="tracker-item" id="lbl-bio2"><input type="checkbox" id="bio2" onchange="saveProgress()"> Lesson 2: Respiration</label>
-                <label class="tracker-item" id="lbl-bio3"><input type="checkbox" id="bio3" onchange="saveProgress()"> Lesson 3: Circulation</label>
-                <label class="tracker-item" id="lbl-bio4"><input type="checkbox" id="bio4" onchange="saveProgress()"> Lesson 4: Excretion</label>
-                <label class="tracker-item" id="lbl-bio5"><input type="checkbox" id="bio5" onchange="saveProgress()"> Lesson 5: Coordination</label>
-                <label class="tracker-item" id="lbl-bio6"><input type="checkbox" id="bio6" onchange="saveProgress()"> Lesson 6: Reproduction</label>
-                <label class="tracker-item" id="lbl-bio7"><input type="checkbox" id="bio7" onchange="saveProgress()"> Lesson 7: Life Processes</label>
-                <label class="tracker-item" id="lbl-bio8"><input type="checkbox" id="bio8" onchange="saveProgress()"> Lesson 8: Heredity</label>
-                <label class="tracker-item" id="lbl-bio9"><input type="checkbox" id="bio9" onchange="saveProgress()"> Lesson 9: Environment</label>
-                <label class="tracker-item" id="lbl-bio10"><input type="checkbox" id="bio10" onchange="saveProgress()"> Lesson 10: Natural Resources</label>
-
                 <h4 class="tracker-section-title" style="margin-top: 20px;">Physical Science</h4>
                 <label class="tracker-item" id="lbl-phy1"><input type="checkbox" id="phy1" onchange="saveProgress()"> Ch 1: Heat</label>
-                <label class="tracker-item" id="lbl-phy2"><input type="checkbox" id="phy2" onchange="saveProgress()"> Ch 2: Acids, Bases & Salts</label>
-                <label class="tracker-item" id="lbl-phy3"><input type="checkbox" id="phy3" onchange="saveProgress()"> Ch 3: Refraction of Light</label>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modal-syllabus">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-bullseye"></i> Blueprints</h3>
-                <button class="close-btn" onclick="closeModal('modal-syllabus')" aria-label="Close Syllabus"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="subject-list">
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a>
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-flask"></i> Science (Phy & Bio)</a>
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-globe-asia"></i> Social Studies</a>
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-language"></i> Languages</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modal-papers">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-file-alt"></i> Previous Papers</h3>
-                <button class="close-btn" onclick="closeModal('modal-papers')" aria-label="Close Papers"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="subject-list">
-                <a href="2023-science-paper.html" class="subject-item"><i class="fas fa-calculator"></i> Physical science (2023)</a>
-                <a href="2024-science-paper.html" class="subject-item"><i class="fas fa-flask"></i> Physical Science (2024)</a>
-                <a href="2025-science-paper.html" class="subject-item"><i class="fas fa-flask"></i> Physical Science (2025)</a>
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-dna"></i> Biological Science</a>
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-globe-asia"></i> Social Studies</a>
-                <a href="#" target="_blank" class="subject-item"><i class="fas fa-language"></i> English</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="modal-books">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-book"></i> Textbooks</h3>
-                <button class="close-btn" onclick="closeModal('modal-books')" aria-label="Close Books"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="subject-list">
-                <a href="https://drive.google.com/file/d/1YIke_RvoC7IEZ30ClbNUVtUEDHl_IScZ/preview" target="_blank" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a>
-                <a href="https://drive.google.com/file/d/1RFNzvLATarkwva0zQ_HwcycYDbPlMZw9/preview" target="_blank" class="subject-item"><i class="fas fa-flask"></i> Physical Science</a>
-                <a href="https://drive.google.com/file/d/1BolgtZ3bLeKYVIY0roBJPDCSyT4bopsU/preview" target="_blank" class="subject-item"><i class="fas fa-dna"></i> Biological Science</a>
-                <a href="https://drive.google.com/file/d/1pTVee0lq0uf9V9kwOWI_Ye2BiAfbFP-L/preview" target="_blank" class="subject-item"><i class="fas fa-globe-asia"></i> Social Studies</a>
-                <a href="https://drive.google.com/file/d/1yE9IfzPApK5UDDuF8rDZM21jSUSqVtYx/preview" target="_blank" class="subject-item"><i class="fas fa-language"></i> English</a>
-                <a href="https://drive.google.com/file/d/1SMfecAzbpT9vm_qbVh2KmyrrbQSUQIXv/preview" target="_blank" class="subject-item"><i class="fas fa-om"></i> Telugu </a>
-                <a href="https://drive.google.com/file/d/1SMfecAzbpT9vm_qbVh2KmyrrbQSUQIXv/preview" target="_blank" class="subject-item"><i class="fas fa-om"></i>  Hindi</a>
             </div>
         </div>
     </div>
@@ -901,6 +827,41 @@
         </div>
     </div>
 
+
+    <div class="modal-overlay" id="modal-music">
+        <div class="modal-content music-player-container">
+            <div class="modal-header" style="border-bottom: none;">
+                <h3><i class="fas fa-headphones-alt" style="color: #8B5CF6;"></i> Lofi Chill Zone</h3>
+                <button class="close-btn" onclick="closeModal('modal-music')" title="Music keeps playing in background!"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="album-art-container">
+                <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Lofi Beats Art" class="album-art" id="music-cover">
+            </div>
+
+            <div class="track-title" id="music-title">Midnight Study</div>
+            <div class="track-artist" id="music-artist">Lofi Vibes</div>
+
+            <div class="music-progress" id="music-progress-container" onclick="seekMusic(event)">
+                <div class="music-progress-filled" id="music-progress-bar"></div>
+            </div>
+            <div class="time-display">
+                <span id="current-time">0:00</span>
+                <span id="duration-time">0:00</span>
+            </div>
+
+            <div class="music-controls">
+                <button class="ctrl-btn" onclick="prevTrack()"><i class="fas fa-backward"></i></button>
+                <button class="ctrl-btn play-pause" onclick="togglePlayPause()" id="play-pause-btn"><i class="fas fa-play" style="margin-left: 3px;"></i></button>
+                <button class="ctrl-btn" onclick="nextTrack()"><i class="fas fa-forward"></i></button>
+            </div>
+
+            <div class="playlist-header"><i class="fas fa-list-music"></i> Playlist</div>
+            <div class="playlist-container" id="playlist-container">
+                </div>
+        </div>
+    </div>
+
     <a href="https://wa.me/?text=Hey!%20I'm%20using%20EduNova%20to%20prepare%20for%20board%20exams.%20It%20has%20free%20notes,%20mock%20tests,%20video%20classes%20and%20previous%20papers%20without%20any%20lag.%20Check%20it%20out!%20https://edu-nova-714d82.netlify.app/" target="_blank" class="whatsapp-float" aria-label="Share on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -931,9 +892,6 @@
         // ==========================================
         // 1. FIREBASE INITIALIZATION & AUTH LOGIC
         // ==========================================
-        
-        // !--- IMPORTANT ---! 
-        // Replace these placeholder values with your actual Firebase Project Config.
         const firebaseConfig = {
             apiKey: "YOUR_FIREBASE_API_KEY",
             authDomain: "your-project.firebaseapp.com",
@@ -1081,10 +1039,10 @@
                 if (event.target.id === 'modal-video-player') {
                     document.getElementById('yt-iframe').src = "";
                 }
+                // Note: We DO NOT stop the music player if its modal is closed, allowing background playback!
             }
         }
 
-        // NEW: Video Player Logic
         function playVideo(videoId) {
             const iframe = document.getElementById('yt-iframe');
             iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
@@ -1313,438 +1271,21 @@
                     { q: "The process of obtaining food and using it for energy is called", options: ["Respiration", "Nutrition", "Excretion", "Circulation"], ans: 1 },
                     { q: "Nutrition in green plants is called", options: ["Heterotrophic", "Autotrophic", "Parasitic", "Saprophytic"], ans: 1 },
                     { q: "The green pigment in plants responsible for photosynthesis is", options: ["Hemoglobin", "Chlorophyll", "Carotene", "Melanin"], ans: 1 },
-                    { q: "The main organ for photosynthesis is", options: ["Root", "Leaf", "Stem", "Flower"], ans: 1 },
-                    { q: "The gas absorbed by plants during photosynthesis is", options: ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"], ans: 1 },
-                    { q: "Plants store food in the form of", options: ["Glucose", "Starch", "Protein", "Fat"], ans: 1 },
-                    { q: "Sunlight provides ______ for photosynthesis", options: ["Heat", "Energy", "Oxygen", "Nitrogen"], ans: 1 },
-                    { q: "The raw materials for photosynthesis are", options: ["CO2 and water", "Oxygen and water", "Nitrogen and oxygen", "Hydrogen and oxygen"], ans: 0 },
-                    { q: "The test for starch uses", options: ["Alcohol", "Iodine", "Copper sulphate", "Salt solution"], ans: 1 },
-                    { q: "Photosynthesis takes place in", options: ["Chloroplast", "Mitochondria", "Nucleus", "Ribosome"], ans: 0 },
-                    { q: "Nutrition in animals is", options: ["Autotrophic", "Heterotrophic", "Photosynthetic", "Saprophytic"], ans: 1 },
-                    { q: "Organisms that depend on dead matter are called", options: ["Parasites", "Saprophytes", "Autotrophs", "Herbivores"], ans: 1 },
-                    { q: "Example of saprophyte", options: ["Mushroom", "Mango", "Tiger", "Goat"], ans: 0 },
-                    { q: "Organisms living on other organisms are", options: ["Parasites", "Saprophytes", "Autotrophs", "Omnivores"], ans: 0 },
-                    { q: "Digestion starts in", options: ["Mouth", "Stomach", "Intestine", "Liver"], ans: 0 },
-                    { q: "The enzyme in saliva is", options: ["Amylase", "Pepsin", "Lipase", "Trypsin"], ans: 0 },
-                    { q: "The largest gland in the body", options: ["Liver", "Pancreas", "Thyroid", "Kidney"], ans: 0 },
-                    { q: "The stomach secretes", options: ["Hydrochloric acid", "Oxygen", "Nitrogen", "Carbon dioxide"], ans: 0 },
-                    { q: "Protein digestion begins in", options: ["Mouth", "Stomach", "Small intestine", "Large intestine"], ans: 1 },
-                    { q: "Bile juice is produced by", options: ["Liver", "Kidney", "Stomach", "Pancreas"], ans: 0 }
                 ],
                 lesson2: [
                     { q: "The process of releasing energy from food is called", options: ["Digestion", "Respiration", "Excretion", "Circulation"], ans: 1 },
                     { q: "The gas required for respiration is", options: ["Nitrogen", "Oxygen", "Hydrogen", "Carbon dioxide"], ans: 1 },
-                    { q: "The gas released during respiration is", options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"], ans: 2 },
-                    { q: "The main source of energy in cells is", options: ["ATP", "DNA", "RNA", "Glucose"], ans: 0 },
-                    { q: "Respiration occurs in", options: ["Only animals", "Only plants", "All living organisms", "Only humans"], ans: 2 },
-                    { q: "Respiration in the presence of oxygen is called", options: ["Anaerobic respiration", "Aerobic respiration", "Fermentation", "Oxidation"], ans: 1 },
-                    { q: "Respiration without oxygen is called", options: ["Aerobic respiration", "Anaerobic respiration", "Oxidation", "Combustion"], ans: 1 },
-                    { q: "Anaerobic respiration in yeast produces", options: ["Alcohol", "Water", "Oxygen", "Nitrogen"], ans: 0 },
-                    { q: "Lactic acid is produced in", options: ["Plants", "Yeast", "Human muscles", "Fish"], ans: 2 },
-                    { q: "The organ of breathing in humans is", options: ["Heart", "Lungs", "Liver", "Kidney"], ans: 1 },
-                    { q: "The tiny air sacs in lungs are called", options: ["Villi", "Nephrons", "Alveoli", "Fibres"], ans: 2 },
-                    { q: "The muscle that helps in breathing is", options: ["Diaphragm", "Biceps", "Triceps", "Deltoid"], ans: 0 },
-                    { q: "Cellular respiration occurs in", options: ["Nucleus", "Cytoplasm", "Mitochondria", "Ribosome"], ans: 2 },
-                    { q: "Mitochondria are called", options: ["Powerhouse of cell", "Brain of cell", "Heart of cell", "Storage organ"], ans: 0 },
-                    { q: "Plants respire through", options: ["Leaves", "Roots", "Stomata", "All of these"], ans: 3 }
-                ],
-                lesson3: [
-                    { q: "The transport of materials in the body is called", options: ["Respiration", "Circulation", "Digestion", "Excretion"], ans: 1 },
-                    { q: "The organ that pumps blood in the human body is", options: ["Brain", "Heart", "Liver", "Kidney"], ans: 1 },
-                    { q: "The human heart has", options: ["2 chambers", "3 chambers", "4 chambers", "5 chambers"], ans: 2 },
-                    { q: "The upper chambers of the heart are called", options: ["Ventricles", "Atria", "Arteries", "Veins"], ans: 1 },
-                    { q: "The liquid part of blood is called", options: ["Plasma", "Serum", "Cytoplasm", "Hemoglobin"], ans: 0 },
-                    { q: "Red blood cells are also called", options: ["RBCs", "WBCs", "Platelets", "Plasma cells"], ans: 0 },
-                    { q: "RBCs contain", options: ["Chlorophyll", "Hemoglobin", "Myoglobin", "Protein only"], ans: 1 },
-                    { q: "WBCs help in", options: ["Digestion", "Immunity", "Circulation", "Respiration"], ans: 1 },
-                    { q: "Platelets help in", options: ["Respiration", "Blood clotting", "Digestion", "Circulation"], ans: 1 },
-                    { q: "Blood vessels that carry blood away from heart are", options: ["Veins", "Arteries", "Capillaries", "Valves"], ans: 1 },
-                    { q: "The smallest blood vessels are", options: ["Arteries", "Veins", "Capillaries", "Nerves"], ans: 2 },
-                    { q: "Normal blood pressure is about", options: ["120/80 mm Hg", "90/60 mm Hg", "150/100 mm Hg", "60/40 mm Hg"], ans: 0 }
-                ],
-                lesson4: [
-                    { q: "The main excretory organs in humans are", options: ["Lungs", "Kidneys", "Liver", "Skin"], ans: 1 },
-                    { q: "The functional unit of the kidney is", options: ["Neuron", "Nephron", "Alveoli", "Villus"], ans: 1 },
-                    { q: "The tube connecting kidney to urinary bladder is", options: ["Urethra", "Ureter", "Trachea", "Bronchus"], ans: 1 },
-                    { q: "Urine leaves the body through", options: ["Ureter", "Urethra", "Kidney", "Bladder"], ans: 1 },
-                    { q: "The kidneys filter", options: ["Blood", "Oxygen", "Food", "Hormones"], ans: 0 },
-                    { q: "The cup-shaped part of nephron is", options: ["Bowman’s capsule", "Loop of Henle", "Tubule", "Ureter"], ans: 0 },
-                    { q: "The network of capillaries in nephron is", options: ["Glomerulus", "Bronchus", "Alveoli", "Villus"], ans: 0 },
-                    { q: "The main nitrogenous waste in humans is", options: ["Urea", "Ammonia", "Uric acid", "Nitrogen"], ans: 0 },
-                    { q: "Urea is produced in", options: ["Kidney", "Liver", "Lungs", "Heart"], ans: 1 },
-                    { q: "Artificial purification of blood is called", options: ["Dialysis", "Filtration", "Respiration", "Circulation"], ans: 0 }
-                ],
-                lesson5: [
-                    { q: "Coordination in humans is mainly controlled by", options: ["Circulatory system", "Nervous system", "Digestive system", "Respiratory system"], ans: 1 },
-                    { q: "The basic unit of the nervous system is", options: ["Nephron", "Neuron", "Alveoli", "Platelet"], ans: 1 },
-                    { q: "The central nervous system includes", options: ["Brain and spinal cord", "Brain and nerves", "Spinal cord and nerves", "Brain only"], ans: 0 },
-                    { q: "The longest cell in the human body is", options: ["Muscle cell", "Nerve cell", "Blood cell", "Skin cell"], ans: 1 },
-                    { q: "The three parts of a neuron are", options: ["Cell body, dendrites, axon", "Nucleus, cytoplasm, membrane", "Heart, brain, nerve", "Plasma, RBC, WBC"], ans: 0 },
-                    { q: "The cerebrum controls", options: ["Thinking and memory", "Breathing", "Heartbeat", "Digestion"], ans: 0 },
-                    { q: "The cerebellum controls", options: ["Balance and coordination", "Thinking", "Breathing", "Digestion"], ans: 0 },
-                    { q: "A quick automatic response to a stimulus is called", options: ["Reaction", "Reflex action", "Respiration", "Circulation"], ans: 1 },
-                    { q: "Chemical messengers in the body are called", options: ["Enzymes", "Hormones", "Proteins", "Vitamins"], ans: 1 },
-                    { q: "The master gland is", options: ["Thyroid", "Pituitary", "Adrenal", "Pancreas"], ans: 1 }
-                ],
-                lesson6: [
-                    { q: "The biological process by which living organisms produce new individuals is called", options: ["Respiration", "Reproduction", "Circulation", "Excretion"], ans: 1 },
-                    { q: "The two main types of reproduction are", options: ["Asexual and sexual", "Internal and external", "Direct and indirect", "Simple and complex"], ans: 0 },
-                    { q: "Binary fission occurs in", options: ["Amoeba", "Hydra", "Human", "Frog"], ans: 0 },
-                    { q: "Budding occurs in", options: ["Hydra", "Amoeba", "Bacteria", "Human"], ans: 0 },
-                    { q: "Vegetative propagation occurs in", options: ["Animals", "Plants", "Humans", "Bacteria"], ans: 1 },
-                    { q: "Male reproductive cell is called", options: ["Ovum", "Sperm", "Egg", "Zygote"], ans: 1 },
-                    { q: "Fusion of male and female gametes is called", options: ["Fertilization", "Respiration", "Digestion", "Circulation"], ans: 0 },
-                    { q: "Male reproductive organ producing sperms is", options: ["Testis", "Ovary", "Uterus", "Kidney"], ans: 0 },
-                    { q: "The place where fertilization occurs is", options: ["Uterus", "Oviduct", "Ovary", "Vagina"], ans: 1 },
-                    { q: "Male reproductive part of flower", options: ["Pistil", "Stamen", "Petal", "Sepal"], ans: 1 },
-                    { q: "Female reproductive part of flower", options: ["Stamen", "Pistil", "Petal", "Sepal"], ans: 1 },
-                    { q: "Pollination is the transfer of pollen from", options: ["Anther to stigma", "Ovary to ovule", "Root to leaf", "Leaf to stem"], ans: 0 },
-                    { q: "Self pollination occurs in", options: ["Same flower", "Different plant", "Different species", "Animals"], ans: 0 },
-                    { q: "Cross pollination occurs between", options: ["Different flowers", "Same flower", "Same pollen", "Same ovule"], ans: 0 },
-                    { q: "Pollination by insects is called", options: ["Anemophily", "Entomophily", "Hydrophily", "Zoophily"], ans: 1 },
-                    { q: "Pollination by wind is called", options: ["Anemophily", "Entomophily", "Hydrophily", "Zoophily"], ans: 0 },
-                    { q: "Pollination by water is called", options: ["Hydrophily", "Entomophily", "Anemophily", "Zoochory"], ans: 0 },
-                    { q: "The ovary develops into", options: ["Seed", "Fruit", "Root", "Stem"], ans: 1 },
-                    { q: "Ovule develops into", options: ["Fruit", "Seed", "Leaf", "Stem"], ans: 1 },
-                    { q: "The first cell formed after fertilization is", options: ["Zygote", "Embryo", "Gamete", "Ovule"], ans: 0 },
-                    { q: "Human reproduction is", options: ["Asexual", "Sexual", "Binary", "Vegetative"], ans: 1 },
-                    { q: "Female reproductive organ producing ova", options: ["Ovary", "Testis", "Kidney", "Liver"], ans: 0 },
-                    { q: "Female gamete is called", options: ["Sperm", "Ovum", "Zygote", "Embryo"], ans: 1 },
-                    { q: "Fertilized egg develops into", options: ["Embryo", "Root", "Leaf", "Seed"], ans: 0 },
-                    { q: "The organ where baby develops", options: ["Ovary", "Uterus", "Oviduct", "Kidney"], ans: 1 },
-                    { q: "The period of development of embryo in uterus", options: ["Gestation", "Fertilization", "Menstruation", "Ovulation"], ans: 0 },
-                    { q: "Average gestation period in humans", options: ["9 months", "6 months", "12 months", "3 months"], ans: 0 },
-                    { q: "Release of ovum from ovary", options: ["Ovulation", "Fertilization", "Menstruation", "Gestation"], ans: 0 },
-                    { q: "Monthly cycle in females is called", options: ["Menstrual cycle", "Respiratory cycle", "Cardiac cycle", "Growth cycle"], ans: 0 },
-                    { q: "Menstruation occurs if", options: ["No fertilization", "Fertilization occurs", "Pregnancy begins", "Embryo forms"], ans: 0 },
-                    { q: "Male gametes are produced in", options: ["Testes", "Ovaries", "Kidneys", "Lungs"], ans: 0 },
-                    { q: "Hormone responsible for male secondary characters", options: ["Testosterone", "Estrogen", "Progesterone", "Adrenaline"], ans: 0 },
-                    { q: "Hormone responsible for female secondary characters", options: ["Estrogen", "Testosterone", "Insulin", "Adrenaline"], ans: 0 },
-                    { q: "Reproduction ensures", options: ["Growth", "Survival of species", "Digestion", "Respiration"], ans: 1 },
-                    { q: "Hydra reproduces by", options: ["Budding", "Binary fission", "Fragmentation", "Spore formation"], ans: 0 },
-                    { q: "Planaria reproduces by", options: ["Regeneration", "Budding", "Fission", "Pollination"], ans: 0 },
-                    { q: "Yeast reproduces by", options: ["Budding", "Binary fission", "Fragmentation", "Spore"], ans: 0 },
-                    { q: "Spore formation occurs in", options: ["Fungi", "Animals", "Birds", "Humans"], ans: 0 },
-                    { q: "Vegetative propagation by stem occurs in", options: ["Potato", "Wheat", "Rice", "Maize"], ans: 0 },
-                    { q: "Vegetative propagation by leaf occurs in", options: ["Bryophyllum", "Mango", "Rice", "Wheat"], ans: 0 },
-                    { q: "Layer protecting embryo in seed", options: ["Seed coat", "Fruit", "Stem", "Leaf"], ans: 0 },
-                    { q: "Baby plant inside seed", options: ["Embryo", "Root", "Stem", "Leaf"], ans: 0 },
-                    { q: "Food storage tissue in seed", options: ["Endosperm", "Xylem", "Phloem", "Cortex"], ans: 0 },
-                    { q: "Process of seed growing into plant", options: ["Germination", "Pollination", "Respiration", "Digestion"], ans: 0 },
-                    { q: "Conditions required for germination", options: ["Water oxygen temperature", "Light only", "Soil only", "Sunlight only"], ans: 0 },
-                    { q: "Sexual reproduction produces", options: ["Variation", "Clones", "Identical organisms", "No offspring"], ans: 0 },
-                    { q: "Asexual reproduction produces", options: ["Identical offspring", "Variations", "Different species", "Seeds"], ans: 0 },
-                    { q: "Reproductive cell is called", options: ["Gamete", "Cell", "Tissue", "Organ"], ans: 0 },
-                    { q: "Fusion of gametes forms", options: ["Zygote", "Embryo", "Fetus", "Seed"], ans: 0 },
-                    { q: "Embryo develops into", options: ["Fetus", "Root", "Leaf", "Stem"], ans: 0 },
-                    { q: "Reproductive age in humans begins at", options: ["Puberty", "Birth", "Old age", "Infancy"], ans: 0 },
-                    { q: "Changes occurring at puberty are called", options: ["Secondary sexual characters", "Primary characters", "Body characters", "External characters"], ans: 0 },
-                    { q: "Examples of secondary sexual characters in males", options: ["Beard growth", "Milk secretion", "Menstruation", "Egg formation"], ans: 0 },
-                    { q: "Example of female secondary character", options: ["Breast development", "Beard growth", "Voice deepening", "Hair loss"], ans: 0 },
-                    { q: "Fertilization outside body is", options: ["External fertilization", "Internal fertilization", "Binary fission", "Budding"], ans: 0 },
-                    { q: "Fertilization inside body is", options: ["Internal fertilization", "External fertilization", "Spore formation", "Fragmentation"], ans: 0 },
-                    { q: "Example of external fertilization", options: ["Frog", "Human", "Dog", "Cat"], ans: 0 },
-                    { q: "Example of internal fertilization", options: ["Human", "Fish", "Frog", "Starfish"], ans: 0 },
-                    { q: "The developing baby inside uterus", options: ["Fetus", "Zygote", "Embryo", "Gamete"], ans: 0 },
-                    { q: "Human reproductive system matures during", options: ["Puberty", "Birth", "Old age", "Infancy"], ans: 0 },
-                    { q: "Sperm is produced continuously after", options: ["Puberty", "Birth", "Childhood", "Old age"], ans: 0 },
-                    { q: "Ovulation usually occurs once in", options: ["28 days", "7 days", "14 days", "10 days"], ans: 0 },
-                    { q: "Pregnancy begins after", options: ["Fertilization", "Pollination", "Digestion", "Respiration"], ans: 0 },
-                    { q: "The placenta connects", options: ["Mother and fetus", "Heart and lungs", "Brain and heart", "Kidney and bladder"], ans: 0 },
-                    { q: "Placenta provides", options: ["Nutrients and oxygen", "Blood only", "Water only", "Hormones only"], ans: 0 },
-                    { q: "Umbilical cord connects fetus to", options: ["Placenta", "Heart", "Brain", "Liver"], ans: 0 },
-                    { q: "Birth process is called", options: ["Parturition", "Gestation", "Fertilization", "Ovulation"], ans: 0 },
-                    { q: "Reproduction in plants ensures", options: ["Continuation of species", "Respiration", "Digestion", "Circulation"], ans: 0 },
-                    { q: "Flowers are reproductive organs of", options: ["Plants", "Animals", "Humans", "Bacteria"], ans: 0 },
-                    { q: "Seeds disperse by", options: ["Wind water animals", "Sunlight", "Soil", "Roots"], ans: 0 },
-                    { q: "Seed dispersal helps in", options: ["Avoid overcrowding", "Increase diseases", "Reduce plants", "Stop growth"], ans: 0 },
-                    { q: "Example of wind dispersal", options: ["Cotton", "Mango", "Coconut", "Guava"], ans: 0 },
-                    { q: "Example of water dispersal", options: ["Coconut", "Mango", "Apple", "Rice"], ans: 0 },
-                    { q: "Example of animal dispersal", options: ["Mango", "Cotton", "Rice", "Wheat"], ans: 0 },
-                    { q: "Asexual reproduction involves", options: ["One parent", "Two parents", "Three parents", "Many parents"], ans: 0 },
-                    { q: "Sexual reproduction involves", options: ["Two parents", "One parent", "Three parents", "No parent"], ans: 0 },
-                    { q: "Binary fission produces", options: ["Two daughter cells", "Four cells", "One cell", "Eight cells"], ans: 0 },
-                    { q: "Fragmentation occurs in", options: ["Algae", "Fish", "Humans", "Dogs"], ans: 0 },
-                    { q: "Regeneration ability is seen in", options: ["Planaria", "Human", "Cow", "Dog"], ans: 0 },
-                    { q: "Reproduction is necessary for", options: ["Continuation of life", "Digestion", "Breathing", "Movement"], ans: 0 }
-                ],
-                lesson7: [
-                    { q: "The process that controls and regulates activities of the body is called", options: ["Digestion", "Coordination", "Respiration", "Circulation"], ans: 1 },
-                    { q: "Coordination in humans is mainly controlled by", options: ["Heart", "Brain", "Kidney", "Liver"], ans: 0 },
-                    { q: "The basic unit of nervous system is", options: ["Neuron", "Nephron", "Cell", "Axon"], ans: 0 },
-                    { q: "The long extension of neuron that carries impulses away from the cell body is", options: ["Dendrite", "Axon", "Synapse", "Nucleus"], ans: 1 },
-                    { q: "The short branches of neuron that receive impulses are", options: ["Axon", "Dendrites", "Synapse", "Nodes"], ans: 1 },
-                    { q: "The gap between two neurons is called", options: ["Synapse", "Axon", "Node", "Cell"], ans: 0 },
-                    { q: "The main controlling center of the nervous system is", options: ["Spinal cord", "Brain", "Heart", "Liver"], ans: 1 },
-                    { q: "The part of brain responsible for thinking and memory is", options: ["Cerebrum", "Cerebellum", "Medulla", "Spinal cord"], ans: 0 },
-                    { q: "The part of brain controlling balance of body is", options: ["Cerebellum", "Cerebrum", "Medulla", "Hypothalamus"], ans: 0 },
-                    { q: "The brain stem controls", options: ["Thinking", "Balance", "Involuntary actions", "Memory"], ans: 2 },
-                    { q: "Reflex action is controlled by", options: ["Brain", "Spinal cord", "Heart", "Kidney"], ans: 1 },
-                    { q: "The path followed by nerve impulses in reflex action is called", options: ["Reflex arc", "Neuron path", "Impulse path", "Nerve cycle"], ans: 0 },
-                    { q: "An example of reflex action is", options: ["Walking", "Writing", "Removing hand from hot object", "Eating"], ans: 2 },
-                    { q: "The chemicals that transmit nerve impulses across synapse are", options: ["Hormones", "Neurotransmitters", "Enzymes", "Vitamins"], ans: 1 },
-                    { q: "The nervous system consists of", options: ["Brain and heart", "Brain, spinal cord and nerves", "Heart and kidney", "Brain and lungs"], ans: 1 },
-                    { q: "The nerves that carry impulses to brain are", options: ["Motor nerves", "Sensory nerves", "Mixed nerves", "Autonomic nerves"], ans: 1 },
-                    { q: "The nerves carrying impulses from brain to muscles are", options: ["Sensory nerves", "Motor nerves", "Mixed nerves", "Central nerves"], ans: 1 },
-                    { q: "The endocrine glands secrete", options: ["Hormones", "Blood", "Enzymes", "Oxygen"], ans: 0 },
-                    { q: "Hormones are secreted directly into", options: ["Blood", "Cells", "Stomach", "Nerves"], ans: 0 },
-                    { q: "The master gland of endocrine system is", options: ["Thyroid", "Pituitary", "Adrenal", "Pancreas"], ans: 1 },
-                    { q: "The hormone controlling growth is", options: ["Insulin", "Growth hormone", "Adrenaline", "Thyroxine"], ans: 1 },
-                    { q: "The gland producing thyroxine is", options: ["Pituitary", "Thyroid", "Adrenal", "Pancreas"], ans: 1 },
-                    { q: "Iodine deficiency causes", options: ["Diabetes", "Goitre", "Cancer", "Fever"], ans: 1 },
-                    { q: "Insulin is secreted by", options: ["Pancreas", "Liver", "Kidney", "Heart"], ans: 0 },
-                    { q: "Insulin regulates", options: ["Blood sugar level", "Blood pressure", "Oxygen level", "Body temperature"], ans: 0 },
-                    { q: "Adrenal glands secrete", options: ["Insulin", "Adrenaline", "Thyroxine", "Estrogen"], ans: 1 },
-                    { q: "Adrenaline prepares body for", options: ["Sleep", "Fight or flight", "Digestion", "Rest"], ans: 1 },
-                    { q: "The gland controlling other endocrine glands is", options: ["Pituitary", "Adrenal", "Thyroid", "Pancreas"], ans: 0 },
-                    { q: "Chemical coordination in plants occurs through", options: ["Hormones", "Blood", "Neurons", "Oxygen"], ans: 0 },
-                    { q: "Plant hormones are called", options: ["Phytohormones", "Animal hormones", "Vitamins", "Minerals"], ans: 0 },
-                    { q: "Auxins help in", options: ["Cell elongation", "Photosynthesis", "Respiration", "Digestion"], ans: 0 },
-                    { q: "Auxins are mainly produced in", options: ["Root tip", "Shoot tip", "Leaves", "Stem"], ans: 1 },
-                    { q: "Gibberellins promote", options: ["Fruit growth", "Photosynthesis", "Respiration", "Digestion"], ans: 0 },
-                    { q: "Cytokinins promote", options: ["Cell division", "Respiration", "Digestion", "Excretion"], ans: 0 },
-                    { q: "Abscisic acid causes", options: ["Growth", "Dormancy", "Photosynthesis", "Respiration"], ans: 1 },
-                    { q: "Ethylene promotes", options: ["Fruit ripening", "Leaf growth", "Stem growth", "Root growth"], ans: 0 },
-                    { q: "The bending of plant towards light is called", options: ["Phototropism", "Geotropism", "Hydrotropism", "Thigmotropism"], ans: 0 },
-                    { q: "Growth towards gravity is", options: ["Phototropism", "Geotropism", "Hydrotropism", "Chemotropism"], ans: 1 },
-                    { q: "Growth towards water is", options: ["Hydrotropism", "Phototropism", "Geotropism", "Chemotropism"], ans: 0 },
-                    { q: "Touch response in plants is", options: ["Thigmotropism", "Phototropism", "Hydrotropism", "Geotropism"], ans: 0 },
-                    { q: "Mimosa plant shows", options: ["Touch movement", "Light movement", "Gravity movement", "Water movement"], ans: 0 },
-                    { q: "Opening and closing of stomata is controlled by", options: ["Guard cells", "Root cells", "Stem cells", "Leaf cells"], ans: 0 },
-                    { q: "Rapid plant movements are called", options: ["Nastic movements", "Tropic movements", "Growth movements", "Root movements"], ans: 0 },
-                    { q: "Directional plant movement is", options: ["Tropic movement", "Nastic movement", "Circular movement", "Random movement"], ans: 0 },
-                    { q: "The coordination in animals is by", options: ["Nervous and endocrine system", "Digestive system", "Respiratory system", "Circulatory system"], ans: 0 },
-                    { q: "The largest part of human brain is", options: ["Cerebrum", "Cerebellum", "Medulla", "Hypothalamus"], ans: 0 },
-                    { q: "The spinal cord is protected by", options: ["Vertebral column", "Skull", "Ribs", "Pelvis"], ans: 0 },
-                    { q: "The skull protects", options: ["Brain", "Heart", "Lungs", "Kidney"], ans: 0 },
-                    { q: "The nervous tissue is made up of", options: ["Neurons", "Nephrons", "Cells", "Muscles"], ans: 0 },
-                    { q: "The endocrine system works through", options: ["Hormones", "Nerves", "Blood cells", "Muscles"], ans: 0 },
-                    { q: "Hormones are chemical", options: ["Messengers", "Foods", "Waste", "Cells"], ans: 0 },
-                    { q: "The hormone responsible for emergency situations is", options: ["Adrenaline", "Insulin", "Thyroxine", "Estrogen"], ans: 0 },
-                    { q: "Coordination ensures", options: ["Proper functioning of body", "Digestion only", "Breathing only", "Movement only"], ans: 0 },
-                    { q: "The nervous system responds quickly while endocrine system responds", options: ["Slowly", "Instantly", "Not at all", "Equally"], ans: 0 },
-                    { q: "Stimulus means", options: ["Change in environment", "Food", "Water", "Air"], ans: 0 },
-                    { q: "Response means", options: ["Reaction to stimulus", "Food digestion", "Breathing", "Circulation"], ans: 0 },
-                    { q: "The receptors detect", options: ["Stimuli", "Blood", "Oxygen", "Food"], ans: 0 },
-                    { q: "Eyes detect", options: ["Light", "Sound", "Smell", "Taste"], ans: 0 },
-                    { q: "Ears detect", options: ["Sound", "Light", "Taste", "Smell"], ans: 0 },
-                    { q: "Tongue detects", options: ["Taste", "Sound", "Light", "Smell"], ans: 0 },
-                    { q: "Nose detects", options: ["Smell", "Taste", "Sound", "Light"], ans: 0 },
-                    { q: "The coordination between muscles and brain helps in", options: ["Movement", "Digestion", "Excretion", "Circulation"], ans: 0 },
-                    { q: "Reflex actions protect the body from", options: ["Harm", "Food", "Water", "Air"], ans: 0 },
-                    { q: "Plants do not have", options: ["Nervous system", "Leaves", "Roots", "Stem"], ans: 0 },
-                    { q: "Yet plants respond through", options: ["Hormones", "Brain", "Heart", "Blood"], ans: 0 },
-                    { q: "Example of plant hormone is", options: ["Auxin", "Insulin", "Adrenaline", "Thyroxine"], ans: 0 },
-                    { q: "Example of animal hormone is", options: ["Insulin", "Auxin", "Cytokinin", "Gibberellin"], ans: 0 },
-                    { q: "The hormone controlling metabolism is", options: ["Thyroxine", "Insulin", "Adrenaline", "Growth hormone"], ans: 0 },
-                    { q: "The organ that helps maintain balance", options: ["Cerebellum", "Cerebrum", "Medulla", "Spinal cord"], ans: 0 },
-                    { q: "Hormonal coordination is", options: ["Chemical coordination", "Physical coordination", "Mechanical coordination", "None"], ans: 0 },
-                    { q: "Nervous coordination is", options: ["Electrical coordination", "Chemical coordination", "Physical coordination", "None"], ans: 0 },
-                    { q: "Both systems together help in", options: ["Body coordination", "Digestion", "Respiration", "Excretion"], ans: 0 },
-                    { q: "Example of stimulus", options: ["Touching hot object", "Eating food", "Sleeping", "Running"], ans: 0 },
-                    { q: "Example of response", options: ["Pulling hand back", "Standing", "Sleeping", "Walking"], ans: 0 }
-                ],
-                lesson8: [
-                    { q: "The transmission of traits from parents to offspring is called", options: ["Evolution", "Heredity", "Variation", "Mutation"], ans: 1 },
-                    { q: "The study of heredity and variation is called", options: ["Genetics", "Biology", "Zoology", "Botany"], ans: 0 },
-                    { q: "The father of genetics is", options: ["Charles Darwin", "Gregor Mendel", "Lamarck", "Watson"], ans: 1 },
-                    { q: "Mendel conducted experiments on", options: ["Rice plant", "Pea plant", "Wheat plant", "Sunflower"], ans: 1 },
-                    { q: "The unit of heredity is", options: ["Gene", "Cell", "Chromosome", "DNA"], ans: 0 },
-                    { q: "Genes are located on", options: ["Chromosomes", "Ribosomes", "Nucleus", "Mitochondria"], ans: 0 },
-                    { q: "The physical appearance of an organism is called", options: ["Genotype", "Phenotype", "Allele", "Gene"], ans: 1 },
-                    { q: "The genetic makeup of an organism is called", options: ["Phenotype", "Genotype", "Allele", "Trait"], ans: 1 },
-                    { q: "Different forms of the same gene are called", options: ["Alleles", "Cells", "Traits", "Proteins"], ans: 0 },
-                    { q: "A trait that appears in F1 generation is called", options: ["Dominant trait", "Recessive trait", "Hybrid trait", "Mixed trait"], ans: 0 },
-                    { q: "A trait that is masked in F1 generation is called", options: ["Dominant trait", "Recessive trait", "Hybrid trait", "Mixed trait"], ans: 1 },
-                    { q: "The cross involving one pair of contrasting traits is called", options: ["Monohybrid cross", "Dihybrid cross", "Hybrid cross", "Test cross"], ans: 0 },
-                    { q: "The cross involving two pairs of contrasting traits is called", options: ["Monohybrid cross", "Dihybrid cross", "Test cross", "Back cross"], ans: 1 },
-                    { q: "The ratio of dominant and recessive traits in F2 generation in monohybrid cross is", options: ["1:1", "3:1", "9:3:3:1", "2:1"], ans: 1 },
-                    { q: "The ratio in dihybrid cross is", options: ["3:1", "1:2:1", "9:3:3:1", "2:1"], ans: 2 },
-                    { q: "Mendel's law of segregation states that", options: ["Genes mix", "Alleles separate during gamete formation", "Traits disappear", "Genes combine permanently"], ans: 1 },
-                    { q: "Mendel's law of independent assortment applies to", options: ["One trait", "Two traits", "Three traits", "No traits"], ans: 1 },
-                    { q: "A cross between hybrid and recessive parent is called", options: ["Test cross", "Back cross", "Hybrid cross", "Mono cross"], ans: 0 },
-                    { q: "A cross between F1 hybrid and dominant parent is called", options: ["Test cross", "Back cross", "Monohybrid cross", "Dihybrid cross"], ans: 1 },
-                    { q: "Variations are important for", options: ["Evolution", "Respiration", "Digestion", "Circulation"], ans: 0 },
-                    { q: "Variation arises due to", options: ["Mutation", "Genetic recombination", "Both A and B", "None"], ans: 2 },
-                    { q: "Mutation means", options: ["Sudden change in gene", "Cell division", "Growth", "Respiration"], ans: 0 },
-                    { q: "Evolution means", options: ["Gradual change in species", "Sudden growth", "Respiration", "Digestion"], ans: 0 },
-                    { q: "The scientist who proposed theory of evolution by natural selection", options: ["Mendel", "Darwin", "Lamarck", "Newton"], ans: 1 },
-                    { q: "Darwin's famous book is", options: ["Origin of Species", "Theory of Evolution", "Genetics Book", "Natural Science"], ans: 0 },
-                    { q: "Natural selection means", options: ["Survival of the fittest", "Weak survive", "All survive equally", "None"], ans: 0 },
-                    { q: "Animals with better adaptations", options: ["Die faster", "Survive better", "Disappear", "Do not reproduce"], ans: 1 },
-                    { q: "Homologous organs have", options: ["Same origin", "Same function", "Different origin", "No origin"], ans: 0 },
-                    { q: "Example of homologous organs", options: ["Human arm and whale flipper", "Bird wing and insect wing", "Fish fin and insect leg", "Plant leaf and root"], ans: 0 },
-                    { q: "Analogous organs have", options: ["Same function but different origin", "Same origin", "Different function", "No function"], ans: 0 },
-                    { q: "Example of analogous organs", options: ["Bird wing and insect wing", "Human arm and whale flipper", "Dog leg and cat leg", "Plant leaf and stem"], ans: 0 },
-                    { q: "Fossils are", options: ["Remains of ancient organisms", "Living animals", "Plants", "Cells"], ans: 0 },
-                    { q: "Fossils provide evidence for", options: ["Evolution", "Digestion", "Respiration", "Excretion"], ans: 0 },
-                    { q: "Age of fossils can be determined by", options: ["Carbon dating", "Water test", "Air test", "Sunlight"], ans: 0 },
-                    { q: "Evolution occurs over", options: ["Long periods", "Short periods", "Instantly", "One day"], ans: 0 },
-                    { q: "Human evolution started from", options: ["Primates", "Fish", "Reptiles", "Birds"], ans: 0 },
-                    { q: "Speciation means", options: ["Formation of new species", "Growth", "Digestion", "Respiration"], ans: 0 },
-                    { q: "Reproductive isolation leads to", options: ["Speciation", "Respiration", "Digestion", "Circulation"], ans: 0 },
-                    { q: "DNA stands for", options: ["Deoxyribonucleic Acid", "Dynamic Nuclear Acid", "Double Nucleus Acid", "None"], ans: 0 },
-                    { q: "DNA carries", options: ["Genetic information", "Oxygen", "Food", "Energy"], ans: 0 },
-                    { q: "Chromosomes are present in", options: ["Nucleus", "Cytoplasm", "Membrane", "Cell wall"], ans: 0 },
-                    { q: "Human cells contain chromosomes", options: ["46", "23", "44", "48"], ans: 0 },
-                    { q: "Genes control", options: ["Traits", "Respiration", "Digestion", "Circulation"], ans: 0 },
-                    { q: "Genetic variation helps species to", options: ["Adapt", "Disappear", "Stop growth", "Stop reproduction"], ans: 0 },
-                    { q: "Evolution explains", options: ["Origin of species", "Digestion", "Respiration", "Excretion"], ans: 0 },
-                    { q: "The main source of energy for evolution is", options: ["Variation", "Water", "Food", "Oxygen"], ans: 0 },
-                    { q: "Mendel observed how many traits in pea plants", options: ["7", "5", "6", "8"], ans: 0 },
-                    { q: "The recessive trait appears in generation", options: ["F2", "F1", "P", "None"], ans: 0 },
-                    { q: "Dominant allele is represented by", options: ["Capital letter", "Small letter", "Number", "Symbol"], ans: 0 },
-                    { q: "Recessive allele is represented by", options: ["Small letter", "Capital letter", "Number", "Symbol"], ans: 0 },
-                    { q: "Homozygous means", options: ["Same alleles", "Different alleles", "No genes", "Multiple genes"], ans: 0 },
-                    { q: "Heterozygous means", options: ["Different alleles", "Same alleles", "No genes", "Many genes"], ans: 0 },
-                    { q: "Example of dominant trait in pea plant", options: ["Tall plant", "Short plant", "Green seed", "White flower"], ans: 0 },
-                    { q: "Example of recessive trait in pea plant", options: ["Short plant", "Tall plant", "Yellow seed", "Purple flower"], ans: 0 },
-                    { q: "The process by which organisms adapt is", options: ["Evolution", "Respiration", "Digestion", "Excretion"], ans: 0 },
-                    { q: "The process of gradual development of complex organisms from simple ones is", options: ["Evolution", "Respiration", "Digestion", "Circulation"], ans: 0 },
-                    { q: "Charles Darwin traveled in ship", options: ["HMS Beagle", "Titanic", "Discovery", "Voyager"], ans: 0 },
-                    { q: "Darwin studied species in", options: ["Galapagos Islands", "India", "Africa", "Europe"], ans: 0 },
-                    { q: "Evolution is supported by", options: ["Fossils", "Comparative anatomy", "Embryology", "All of these"], ans: 3 },
-                    { q: "Genetic information is passed through", options: ["DNA", "RNA", "Protein", "Water"], ans: 0 },
-                    { q: "Genes are made of", options: ["DNA", "RNA", "Protein", "Carbohydrates"], ans: 0 },
-                    { q: "Variations help organisms to", options: ["Survive environmental changes", "Stop growth", "Disappear", "Die"], ans: 0 },
-                    { q: "Evolution takes place through", options: ["Natural selection", "Mutation", "Genetic variation", "All of these"], ans: 3 },
-                    { q: "The study of fossils is called", options: ["Paleontology", "Genetics", "Biology", "Botany"], ans: 0 },
-                    { q: "The basic cause of evolution is", options: ["Variation", "Water", "Food", "Sunlight"], ans: 0 },
-                    { q: "The theory explaining survival of fittest is", options: ["Natural selection", "Mutation theory", "Cell theory", "Gene theory"], ans: 0 }
-                ],
-                lesson9: [
-                    { q: "The surroundings in which organisms live is called", options: ["Habitat", "Environment", "Population", "Community"], ans: 1 },
-                    { q: "All living and non-living things around us form the", options: ["Ecosystem", "Environment", "Population", "Community"], ans: 1 },
-                    { q: "The study of interactions between organisms and environment is called", options: ["Biology", "Ecology", "Zoology", "Botany"], ans: 1 },
-                    { q: "A place where organisms live is called", options: ["Habitat", "Niche", "Environment", "Biome"], ans: 0 },
-                    { q: "The functional unit of nature is", options: ["Population", "Community", "Ecosystem", "Species"], ans: 2 },
-                    { q: "Green plants in an ecosystem are called", options: ["Consumers", "Producers", "Decomposers", "Parasites"], ans: 1 },
-                    { q: "Animals that depend on plants for food are", options: ["Carnivores", "Omnivores", "Herbivores", "Decomposers"], ans: 2 },
-                    { q: "Animals that eat other animals are", options: ["Herbivores", "Carnivores", "Producers", "Decomposers"], ans: 1 },
-                    { q: "Organisms that break down dead organisms are", options: ["Producers", "Consumers", "Decomposers", "Herbivores"], ans: 2 },
-                    { q: "Example of decomposers", options: ["Bacteria and fungi", "Cow and goat", "Lion and tiger", "Plants"], ans: 0 },
-                    { q: "Energy enters ecosystem through", options: ["Wind", "Sunlight", "Water", "Soil"], ans: 1 },
-                    { q: "The process by which plants prepare food is", options: ["Respiration", "Photosynthesis", "Digestion", "Excretion"], ans: 1 },
-                    { q: "A sequence of organisms feeding on one another is called", options: ["Food web", "Food chain", "Energy cycle", "Energy flow"], ans: 1 },
-                    { q: "The first organism in food chain is usually", options: ["Carnivore", "Producer", "Herbivore", "Decomposer"], ans: 1 },
-                    { q: "Example of food chain", options: ["Grass → Deer → Tiger", "Tiger → Deer → Grass", "Deer → Grass → Tiger", "Tiger → Grass → Deer"], ans: 0 },
-                    { q: "Interconnected food chains form", options: ["Food web", "Food cycle", "Energy pyramid", "Food level"], ans: 0 },
-                    { q: "Each step in a food chain is called", options: ["Trophic level", "Food level", "Energy step", "Growth level"], ans: 0 },
-                    { q: "Plants belong to trophic level", options: ["First", "Second", "Third", "Fourth"], ans: 0 },
-                    { q: "Herbivores belong to trophic level", options: ["First", "Second", "Third", "Fourth"], ans: 1 },
-                    { q: "Carnivores belong to trophic level", options: ["First", "Second", "Third", "Fourth"], ans: 2 },
-                    { q: "Energy decreases at each trophic level due to", options: ["Respiration", "Heat loss", "Metabolism", "All of these"], ans: 3 },
-                    { q: "According to 10% law only this much energy is transferred to next trophic level", options: ["5%", "10%", "15%", "20%"], ans: 1 },
-                    { q: "The ultimate source of energy for ecosystem is", options: ["Moon", "Sun", "Water", "Wind"], ans: 1 },
-                    { q: "Non-biodegradable substances are", options: ["Plastic", "Glass", "Polythene", "All of these"], ans: 3 },
-                    { q: "Substances that can be broken down by microorganisms are", options: ["Biodegradable", "Non-biodegradable", "Synthetic", "Artificial"], ans: 0 },
-                    { q: "Example of biodegradable waste", options: ["Vegetable waste", "Plastic", "Glass", "Metal"], ans: 0 },
-                    { q: "Excessive use of pesticides causes", options: ["Biomagnification", "Respiration", "Digestion", "Circulation"], ans: 0 },
-                    { q: "Biomagnification means", options: ["Increase of toxins in food chain", "Decrease of toxins", "Energy flow", "Food chain formation"], ans: 0 },
-                    { q: "DDT is an example of", options: ["Fertilizer", "Pesticide", "Herbicide", "Hormone"], ans: 1 },
-                    { q: "Accumulation of DDT increases at", options: ["Higher trophic levels", "Lower trophic levels", "Plants only", "Animals only"], ans: 0 },
-                    { q: "Ozone layer protects earth from", options: ["Infrared rays", "Ultraviolet rays", "X-rays", "Gamma rays"], ans: 1 },
-                    { q: "Ozone layer is present in", options: ["Troposphere", "Stratosphere", "Mesosphere", "Thermosphere"], ans: 1 },
-                    { q: "Major cause of ozone depletion is", options: ["CFCs", "Oxygen", "Nitrogen", "Carbon dioxide"], ans: 0 },
-                    { q: "CFC stands for", options: ["Chloro Fluoro Carbon", "Carbon Fluoro Chloride", "Chloride Fluoro Carbon", "None"], ans: 0 },
-                    { q: "Ozone depletion leads to", options: ["Skin cancer", "Global warming", "Acid rain", "Earthquakes"], ans: 0 },
-                    { q: "Waste management helps to", options: ["Reduce pollution", "Increase pollution", "Destroy ecosystems", "Kill animals"], ans: 0 },
-                    { q: "The best method of waste management is", options: ["Reduce", "Reuse", "Recycle", "All of these"], ans: 3 },
-                    { q: "3R's stand for", options: ["Reduce, Reuse, Recycle", "Reuse, Replace, Reduce", "Recycle, Remove, Reduce", "Replace, Remove, Recycle"], ans: 0 },
-                    { q: "Burning of plastic produces", options: ["Toxic gases", "Oxygen", "Nitrogen", "Water"], ans: 0 },
-                    { q: "Biogas is produced from", options: ["Organic waste", "Plastic", "Metal", "Glass"], ans: 0 },
-                    { q: "Biogas mainly contains", options: ["Methane", "Oxygen", "Nitrogen", "Hydrogen"], ans: 0 },
-                    { q: "Pollution caused by excessive waste is called", options: ["Environmental pollution", "Air pollution", "Water pollution", "Soil pollution"], ans: 0 },
-                    { q: "Soil pollution affects", options: ["Plants", "Animals", "Humans", "All of these"], ans: 3 },
-                    { q: "Sewage treatment reduces", options: ["Water pollution", "Air pollution", "Soil pollution", "Noise pollution"], ans: 0 },
-                    { q: "Plastic bags should be avoided because they are", options: ["Non-biodegradable", "Biodegradable", "Natural", "Organic"], ans: 0 },
-                    { q: "The balance of ecosystem depends on", options: ["Food chains", "Energy flow", "Nutrient cycles", "All of these"], ans: 3 },
-                    { q: "The top carnivore in food chain is called", options: ["Top consumer", "Primary consumer", "Producer", "Decomposer"], ans: 0 },
-                    { q: "Example of top carnivore", options: ["Tiger", "Grasshopper", "Deer", "Cow"], ans: 0 },
-                    { q: "Removal of one species may affect", options: ["Food chain", "Ecosystem balance", "Food web", "All of these"], ans: 3 },
-                    { q: "Environmental protection is necessary for", options: ["Healthy life", "Ecosystem balance", "Future generations", "All of these"], ans: 3 },
-                    { q: "The organisms that feed directly on plants are", options: ["Primary consumers", "Secondary consumers", "Producers", "Decomposers"], ans: 0 },
-                    { q: "Organisms feeding on herbivores are", options: ["Secondary consumers", "Primary consumers", "Producers", "Decomposers"], ans: 0 },
-                    { q: "Energy flow in ecosystem is", options: ["Unidirectional", "Circular", "Random", "Static"], ans: 0 },
-                    { q: "Example of ecosystem", options: ["Forest", "Pond", "Desert", "All of these"], ans: 3 },
-                    { q: "Human activities disturb ecosystem balance by", options: ["Pollution", "Deforestation", "Overuse of chemicals", "All of these"], ans: 3 },
-                    { q: "Proper disposal of waste helps protect", options: ["Environment", "Animals", "Humans", "All of these"], ans: 3 },
-                    { q: "The natural home of organisms is", options: ["Habitat", "Population", "Community", "Species"], ans: 0 },
-                    { q: "Biodegradable substances include", options: ["Paper", "Food waste", "Leaves", "All of these"], ans: 3 },
-                    { q: "Non-biodegradable waste accumulates in", options: ["Environment", "Water", "Soil", "All of these"], ans: 3 },
-                    { q: "Environmental awareness helps to", options: ["Protect nature", "Reduce pollution", "Save resources", "All of these"], ans: 3 }
-                ],
-                lesson10: [
-                    { q: "Resources obtained from nature are called", options: ["Natural resources", "Artificial resources", "Chemical resources", "Human resources"], ans: 0 },
-                    { q: "Examples of natural resources include", options: ["Air, water, soil", "Plastic", "Glass", "Metal"], ans: 0 },
-                    { q: "Natural resources are classified as", options: ["Renewable and non-renewable", "Living and nonliving", "Solid and liquid", "Artificial and natural"], ans: 0 },
-                    { q: "Example of renewable resource", options: ["Solar energy", "Coal", "Petroleum", "Natural gas"], ans: 0 },
-                    { q: "Example of non-renewable resource", options: ["Coal", "Wind energy", "Solar energy", "Water"], ans: 0 },
-                    { q: "The layer of air surrounding the earth is called", options: ["Hydrosphere", "Atmosphere", "Lithosphere", "Biosphere"], ans: 1 },
-                    { q: "Atmosphere mainly contains", options: ["Nitrogen and Oxygen", "Carbon and Hydrogen", "Hydrogen and Helium", "Oxygen and Helium"], ans: 0 },
-                    { q: "The most abundant gas in atmosphere is", options: ["Nitrogen", "Oxygen", "Carbon dioxide", "Hydrogen"], ans: 0 },
-                    { q: "Oxygen in atmosphere is about", options: ["21%", "78%", "50%", "10%"], ans: 0 },
-                    { q: "Nitrogen in atmosphere is about", options: ["78%", "21%", "50%", "10%"], ans: 0 },
-                    { q: "Carbon dioxide is used by plants for", options: ["Photosynthesis", "Respiration", "Digestion", "Excretion"], ans: 0 },
-                    { q: "Increase of carbon dioxide causes", options: ["Global warming", "Cooling", "Rainfall", "Wind"], ans: 0 },
-                    { q: "The greenhouse gas is", options: ["Carbon dioxide", "Oxygen", "Nitrogen", "Hydrogen"], ans: 0 },
-                    { q: "The average temperature increase of earth is called", options: ["Global warming", "Cooling", "Ozone depletion", "Acid rain"], ans: 0 },
-                    { q: "Water present on earth forms the", options: ["Hydrosphere", "Lithosphere", "Atmosphere", "Biosphere"], ans: 0 },
-                    { q: "About how much of earth surface is covered by water", options: ["71%", "50%", "30%", "90%"], ans: 0 },
-                    { q: "Fresh water available for use is about", options: ["1%", "10%", "20%", "50%"], ans: 0 },
-                    { q: "The continuous movement of water on earth is called", options: ["Water cycle", "Nitrogen cycle", "Carbon cycle", "Energy cycle"], ans: 0 },
-                    { q: "Evaporation means", options: ["Liquid to gas", "Gas to liquid", "Solid to liquid", "Liquid to solid"], ans: 0 },
-                    { q: "Condensation means", options: ["Gas to liquid", "Liquid to gas", "Solid to gas", "Gas to solid"], ans: 0 },
-                    { q: "Rainfall occurs due to", options: ["Condensation", "Evaporation", "Photosynthesis", "Respiration"], ans: 0 },
-                    { q: "The solid part of earth is called", options: ["Lithosphere", "Atmosphere", "Hydrosphere", "Biosphere"], ans: 0 },
-                    { q: "Soil is formed by", options: ["Weathering of rocks", "Water", "Wind", "Sunlight"], ans: 0 },
-                    { q: "Top layer of soil is rich in", options: ["Humus", "Sand", "Clay", "Stones"], ans: 0 },
-                    { q: "Soil erosion means", options: ["Removal of top soil", "Formation of soil", "Water flow", "Wind movement"], ans: 0 },
-                    { q: "Major cause of soil erosion is", options: ["Deforestation", "Rainfall", "Wind", "Animals"], ans: 0 },
-                    { q: "Cutting of trees is called", options: ["Deforestation", "Afforestation", "Reforestation", "Cultivation"], ans: 0 },
-                    { q: "Planting trees is called", options: ["Afforestation", "Deforestation", "Soil erosion", "Cultivation"], ans: 0 },
-                    { q: "Trees help in", options: ["Prevent soil erosion", "Increase rainfall", "Provide oxygen", "All of these"], ans: 3 },
-                    { q: "Nitrogen cycle helps in", options: ["Maintaining nitrogen balance", "Oxygen balance", "Water balance", "Heat balance"], ans: 0 },
-                    { q: "Nitrogen fixing bacteria convert nitrogen into", options: ["Nitrates", "Oxygen", "Carbon dioxide", "Water"], ans: 0 },
-                    { q: "Example of nitrogen fixing bacteria", options: ["Rhizobium", "Amoeba", "Paramecium", "Yeast"], ans: 0 },
-                    { q: "Nitrogen fixation occurs in", options: ["Root nodules of legumes", "Leaves", "Stem", "Flowers"], ans: 0 },
-                    { q: "Nitrogen is essential for", options: ["Protein formation", "Respiration", "Digestion", "Excretion"], ans: 0 },
-                    { q: "Carbon cycle maintains balance of", options: ["Carbon dioxide", "Oxygen", "Nitrogen", "Hydrogen"], ans: 0 },
-                    { q: "Plants absorb carbon dioxide during", options: ["Photosynthesis", "Respiration", "Digestion", "Excretion"], ans: 0 },
-                    { q: "Animals release carbon dioxide during", options: ["Respiration", "Photosynthesis", "Digestion", "Excretion"], ans: 0 },
-                    { q: "Burning of fossil fuels increases", options: ["Carbon dioxide", "Oxygen", "Nitrogen", "Hydrogen"], ans: 0 },
-                    { q: "Acid rain is caused by", options: ["Sulphur dioxide and nitrogen oxides", "Oxygen", "Nitrogen", "Water"], ans: 0 },
-                    { q: "Acid rain damages", options: ["Plants and buildings", "Water only", "Animals only", "Soil only"], ans: 0 },
-                    { q: "Major fossil fuels are", options: ["Coal petroleum natural gas", "Water wind sunlight", "Plants animals soil", "Air water soil"], ans: 0 },
-                    { q: "Burning fossil fuels causes", options: ["Air pollution", "Water pollution", "Soil pollution", "Noise pollution"], ans: 0 },
-                    { q: "Renewable energy sources include", options: ["Solar wind water", "Coal petroleum gas", "Plastic glass metal", "Paper wood coal"], ans: 0 },
-                    { q: "Solar energy is obtained from", options: ["Sun", "Wind", "Water", "Soil"], ans: 0 },
-                    { q: "Wind energy is produced by", options: ["Wind turbines", "Solar panels", "Dams", "Engines"], ans: 0 },
-                    { q: "Hydroelectric power is produced using", options: ["Water", "Wind", "Sun", "Coal"], ans: 0 },
-                    { q: "Biogas is produced from", options: ["Organic waste", "Plastic", "Metal", "Glass"], ans: 0 },
-                    { q: "Biogas mainly contains", options: ["Methane", "Oxygen", "Nitrogen", "Carbon dioxide"], ans: 0 },
-                    { q: "Conservation of resources means", options: ["Careful use", "Waste use", "Destroy use", "Overuse"], ans: 0 },
-                    { q: "Saving natural resources helps", options: ["Future generations", "Only present generation", "Animals only", "Plants only"], ans: 0 },
-                    { q: "Rainwater harvesting helps to", options: ["Save water", "Increase pollution", "Decrease soil", "Destroy plants"], ans: 0 },
-                    { q: "Overuse of natural resources leads to", options: ["Resource depletion", "Resource increase", "No change", "More rainfall"], ans: 0 },
-                    { q: "Sustainable development means", options: ["Using resources wisely", "Overusing resources", "Destroying forests", "Ignoring environment"], ans: 0 },
-                    { q: "Environmental protection ensures", options: ["Healthy life", "Clean environment", "Resource conservation", "All of these"], ans: 3 }
+                    { q: "The gas released during respiration is", options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"], ans: 2 }
                 ]
             },
             physics: {
                 light_reflection: [
                     { q: "Light travels in a...", options: ["Straight line", "Curved line", "Zig-zag path", "Circular path"], ans: 0 },
                     { q: "According to laws of reflection, angle of incidence is equal to...", options: ["Angle of refraction", "Angle of reflection", "Critical angle", "90 degrees"], ans: 1 },
-                    { q: "An image that cannot be obtained on a screen is called...", options: ["Real image", "Virtual image", "Inverted image", "Magnified image"], ans: 1 },
-                    { q: "The mirror used as a rear-view mirror in vehicles is...", options: ["Concave mirror", "Convex mirror", "Plane mirror", "Parabolic mirror"], ans: 1 },
-                    { q: "Focal length (f) and radius of curvature (R) of a spherical mirror are related as...", options: ["R = f/2", "f = R/2", "f = R", "f = 2R"], ans: 1 }
                 ],
                 acids_bases: [
                     { q: "Acids turn blue litmus paper to...", options: ["Red", "Green", "Yellow", "Colourless"], ans: 0 },
                     { q: "The pH value of a neutral solution is...", options: ["0", "14", "7", "10"], ans: 2 },
-                    { q: "Which acid is present in our stomach?", options: ["Sulphuric acid", "Hydrochloric acid", "Nitric acid", "Acetic acid"], ans: 1 },
-                    { q: "A reaction between an acid and a base is called...", options: ["Oxidation", "Reduction", "Neutralization", "Decomposition"], ans: 2 },
-                    { q: "What is the chemical formula of baking soda?", options: ["Na2CO3", "NaHCO3", "NaCl", "NaOH"], ans: 1 }
                 ]
             }
         };
@@ -1758,14 +1299,6 @@
                     <option value="all">All Biology Chapters</option>
                     <option value="lesson1">Lesson 1: Nutrition</option>
                     <option value="lesson2">Lesson 2: Respiration</option>
-                    <option value="lesson3">Lesson 3: Circulation</option>
-                    <option value="lesson4">Lesson 4: Excretion</option>
-                    <option value="lesson5">Lesson 5: Coordination</option>
-                    <option value="lesson6">Lesson 6: Reproduction</option>
-                    <option value="lesson7">Lesson 7: Life Processes</option>
-                    <option value="lesson8">Lesson 8: Heredity</option>
-                    <option value="lesson9">Lesson 9: Environment</option>
-                    <option value="lesson10">Lesson 10: Natural Resources</option>
                 `;
                 chapterSelect.disabled = false;
             } else if (subject === 'physics') {
@@ -2005,8 +1538,171 @@
             window.scrollTo(0,0);
         }
 
+       // ==========================================
+        // 7. NEW: MUSIC PLAYER (LOFI CHILL ZONE) - BUG FIXED
         // ==========================================
-        // 7. GEMINI AI CHATBOT LOGIC
+        const musicTracks = [
+            {
+                title: "Chikiri Chikiri",
+                artist: "Chillhop Music",
+                src: "Chikiri Chikiri.mp3",
+                cover: "Chikiri Chikiri.jpg"
+            },
+            {
+                title: "Aaya Sher",
+                artist: "Lofi Vibes",
+                src: "Aaya Sher.mp3",
+                cover: "Aaya Sher.jpg"
+            },
+            {
+                title: "Rainy Afternoon",
+                artist: "Focus Beats",
+                src: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_13a1e2fbc2.mp3",
+                cover: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                title: "Deep Concentration",
+                artist: "Study Music",
+                src: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3",
+                cover: "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            }
+        ];
+
+        let currentMusicIndex = 0;
+        let isMusicPlaying = false;
+        let audioPlayer = new Audio();
+        audioPlayer.preload = "metadata"; // Prevents lag by loading metadata early
+
+        function initMusicPlayer() {
+            renderPlaylist();
+            // Load the first track but DO NOT auto-play it to respect browser rules
+            loadTrack(currentMusicIndex, false);
+            
+            audioPlayer.addEventListener('timeupdate', updateProgressBar);
+            audioPlayer.addEventListener('ended', nextTrack);
+            audioPlayer.addEventListener('loadedmetadata', () => {
+                document.getElementById('duration-time').innerText = formatTime(audioPlayer.duration);
+            });
+        }
+
+        function loadTrack(index, playInstantly = false) {
+            const track = musicTracks[index];
+            audioPlayer.src = track.src;
+            document.getElementById('music-title').innerText = track.title;
+            document.getElementById('music-artist').innerText = track.artist;
+            document.getElementById('music-cover').src = track.cover;
+            
+            // Update playlist active state UI
+            document.querySelectorAll('.playlist-item').forEach((item, i) => {
+                item.classList.remove('active');
+                if(i === index) item.classList.add('active');
+            });
+            
+            if (playInstantly) {
+                safePlay();
+            }
+        }
+
+        // Safe play wrapper to handle browser promise rejections without crashing
+        function safePlay() {
+            const playPromise = audioPlayer.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    isMusicPlaying = true;
+                    updateMusicUI();
+                }).catch(error => {
+                    console.warn("Browser blocked autoplay. User needs to click play.", error);
+                    isMusicPlaying = false;
+                    updateMusicUI();
+                });
+            }
+        }
+
+        function togglePlayPause() {
+            if (isMusicPlaying) {
+                audioPlayer.pause();
+                isMusicPlaying = false;
+                updateMusicUI();
+            } else {
+                safePlay();
+            }
+        }
+
+        function updateMusicUI() {
+            const btn = document.getElementById('play-pause-btn');
+            const cover = document.getElementById('music-cover');
+            if (isMusicPlaying) {
+                btn.innerHTML = '<i class="fas fa-pause"></i>';
+                cover.classList.add('playing');
+            } else {
+                btn.innerHTML = '<i class="fas fa-play" style="margin-left: 3px;"></i>';
+                cover.classList.remove('playing');
+            }
+        }
+
+        function nextTrack() {
+            currentMusicIndex = (currentMusicIndex + 1) % musicTracks.length;
+            loadTrack(currentMusicIndex, isMusicPlaying); // Keep playing if it was already playing
+        }
+
+        function prevTrack() {
+            currentMusicIndex = (currentMusicIndex - 1 + musicTracks.length) % musicTracks.length;
+            loadTrack(currentMusicIndex, isMusicPlaying);
+        }
+
+        function playSpecificTrack(index) {
+            currentMusicIndex = index;
+            loadTrack(currentMusicIndex, true); // Force play because the user clicked a specific song
+        }
+
+        function updateProgressBar() {
+            const { duration, currentTime } = audioPlayer;
+            if(!duration) return;
+            const percent = (currentTime / duration) * 100;
+            document.getElementById('music-progress-bar').style.width = `${percent}%`;
+            document.getElementById('current-time').innerText = formatTime(currentTime);
+        }
+
+        function seekMusic(e) {
+            const width = document.getElementById('music-progress-container').clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+            audioPlayer.currentTime = (clickX / width) * duration;
+        }
+
+        function formatTime(seconds) {
+            let min = Math.floor(seconds / 60);
+            let sec = Math.floor(seconds % 60);
+            return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+        }
+
+        function renderPlaylist() {
+            const container = document.getElementById('playlist-container');
+            container.innerHTML = '';
+            musicTracks.forEach((track, index) => {
+                const item = document.createElement('div');
+                item.className = 'playlist-item';
+                item.onclick = () => playSpecificTrack(index);
+                item.innerHTML = `
+                    <div class="playlist-item-icon"><i class="fas fa-music"></i></div>
+                    <div class="playlist-info">
+                        <div class="pl-title">${track.title}</div>
+                        <div class="pl-artist">${track.artist}</div>
+                    </div>
+                    <div class="music-wave">
+                        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Initialize music player on load
+        document.addEventListener('DOMContentLoaded', initMusicPlayer);
+
+
+        // ==========================================
+        // 8. GEMINI AI CHATBOT LOGIC
         // ==========================================
         const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY";
 
@@ -2043,12 +1739,12 @@
                     response = "Want to test your knowledge? Click on 'MCQ Mock Tests' to practice chapter-wise questions with a built-in timer! ⏱️";
                 } else if (lowerInput.includes('video') || lowerInput.includes('class') || lowerInput.includes('lecture') || lowerInput.includes('youtube')) {
                     response = "Visual learner? Tap the 'Video Masterclasses' card to watch top-rated YouTube explanations for your subjects! 🎥";
-                } else if (lowerInput.includes('paper') || lowerInput.includes('previous') || lowerInput.includes('pyq')) {
-                    response = "We have exactly what you need. Open the 'Previous Papers' section to view or download official board papers from the last 5 years! 📄";
+                } else if (lowerInput.includes('music') || lowerInput.includes('lofi') || lowerInput.includes('song')) {
+                    response = "Need to relax? Click the 'Study Beats' card on the dashboard to listen to our premium Lofi tracks while you study! 🎧";
                 } else if (lowerInput.includes('create') || lowerInput.includes('who') || lowerInput.includes('owner')) {
                     response = "EduNova was proudly built by Siddartha! You can connect with him directly on Instagram by clicking his profile link at the bottom of the page. 🚀";
                 } else if (lowerInput.includes('hi') || lowerInput.includes('hello') || lowerInput.includes('hey')) {
-                    response = "Hi there! Welcome to EduNova. Are you looking for Notes, Mock Tests, or Previous Papers today?";
+                    response = "Hi there! Welcome to EduNova. Are you looking for Notes, Mock Tests, Study Beats, or Previous Papers today?";
                 } else {
                     response = "That's a great question! I am still learning.<br><br><span style='font-size: 0.8rem; color: var(--primary);'><b>Dev Note:</b> Add your Gemini API Key in the HTML code to unlock real AI responses!</span> 💡";
                 }
@@ -2088,7 +1784,7 @@
 
 
         // ==========================================
-        // 8. SCROLL REVEAL & CUSTOM CURSOR LOGIC
+        // 9. SCROLL REVEAL & CUSTOM CURSOR LOGIC
         // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.card, .video-card').forEach(card => card.classList.add('reveal'));
@@ -2114,7 +1810,7 @@
             cursor.style.top = e.clientY + 'px';
         });
         
-        const interactables = document.querySelectorAll('a, button, .card, .card-btn, .switch, input, select, summary, .user-profile-nav, .video-card');
+        const interactables = document.querySelectorAll('a, button, .card, .card-btn, .switch, input, select, summary, .user-profile-nav, .video-card, .playlist-item, .music-progress');
         interactables.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
