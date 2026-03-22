@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,8 +15,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
 
     <style>
         /* --- Premium Core Variables --- */
@@ -79,6 +83,11 @@
             border-bottom: 1px solid var(--border-color); box-shadow: var(--glass-shadow); z-index: 1000; transition: all 0.5s ease;
         }
         .logo { font-size: clamp(1.2rem, 4vw, 1.5rem); font-weight: 700; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.5px; }
+        .nav-actions { display: flex; align-items: center; gap: 20px; }
+
+        /* --- Authentication & Profile Header --- */
+        .user-profile-nav { display: flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer; padding: 8px 15px; border-radius: 20px; background: var(--light); border: 1px solid var(--border-color); transition: all 0.3s ease; }
+        .user-profile-nav:hover { background: var(--card-bg); border-color: var(--primary); box-shadow: var(--glass-shadow); }
 
         /* --- ANIMATED THEME SWITCH CSS --- */
         .switch { position: relative; display: inline-block; width: 60px; height: 34px; }
@@ -133,6 +142,8 @@
             .hero-content { align-items: center; display: flex; flex-direction: column; }
             .badge-1 { left: 5%; }
             .badge-2 { right: 5%; }
+            .nav-actions { gap: 10px; }
+            .user-profile-nav span { display: none; }
         }
 
         /* --- Dashboard Grid --- */
@@ -153,7 +164,7 @@
         .card:hover .card-btn { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #FFF; box-shadow: 0 8px 20px var(--primary-glow); }
 
         /* --- Modals (Popups) --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; visibility: hidden; transition: all 0.4s ease; z-index: 2000; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; visibility: hidden; transition: all 0.4s ease; z-index: 2000; }
         .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal-content { background: var(--card-bg); padding: 30px; border-radius: 24px; width: 100%; max-width: 500px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); border: 1px solid var(--border-color); max-height: 90vh; overflow-y: auto; scrollbar-width: thin;}
         .modal-overlay.active .modal-content { animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
@@ -167,6 +178,40 @@
         .subject-item:hover { background: var(--card-bg); border-color: var(--primary); transform: translateX(5px); color: var(--primary); box-shadow: 0 5px 15px var(--glass-shadow); }
         .subject-item i { width: 30px; text-align: center; font-size: 1.3rem; color: var(--text-muted); transition: color 0.3s ease;}
         .subject-item:hover i { color: var(--primary); }
+
+        /* --- NEW: YouTube Horizontal Row --- */
+        .video-row { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .video-row::-webkit-scrollbar { display: none; }
+        .video-card { flex: 0 0 calc(33.333% - 14px); height: 220px; border-radius: 16px; position: relative; overflow: hidden; cursor: pointer; scroll-snap-align: start; box-shadow: var(--glass-shadow); border: 1px solid var(--border-color); transition: transform 0.3s ease; }
+        @media (max-width: 900px) { .video-card { flex: 0 0 85%; } }
+        .video-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px var(--primary-glow); border-color: var(--primary); }
+        .video-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .video-card:hover img { transform: scale(1.08); }
+        .play-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
+        .video-card:hover .play-overlay { background: rgba(15, 23, 42, 0.2); }
+        .play-overlay i { font-size: 4rem; color: white; opacity: 0.9; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); drop-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .video-card:hover .play-overlay i { opacity: 1; transform: scale(1.15); color: var(--primary); }
+        .lang-badge { position: absolute; top: 15px; left: 15px; background: var(--primary); color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.2); backdrop-filter: blur(4px); }
+
+        /* --- Custom Video Player Modal --- */
+        .video-modal-content { max-width: 900px; padding: 0; background: transparent; border: none; box-shadow: none; position: relative; overflow: visible; }
+        .iframe-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; background: #000; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); }
+        .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .video-close { position: absolute; top: -45px; right: 0; background: var(--card-bg); color: var(--text-main); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; border: 1px solid var(--border-color); transition: all 0.3s ease; z-index: 10; }
+        .video-close:hover { background: #EF4444; color: white; transform: rotate(90deg); }
+
+        /* --- Leaderboard Styles --- */
+        .leaderboard-list { display: flex; flex-direction: column; gap: 10px; }
+        .leaderboard-item { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: var(--light); border-radius: 16px; border: 1px solid var(--border-color); transition: transform 0.2s ease; }
+        .leaderboard-item:hover { transform: translateX(5px); background: var(--card-bg); border-color: var(--primary); }
+        .leaderboard-rank { font-size: 1.2rem; font-weight: 700; color: var(--primary); width: 30px; }
+        .leaderboard-user { display: flex; align-items: center; gap: 15px; flex: 1; }
+        .leaderboard-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--card-bg); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .leaderboard-name { font-weight: 600; color: var(--text-main); }
+        .leaderboard-score { font-size: 1.2rem; font-weight: 700; color: white; background: linear-gradient(135deg, #F59E0B, #EF4444); padding: 5px 15px; border-radius: 20px; box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3); }
+        .rank-1 .leaderboard-rank { color: #F59E0B; font-size: 1.5rem; }
+        .rank-2 .leaderboard-rank { color: #94A3B8; font-size: 1.4rem; }
+        .rank-3 .leaderboard-rank { color: #B45309; font-size: 1.3rem; }
 
         /* --- Premium Accordion for Important Questions --- */
         .premium-accordion { background: var(--light); border: 1px solid var(--border-color); border-radius: 12px; margin-bottom: 10px; overflow: hidden; transition: all 0.3s ease; }
@@ -215,8 +260,6 @@
         .history-info h4 { color: var(--text-main); font-size: 1rem; margin-bottom: 4px; }
         .history-date { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 5px;}
         .history-score { font-size: 1.2rem; font-weight: 700; color: white; background: var(--primary); padding: 6px 14px; border-radius: 10px; box-shadow: 0 4px 10px var(--primary-glow); }
-
-        /* --- NEW: Chart.js Container --- */
         .chart-container { position: relative; height: 200px; width: 100%; margin-bottom: 20px; background: var(--light); border-radius: 16px; padding: 15px; border: 1px solid var(--border-color); }
 
         /* --- MCQ Setup Form --- */
@@ -288,7 +331,7 @@
         body.dark-theme .review-opt.correct { color: #34D399; }
         body.dark-theme .review-opt.wrong { color: #F87171; }
 
-        /* --- NEW: Skeleton Loader Styles --- */
+        /* --- Skeleton Loader Styles --- */
         .skeleton {
             background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-highlight) 50%, var(--skeleton-base) 75%);
             background-size: 200% 100%;
@@ -340,79 +383,21 @@
             justify-content: center;
             font-size: 1rem;
             font-weight: 600;
-            text-decoration: none; /* For when used as an anchor tag replacement */
+            text-decoration: none;
         }
-
-        .Btn::before {
-            width: 70%;
-            height: 2px;
-            position: absolute;
-            background-color: rgba(250, 250, 250, 0.678);
-            content: "";
-            filter: blur(1px);
-            top: 7px;
-            border-radius: 50%;
-        }
-
-        .Btn::after {
-            width: 70%;
-            height: 2px;
-            position: absolute;
-            background-color: rgba(250, 250, 250, 0.137);
-            content: "";
-            filter: blur(1px);
-            bottom: 7px;
-            border-radius: 50%;
-        }
-
-        .Btn:hover {
-            animation: jello-horizontal 0.9s both;
-        }
-
-        @keyframes jello-horizontal {
-            0% { transform: scale3d(1, 1, 1); }
-            30% { transform: scale3d(1.25, 0.75, 1); }
-            40% { transform: scale3d(0.75, 1.25, 1); }
-            50% { transform: scale3d(1.15, 0.85, 1); }
-            65% { transform: scale3d(0.95, 1.05, 1); }
-            75% { transform: scale3d(1.05, 0.95, 1); }
-            100% { transform: scale3d(1, 1, 1); }
-        }
+        .Btn::before { width: 70%; height: 2px; position: absolute; background-color: rgba(250, 250, 250, 0.678); content: ""; filter: blur(1px); top: 7px; border-radius: 50%; }
+        .Btn::after { width: 70%; height: 2px; position: absolute; background-color: rgba(250, 250, 250, 0.137); content: ""; filter: blur(1px); bottom: 7px; border-radius: 50%; }
+        .Btn:hover { animation: jello-horizontal 0.9s both; }
+        @keyframes jello-horizontal { 0% { transform: scale3d(1, 1, 1); } 30% { transform: scale3d(1.25, 0.75, 1); } 40% { transform: scale3d(0.75, 1.25, 1); } 50% { transform: scale3d(1.15, 0.85, 1); } 65% { transform: scale3d(0.95, 1.05, 1); } 75% { transform: scale3d(1.05, 0.95, 1); } 100% { transform: scale3d(1, 1, 1); } }
 
         /* --- Custom Cursor Styles --- */
-        .custom-cursor {
-            position: fixed;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background-color 0.2s;
-            z-index: 9999;
-            box-shadow: 0 0 10px var(--primary-glow);
-        }
-        .custom-cursor.cursor-hover {
-            width: 45px;
-            height: 45px;
-            background-color: var(--primary-glow);
-            border-color: transparent;
-        }
-        @media (max-width: 768px) {
-            .custom-cursor { display: none; } /* Hide on mobile devices */
-            body { cursor: auto; }
-        }
+        .custom-cursor { position: fixed; width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); transition: width 0.2s, height 0.2s, background-color 0.2s; z-index: 9999; box-shadow: 0 0 10px var(--primary-glow); }
+        .custom-cursor.cursor-hover { width: 45px; height: 45px; background-color: var(--primary-glow); border-color: transparent; }
+        @media (max-width: 768px) { .custom-cursor { display: none; } body { cursor: auto; } }
 
         /* --- Scroll Reveal Styles --- */
-        .reveal {
-            opacity: 0;
-            transform: translateY(60px);
-            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .reveal { opacity: 0; transform: translateY(60px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
@@ -422,32 +407,38 @@
     <nav id="main-nav">
         <div class="logo"><i class="fas fa-graduation-cap"></i> EduNova</div>
         
-        <label class="switch" aria-label="Toggle Dark Mode">
-          <input id="theme-input" type="checkbox" />
-          <div class="slider round">
-            <div class="sun-moon">
-              <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
-              <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
-              <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
-              <svg id="light-ray-1" class="light-ray" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
-              <svg id="light-ray-2" class="light-ray" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
-              <svg id="light-ray-3" class="light-ray" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+        <div class="nav-actions">
+            <div class="user-profile-nav" id="auth-btn" onclick="openModal('modal-profile')">
+                <i class="fas fa-user-circle"></i> <span id="nav-user-name">Sign In</span>
+            </div>
 
-              <svg id="cloud-1" class="cloud-dark" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
-              <svg id="cloud-2" class="cloud-dark" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
-              <svg id="cloud-3" class="cloud-dark" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
-              <svg id="cloud-4" class="cloud-light" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
-              <svg id="cloud-5" class="cloud-light" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
-              <svg id="cloud-6" class="cloud-light" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+            <label class="switch" aria-label="Toggle Dark Mode">
+            <input id="theme-input" type="checkbox" />
+            <div class="slider round">
+                <div class="sun-moon">
+                <svg id="moon-dot-1" class="moon-dot" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+                <svg id="moon-dot-2" class="moon-dot" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+                <svg id="moon-dot-3" class="moon-dot" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+                <svg id="light-ray-1" class="light-ray" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+                <svg id="light-ray-2" class="light-ray" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+                <svg id="light-ray-3" class="light-ray" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+
+                <svg id="cloud-1" class="cloud-dark" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+                <svg id="cloud-2" class="cloud-dark" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+                <svg id="cloud-3" class="cloud-dark" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+                <svg id="cloud-4" class="cloud-light" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+                <svg id="cloud-5" class="cloud-light" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+                <svg id="cloud-6" class="cloud-light" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50"></circle></svg>
+                </div>
+                <div class="stars">
+                <svg id="star-1" class="star" viewBox="0 0 20 20"><path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"></path></svg>
+                <svg id="star-2" class="star" viewBox="0 0 20 20"><path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"></path></svg>
+                <svg id="star-3" class="star" viewBox="0 0 20 20"><path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"></path></svg>
+                <svg id="star-4" class="star" viewBox="0 0 20 20"><path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"></path></svg>
+                </div>
             </div>
-            <div class="stars">
-              <svg id="star-1" class="star" viewBox="0 0 20 20"><path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"></path></svg>
-              <svg id="star-2" class="star" viewBox="0 0 20 20"><path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"></path></svg>
-              <svg id="star-3" class="star" viewBox="0 0 20 20"><path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"></path></svg>
-              <svg id="star-4" class="star" viewBox="0 0 20 20"><path d="M 0 10 C 10 10,10 10 ,0 10 C 10 10 , 10 10 , 10 20 C 10 10 , 10 10 , 20 10 C 10 10 , 10 10 , 10 0 C 10 10,10 10 ,0 10 Z"></path></svg>
-            </div>
-          </div>
-        </label>
+            </label>
+        </div>
     </nav>
 
     <div id="main-content">
@@ -457,7 +448,7 @@
                 <p>Your one-stop premium dashboard for Class 10 SSC. Access notes, tests, video lectures, and track your syllabus progress all in one place.</p>
                 <div style="margin-top: 30px;">
                     <a href="#dashboard" class="Btn" style="text-decoration: none;">
-                        Jelly Button
+                        Get started       
                     </a>
                 </div>
             </div>
@@ -484,6 +475,13 @@
                     <h3>My Report Card</h3>
                     <p>Track your MCQ test scores and overall performance analytics.</p>
                     <div class="card-btn" style="color: #3B82F6;">View Analytics</div>
+                </div>
+
+                <div class="card reveal" onclick="fetchLeaderboard(); openModal('modal-leaderboard')" role="button" tabindex="0">
+                    <i class="fas fa-trophy" style="color: #F59E0B;"></i>
+                    <h3>Global Leaderboard</h3>
+                    <p>Compete with students globally. See who holds the top 10 spots!</p>
+                    <div class="card-btn" style="color: #F59E0B;">View Ranks</div>
                 </div>
 
                 <div class="card reveal" onclick="openModal('modal-questions')" role="button" tabindex="0">
@@ -545,6 +543,29 @@
             </div>
         </section>
 
+        <section id="career-guidance" class="reveal" style="padding-top: 0;">
+            <h2 class="section-title" style="margin-bottom: 20px;">Confused? What After 10th?</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 40px; font-size: 1.1rem;">Watch these expert guidance videos to choose the right stream (Science, Commerce, or Arts) in your preferred language.</p>
+            
+            <div class="video-row">
+                <div class="video-card" onclick="playVideo('yFwVKR6yt0w')">
+                    <img src="https://img.youtube.com/vi/yFwVKR6yt0w/hqdefault.jpg" alt="Telugu Career Guidance">
+                    <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                    <span class="lang-badge">Telugu</span>
+                </div>
+                <div class="video-card" onclick="playVideo('k3bQb4tyXbU')">
+                    <img src="https://img.youtube.com/vi/k3bQb4tyXbU/hqdefault.jpg" alt="Hindi Career Guidance">
+                    <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                    <span class="lang-badge">Hindi</span>
+                </div>
+                <div class="video-card" onclick="playVideo('N4pLiP5qgJ0')">
+                    <img src="https://img.youtube.com/vi/N4pLiP5qgJ0/hqdefault.jpg" alt="English Career Guidance">
+                    <div class="play-overlay"><i class="fas fa-play-circle"></i></div>
+                    <span class="lang-badge">English</span>
+                </div>
+            </div>
+        </section>
+
         <footer class="reveal">
             <p>&copy; 2026 EduNova. Built for Students.</p>
             <div class="creator-connect">
@@ -555,6 +576,61 @@
                 </a>
             </div>
         </footer>
+    </div>
+
+    <div class="modal-overlay" id="modal-profile">
+        <div class="modal-content" style="text-align: center;">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-astronaut" style="color: var(--primary);"></i> Student Profile</h3>
+                <button class="close-btn" onclick="closeModal('modal-profile')"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div id="unauthenticated-view">
+                <p style="margin-bottom: 20px; color: var(--text-muted);">Sign in to track your global rank and leave reviews!</p>
+                <button class="start-test-btn" onclick="signInWithGoogle()" style="background: #FFF; color: #333; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" alt="Google" style="width: 20px;">
+                    Sign in with Google
+                </button>
+            </div>
+
+            <div id="authenticated-view" style="display: none;">
+                <div class="profile-pic-container">
+                    <img src="default-avatar.png" id="user-profile-pic" alt="Profile" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary); margin-bottom: 15px;">
+                    <input type="file" id="pic-upload" accept="image/*" style="display: none;" onchange="uploadProfilePic(event)">
+                    <button class="quick-btn" onclick="document.getElementById('pic-upload').click()" style="margin-bottom: 15px;">Change Picture</button>
+                </div>
+                <h2 id="user-display-name" style="margin-bottom: 5px;">Student Name</h2>
+                
+                <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
+                
+                <h4 style="text-align: left; margin-bottom: 10px;">Review EduNova</h4>
+                <textarea id="website-review" placeholder="How is EduNova helping you?" style="width: 100%; height: 80px; padding: 10px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--light); color: var(--text-main); resize: none; margin-bottom: 10px; outline: none;"></textarea>
+                <button class="start-test-btn" onclick="submitReview()">Submit Review</button>
+                
+                <button class="quick-btn" onclick="signOutUser()" style="margin-top: 20px; border-color: #EF4444; color: #EF4444;">Sign Out</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-leaderboard">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-trophy" style="color: #F59E0B;"></i> Top 10 Scholars</h3>
+                <button class="close-btn" onclick="closeModal('modal-leaderboard')"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="leaderboard-list" id="leaderboard-container">
+                <p style="text-align:center; color: var(--text-muted);">Loading live scores...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-video-player">
+        <div class="modal-content video-modal-content">
+            <button class="video-close" onclick="closeVideoModal()"><i class="fas fa-times"></i></button>
+            <div class="iframe-container">
+                <iframe id="yt-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
+        </div>
     </div>
 
     <div class="modal-overlay" id="modal-timer">
@@ -603,8 +679,7 @@
             </div>
 
             <h4 class="history-title"><i class="fas fa-history"></i> Test History</h4>
-            <div class="history-list" id="report-history-list">
-            </div>
+            <div class="history-list" id="report-history-list"></div>
         </div>
     </div>
 
@@ -616,183 +691,23 @@
             </div>
             <div style="max-height: 65vh; overflow-y: auto; padding-right: 5px;">
                 <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Repeated questions from the last 10 years of SSC TS Board Exams.</p>
-                
-                <details class="premium-accordion">
-                    <summary><i class="fas fa-square-root-variable"></i> Mathematics</summary>
-                    <div class="accordion-content">
-                        <h4>1. Real Numbers</h4>
-                        <ul>
-                            <li>Prove that √3 is irrational.</li>
-                            <li>Prove that √5 is irrational.</li>
-                            <li>Show that 3 + 2√5 is irrational.</li>
-                            <li>Find HCF and LCM of 306 and 657 using Euclid’s algorithm.</li>
-                            <li>Use Euclid’s Division Algorithm to find the HCF of 135 and 225.</li>
-                        </ul>
-                        <h4>2. Polynomials</h4>
-                        <ul>
-                            <li>Find the zeroes of the quadratic polynomial x² - 7x + 10.</li>
-                            <li>Find the zeroes of the quadratic polynomial x² - 5x + 6.</li>
-                            <li>Verify the relationship between zeroes and coefficients.</li>
-                        </ul>
-                        <h4>3. Pair of Linear Equations</h4>
-                        <ul>
-                            <li>Solve the system: 2x + 3y = 13 and 3x - y = 5.</li>
-                        </ul>
-                        <h4>4. Quadratic Equations</h4>
-                        <ul>
-                            <li>Solve using quadratic formula: x² - 7x + 10 = 0.</li>
-                            <li>Solve using quadratic formula: x² - 5x + 6 = 0.</li>
-                        </ul>
-                        <h4>5. Arithmetic Progressions</h4>
-                        <ul>
-                            <li>Find the sum of first 20 terms of an AP: 3, 7, 11, 15...</li>
-                            <li>Find the 20th term of AP: 3, 7, 11, 15...</li>
-                            <li>Find the sum of first 30 terms of AP.</li>
-                        </ul>
-                        <h4>6. Trigonometry</h4>
-                        <ul>
-                            <li>Prove the trigonometric identity: 1/sinθ - 1/cscθ = 0.</li>
-                            <li>Prove that (1 - tan²θ) / (1 + tan²θ) = cos 2θ.</li>
-                        </ul>
-                        <h4>7. Coordinate Geometry & Statistics</h4>
-                        <ul>
-                            <li>Find area of triangle formed by points (5,2), (4,7), (7,-4).</li>
-                            <li>Find mean, median, and mode of grouped data.</li>
-                        </ul>
-                        <h4>8. Mensuration</h4>
-                        <ul>
-                            <li>Find the surface area and volume of a cone.</li>
-                        </ul>
-                    </div>
-                </details>
-
-                <details class="premium-accordion">
-                    <summary><i class="fas fa-flask"></i> Science</summary>
-                    <div class="accordion-content">
-                        <h4>Physics</h4>
-                        <ul>
-                            <li>State Ohm’s Law and explain with a graph.</li>
-                            <li>Difference between AC and DC current.</li>
-                            <li>Explain the Electric Motor with a labelled diagram.</li>
-                            <li>What is the refraction of light?</li>
-                            <li>Define focal length and power of a lens. Find focal length when power is given.</li>
-                        </ul>
-                        <h4>Chemistry</h4>
-                        <ul>
-                            <li>Write types of chemical reactions with examples.</li>
-                            <li>Explain corrosion and rancidity.</li>
-                            <li>Write the chemical properties of acids and bases.</li>
-                            <li>Explain the electrolysis of water with a diagram.</li>
-                        </ul>
-                        <h4>Biology</h4>
-                        <ul>
-                            <li>Explain the Human Digestive System with a diagram.</li>
-                            <li>Explain Respiration in human beings.</li>
-                            <li>Describe Blood circulation in the human heart.</li>
-                            <li>Explain Reproduction in plants.</li>
-                            <li>Explain the Human reproductive system.</li>
-                        </ul>
-                    </div>
-                </details>
-
-                <details class="premium-accordion">
-                    <summary><i class="fas fa-globe-asia"></i> Social Studies</summary>
-                    <div class="accordion-content">
-                        <h4>History</h4>
-                        <ul>
-                            <li>Causes and results of World War I.</li>
-                            <li>Consequences & effects of World War II.</li>
-                            <li>Importance of the Bandung Conference.</li>
-                        </ul>
-                        <h4>Civics</h4>
-                        <ul>
-                            <li>What is Democracy? Explain its features.</li>
-                            <li>Functions of the Election Commission.</li>
-                        </ul>
-                        <h4>Geography</h4>
-                        <ul>
-                            <li>Explain major rivers of India.</li>
-                            <li>Explain types of soils in India.</li>
-                            <li>Explain Water resources in India.</li>
-                        </ul>
-                        <h4>Economics</h4>
-                        <ul>
-                            <li>What is Globalisation? Explain.</li>
-                            <li>Role of Banks in economic development.</li>
-                        </ul>
-                    </div>
-                </details>
-
-                <details class="premium-accordion">
-                    <summary><i class="fas fa-language"></i> English & Hindi</summary>
-                    <div class="accordion-content">
-                        <h4>English</h4>
-                        <ul>
-                            <li>Write a summary of "The Dear Departed".</li>
-                            <li>Character sketch of Mrs. Slater.</li>
-                            <li>Write a Notice for a school event.</li>
-                            <li>Write an Invitation letter for a school function.</li>
-                            <li>Change Active voice to Passive voice.</li>
-                            <li>Write an Essay on Environmental Pollution.</li>
-                            <li>Write a letter to the headmaster requesting leave.</li>
-                        </ul>
-                        <h4>Hindi</h4>
-                        <ul>
-                            <li>Write सारांश (Summary) of a lesson.</li>
-                            <li>पत्र लेखन (Letter writing).</li>
-                            <li>निबंध लेखन (Essay writing) on पर्यावरण संरक्षण (Environment).</li>
-                            <li>अपठित गद्यांश (Unseen passage).</li>
-                            <li>कविता का भावार्थ (Poem explanation).</li>
-                        </ul>
-                    </div>
-                </details>
-
-                <details class="premium-accordion">
-                    <summary><i class="fas fa-pen-nib"></i> Important Diagrams to Practice</summary>
-                    <div class="accordion-content" style="text-align: center;">
-                        <p style="text-align: left; margin-bottom: 15px;">Make sure to practice labeling these highly repeated diagrams:</p>
-                        
-                        <h4>1. Human Digestive System</h4>
-                        <br>
-                        
-
+                <details class="premium-accordion"><summary><i class="fas fa-square-root-variable"></i> Mathematics</summary><div class="accordion-content"><h4>1. Real Numbers</h4><ul><li>Prove that √3 is irrational.</li><li>Prove that √5 is irrational.</li><li>Show that 3 + 2√5 is irrational.</li><li>Find HCF and LCM of 306 and 657 using Euclid’s algorithm.</li><li>Use Euclid’s Division Algorithm to find the HCF of 135 and 225.</li></ul><h4>2. Polynomials</h4><ul><li>Find the zeroes of the quadratic polynomial x² - 7x + 10.</li><li>Find the zeroes of the quadratic polynomial x² - 5x + 6.</li><li>Verify the relationship between zeroes and coefficients.</li></ul><h4>3. Pair of Linear Equations</h4><ul><li>Solve the system: 2x + 3y = 13 and 3x - y = 5.</li></ul><h4>4. Quadratic Equations</h4><ul><li>Solve using quadratic formula: x² - 7x + 10 = 0.</li><li>Solve using quadratic formula: x² - 5x + 6 = 0.</li></ul><h4>5. Arithmetic Progressions</h4><ul><li>Find the sum of first 20 terms of an AP: 3, 7, 11, 15...</li><li>Find the 20th term of AP: 3, 7, 11, 15...</li><li>Find the sum of first 30 terms of AP.</li></ul><h4>6. Trigonometry</h4><ul><li>Prove the trigonometric identity: 1/sinθ - 1/cscθ = 0.</li><li>Prove that (1 - tan²θ) / (1 + tan²θ) = cos 2θ.</li></ul><h4>7. Coordinate Geometry & Statistics</h4><ul><li>Find area of triangle formed by points (5,2), (4,7), (7,-4).</li><li>Find mean, median, and mode of grouped data.</li></ul><h4>8. Mensuration</h4><ul><li>Find the surface area and volume of a cone.</li></ul></div></details>
+                <details class="premium-accordion"><summary><i class="fas fa-flask"></i> Science</summary><div class="accordion-content"><h4>Physics</h4><ul><li>State Ohm’s Law and explain with a graph.</li><li>Difference between AC and DC current.</li><li>Explain the Electric Motor with a labelled diagram.</li><li>What is the refraction of light?</li><li>Define focal length and power of a lens. Find focal length when power is given.</li></ul><h4>Chemistry</h4><ul><li>Write types of chemical reactions with examples.</li><li>Explain corrosion and rancidity.</li><li>Write the chemical properties of acids and bases.</li><li>Explain the electrolysis of water with a diagram.</li></ul><h4>Biology</h4><ul><li>Explain the Human Digestive System with a diagram.</li><li>Explain Respiration in human beings.</li><li>Describe Blood circulation in the human heart.</li><li>Explain Reproduction in plants.</li><li>Explain the Human reproductive system.</li></ul></div></details>
+                <details class="premium-accordion"><summary><i class="fas fa-globe-asia"></i> Social Studies</summary><div class="accordion-content"><h4>History</h4><ul><li>Causes and results of World War I.</li><li>Consequences & effects of World War II.</li><li>Importance of the Bandung Conference.</li></ul><h4>Civics</h4><ul><li>What is Democracy? Explain its features.</li><li>Functions of the Election Commission.</li></ul><h4>Geography</h4><ul><li>Explain major rivers of India.</li><li>Explain types of soils in India.</li><li>Explain Water resources in India.</li></ul><h4>Economics</h4><ul><li>What is Globalisation? Explain.</li><li>Role of Banks in economic development.</li></ul></div></details>
+                <details class="premium-accordion"><summary><i class="fas fa-language"></i> English & Hindi</summary><div class="accordion-content"><h4>English</h4><ul><li>Write a summary of "The Dear Departed".</li><li>Character sketch of Mrs. Slater.</li><li>Write a Notice for a school event.</li><li>Write an Invitation letter for a school function.</li><li>Change Active voice to Passive voice.</li><li>Write an Essay on Environmental Pollution.</li><li>Write a letter to the headmaster requesting leave.</li></ul><h4>Hindi</h4><ul><li>Write सारांश (Summary) of a lesson.</li><li>पत्र लेखन (Letter writing).</li><li>निबंध लेखन (Essay writing) on पर्यावरण संरक्षण (Environment).</li><li>अपठित गद्यांश (Unseen passage).</li><li>कविता का भावार्थ (Poem explanation).</li></ul></div></details>
+                <details class="premium-accordion"><summary><i class="fas fa-pen-nib"></i> Important Diagrams to Practice</summary><div class="accordion-content" style="text-align: center;"><p style="text-align: left; margin-bottom: 15px;">Make sure to practice labeling these highly repeated diagrams:</p><h4>1. Human Digestive System</h4><br>
 
 [Image of the human digestive system]
-
-
-                        <br>
-                        <h4>2. Electric Motor</h4>
-                        <br>
-                        
-
+<br><h4>2. Electric Motor</h4><br>
 
 [Image of an electric motor diagram]
-
-
-                        <br>
-                        <h4>3. Human Heart</h4>
-                        <br>
-                        
-
+<br><h4>3. Human Heart</h4><br>
 
 [Image of the human heart internal structure]
-
-
-                        <br>
-                        <h4>4. Refraction through Lens</h4>
-                        <br>
-                        <br>
-                        <h4>5. Neuron Structure</h4>
-                        <br>
-                        
-
+<br><h4>4. Refraction through Lens</h4><br><br><h4>5. Neuron Structure</h4><br>
 
 [Image of a neuron structure diagram]
-
-
-                    </div>
-                </details>
-
+</div></details>
             </div>
         </div>
     </div>
@@ -1013,7 +928,142 @@
     </div>
 
     <script>
-        // --- Theme and Modal Logic ---
+        // ==========================================
+        // 1. FIREBASE INITIALIZATION & AUTH LOGIC
+        // ==========================================
+        
+        // !--- IMPORTANT ---! 
+        // Replace these placeholder values with your actual Firebase Project Config.
+        const firebaseConfig = {
+            apiKey: "YOUR_FIREBASE_API_KEY",
+            authDomain: "your-project.firebaseapp.com",
+            projectId: "your-project",
+            storageBucket: "your-project.appspot.com",
+            messagingSenderId: "YOUR_SENDER_ID",
+            appId: "YOUR_APP_ID"
+        };
+        
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        const storage = firebase.storage();
+        const provider = new firebase.auth.GoogleAuthProvider();
+
+        let currentUser = null;
+
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                document.getElementById('unauthenticated-view').style.display = 'none';
+                document.getElementById('authenticated-view').style.display = 'block';
+                document.getElementById('nav-user-name').innerText = user.displayName.split(' ')[0];
+                document.getElementById('user-display-name').innerText = user.displayName;
+                if(user.photoURL) document.getElementById('user-profile-pic').src = user.photoURL;
+                
+                db.collection('users').doc(user.uid).set({
+                    name: user.displayName,
+                    photoURL: user.photoURL,
+                    email: user.email
+                }, { merge: true });
+
+            } else {
+                currentUser = null;
+                document.getElementById('unauthenticated-view').style.display = 'block';
+                document.getElementById('authenticated-view').style.display = 'none';
+                document.getElementById('nav-user-name').innerText = "Sign In";
+            }
+        });
+
+        function signInWithGoogle() {
+            if (firebaseConfig.apiKey === "YOUR_FIREBASE_API_KEY") {
+                alert("Developer Note: You need to add your real Firebase Config in the HTML file for Google Sign-In to work!");
+                return;
+            }
+            auth.signInWithPopup(provider).catch(error => alert(error.message));
+        }
+
+        function signOutUser() {
+            auth.signOut();
+        }
+
+        async function uploadProfilePic(event) {
+            const file = event.target.files[0];
+            if(!file || !currentUser) return;
+
+            const storageRef = storage.ref(`profilePics/${currentUser.uid}`);
+            const uploadTask = storageRef.put(file);
+
+            uploadTask.on('state_changed', null, (error) => console.error(error), async () => {
+                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+                await auth.currentUser.updateProfile({ photoURL: downloadURL });
+                await db.collection('users').doc(currentUser.uid).update({ photoURL: downloadURL });
+                document.getElementById('user-profile-pic').src = downloadURL;
+                alert("Profile picture updated!");
+            });
+        }
+
+        async function submitReview() {
+            const text = document.getElementById('website-review').value.trim();
+            if(!text || !currentUser) return alert("Please write something first.");
+
+            await db.collection('reviews').add({
+                uid: currentUser.uid,
+                name: currentUser.displayName,
+                photoURL: currentUser.photoURL,
+                review: text,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            
+            document.getElementById('website-review').value = '';
+            alert("Thank you for your review!");
+        }
+
+        async function fetchLeaderboard() {
+            const container = document.getElementById('leaderboard-container');
+            container.innerHTML = '<p style="text-align:center; color: var(--text-muted);">Loading live scores...</p>';
+            
+            if (firebaseConfig.apiKey === "YOUR_FIREBASE_API_KEY") {
+                container.innerHTML = '<p style="text-align:center; color: #EF4444;">Developer Note: Add Firebase config to see real scores.</p>';
+                return;
+            }
+
+            try {
+                const snapshot = await db.collection('users').orderBy('totalScore', 'desc').limit(10).get();
+                container.innerHTML = '';
+                
+                if(snapshot.empty) {
+                    container.innerHTML = '<p style="text-align:center; color: var(--text-muted);">No scores recorded yet! Take a test to be #1.</p>';
+                    return;
+                }
+
+                let rank = 1;
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const item = document.createElement('div');
+                    item.className = `leaderboard-item rank-${rank}`;
+                    item.innerHTML = `
+                        <div class="leaderboard-rank">#${rank}</div>
+                        <div class="leaderboard-user">
+                            <img src="${data.photoURL || 'default-avatar.png'}" class="leaderboard-avatar">
+                            <div class="leaderboard-name">${data.name}</div>
+                        </div>
+                        <div class="leaderboard-score">${data.totalScore || 0} pts</div>
+                    `;
+                    container.appendChild(item);
+                    rank++;
+                });
+            } catch(err) {
+                console.error(err);
+                container.innerHTML = '<p style="text-align:center; color: #EF4444;">Failed to load leaderboard.</p>';
+            }
+        }
+
+        // ==========================================
+        // 2. UI, MODALS, VIDEO PLAYER & THEME LOGIC
+        // ==========================================
         function openModal(modalId) {
             document.getElementById(modalId).classList.add('active');
             document.body.style.overflow = 'hidden'; 
@@ -1026,10 +1076,27 @@
             if (event.target.classList.contains('modal-overlay')) {
                 event.target.classList.remove('active');
                 document.body.style.overflow = 'auto';
+                
+                // Stop video if the video modal is closed by clicking outside
+                if (event.target.id === 'modal-video-player') {
+                    document.getElementById('yt-iframe').src = "";
+                }
             }
         }
+
+        // NEW: Video Player Logic
+        function playVideo(videoId) {
+            const iframe = document.getElementById('yt-iframe');
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            openModal('modal-video-player');
+        }
+
+        function closeVideoModal() {
+            const iframe = document.getElementById('yt-iframe');
+            iframe.src = ""; // Stops the video from playing in background
+            closeModal('modal-video-player');
+        }
         
-        // --- Interactive Theme Toggle Logic ---
         const themeInput = document.getElementById('theme-input');
         const bodyElement = document.body;
         themeInput.addEventListener('change', () => {
@@ -1038,15 +1105,17 @@
             } else {
                 bodyElement.classList.remove('dark-theme');
             }
-            // Update chart colors if chart exists when theme changes
             if(window.scoreChartInstance) loadReportCard();
         });
 
-        // --- Pomodoro Timer Logic ---
+
+        // ==========================================
+        // 3. POMODORO TIMER LOGIC
+        // ==========================================
         let pomoInterval;
         let isTimerRunning = false;
-        let pomoMode = 'pomodoro'; // 'pomodoro' or 'break'
-        let timeRemaining = 25 * 60; // default 25 mins
+        let pomoMode = 'pomodoro'; 
+        let timerTimeRemaining = 25 * 60; 
 
         function setTimerMode(mode) {
             clearInterval(pomoInterval);
@@ -1060,10 +1129,10 @@
             
             const circle = document.getElementById('timer-circle-ui');
             if(mode === 'break') {
-                timeRemaining = 5 * 60;
+                timerTimeRemaining = 5 * 60;
                 circle.classList.add('break-mode');
             } else {
-                timeRemaining = 25 * 60;
+                timerTimeRemaining = 25 * 60;
                 circle.classList.remove('break-mode');
             }
             updateTimerUI();
@@ -1077,9 +1146,9 @@
             } else {
                 btn.innerText = "Pause";
                 pomoInterval = setInterval(() => {
-                    timeRemaining--;
+                    timerTimeRemaining--;
                     updateTimerUI();
-                    if(timeRemaining <= 0) {
+                    if(timerTimeRemaining <= 0) {
                         clearInterval(pomoInterval);
                         isTimerRunning = false;
                         btn.innerText = "Start";
@@ -1095,17 +1164,20 @@
         }
 
         function updateTimerUI() {
-            let m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
-            let s = (timeRemaining % 60).toString().padStart(2, '0');
+            let m = Math.floor(timerTimeRemaining / 60).toString().padStart(2, '0');
+            let s = (timerTimeRemaining % 60).toString().padStart(2, '0');
             document.getElementById('pomodoro-time').innerText = `${m}:${s}`;
             
             let totalSeconds = pomoMode === 'pomodoro' ? 25 * 60 : 5 * 60;
-            let percentage = (timeRemaining / totalSeconds) * 360;
+            let percentage = (timerTimeRemaining / totalSeconds) * 360;
             document.getElementById('timer-circle-ui').style.setProperty('--timer-deg', `${percentage}deg`);
         }
 
-        // --- NEW: Chart.js Integration & Report Card Logic ---
-        window.scoreChartInstance = null; // Store globally to destroy before recreating
+
+        // ==========================================
+        // 4. CHART.JS & LOCAL REPORT CARD
+        // ==========================================
+        window.scoreChartInstance = null; 
         
         function loadReportCard() {
             const historyList = document.getElementById('report-history-list');
@@ -1127,10 +1199,8 @@
             let totalPercentage = 0;
             historyList.innerHTML = "";
             
-            // Generate List
             [...reports].reverse().forEach(report => {
                 totalPercentage += report.percentage;
-                
                 const item = document.createElement('div');
                 item.className = 'history-item';
                 item.innerHTML = `
@@ -1147,22 +1217,16 @@
             avgScoreEl.innerText = `${avg}%`;
             avgScoreEl.style.color = avg >= 70 ? 'var(--primary)' : (avg >= 40 ? '#F59E0B' : '#EF4444');
 
-            // Initialize/Update Chart.js Graph
             chartWrapper.style.display = 'block';
             const ctx = document.getElementById('scoreChart').getContext('2d');
-            
-            // Limit to last 15 tests for clean graph
             const chartData = reports.slice(-15);
             const labels = chartData.map((r, i) => `Test ${i+1}`);
             const dataScores = chartData.map(r => r.percentage);
-
             const isDark = document.body.classList.contains('dark-theme');
             const gridColor = isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)';
             const textColor = isDark ? '#94A3B8' : '#64748B';
 
-            if(window.scoreChartInstance) {
-                window.scoreChartInstance.destroy();
-            }
+            if(window.scoreChartInstance) window.scoreChartInstance.destroy();
 
             window.scoreChartInstance = new Chart(ctx, {
                 type: 'line',
@@ -1187,16 +1251,8 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: { 
-                        y: { 
-                            beginAtZero: true, 
-                            max: 100,
-                            grid: { color: gridColor },
-                            ticks: { color: textColor }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: textColor }
-                        }
+                        y: { beginAtZero: true, max: 100, grid: { color: gridColor }, ticks: { color: textColor } },
+                        x: { grid: { display: false }, ticks: { color: textColor } }
                     },
                     plugins: { 
                         legend: { display: false },
@@ -1208,16 +1264,17 @@
                             borderWidth: 1,
                             padding: 10,
                             displayColors: false,
-                            callbacks: {
-                                label: function(context) { return `Score: ${context.parsed.y}%`; }
-                            }
+                            callbacks: { label: function(context) { return `Score: ${context.parsed.y}%`; } }
                         }
                     }
                 }
             });
         }
 
-        // --- Syllabus Tracker Logic ---
+
+        // ==========================================
+        // 5. SYLLABUS TRACKER
+        // ==========================================
         document.addEventListener('DOMContentLoaded', loadProgress);
         function saveProgress() {
             const checkboxes = document.querySelectorAll('.tracker-item input[type="checkbox"]');
@@ -1246,7 +1303,10 @@
             }
         }
 
-        // --- Expanded MCQ Engine Data ---
+
+        // ==========================================
+        // 6. MCQ ENGINE LOGIC
+        // ==========================================
         const mcqData = {
             biology: {
                 lesson1: [
@@ -1748,27 +1808,25 @@
 
             if(currentTestQuestions.length === 0) { alert("Sorry, no questions found."); return; }
 
-            let chapterText = document.getElementById('mcq-chapter').options[document.getElementById('mcq-chapter').selectedIndex].text;
             let subjectText = document.getElementById('mcq-subject').options[document.getElementById('mcq-subject').selectedIndex].text;
-            
             document.getElementById('test-title-display').innerText = `${subjectText} Test`;
 
             const timerDisplay = document.getElementById('timer-display');
             if(useTimer) {
-                let timeRemaining = currentTestQuestions.length * 60; 
+                let testTimeRemaining = currentTestQuestions.length * 60; 
                 timerDisplay.style.display = 'flex';
                 timerDisplay.classList.remove('warning');
                 
                 clearInterval(examTimerInterval);
                 examTimerInterval = setInterval(() => {
-                    timeRemaining--;
-                    let m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
-                    let s = (timeRemaining % 60).toString().padStart(2, '0');
+                    testTimeRemaining--;
+                    let m = Math.floor(testTimeRemaining / 60).toString().padStart(2, '0');
+                    let s = (testTimeRemaining % 60).toString().padStart(2, '0');
                     document.getElementById('time-remaining').innerText = `${m}:${s}`;
                     
-                    if(timeRemaining <= 60) timerDisplay.classList.add('warning');
+                    if(testTimeRemaining <= 60) timerDisplay.classList.add('warning');
                     
-                    if(timeRemaining <= 0) {
+                    if(testTimeRemaining <= 0) {
                         clearInterval(examTimerInterval);
                         alert("Time's up! Submitting test automatically.");
                         submitTest();
@@ -1789,12 +1847,10 @@
             renderQuestion();
         }
 
-        // --- NEW: Skeleton Loader Logic incorporated into Render ---
         function renderQuestion() {
             const questionContainer = document.getElementById('question-text');
             const optionsContainer = document.getElementById('options-container');
 
-            // 1. Instantly show Skeleton Screen
             questionContainer.innerHTML = `
                 <div class="skeleton skeleton-text"></div>
                 <div class="skeleton skeleton-text short"></div>
@@ -1806,12 +1862,10 @@
                 <div class="skeleton skeleton-btn"></div>
             `;
             
-            // Hide buttons while loading
             document.getElementById('prev-btn').style.visibility = 'hidden';
             document.getElementById('next-btn').style.display = 'none';
             document.getElementById('submit-btn').style.display = 'none';
 
-            // 2. Load actual content after a brief artificial delay (600ms)
             setTimeout(() => {
                 const qData = currentTestQuestions[currentQuestionIndex];
                 document.getElementById('current-q-num').innerText = currentQuestionIndex + 1;
@@ -1837,12 +1891,11 @@
                     document.getElementById('next-btn').style.display = 'block';
                     document.getElementById('submit-btn').style.display = 'none';
                 }
-            }, 600); // 600 milliseconds of loading animation
+            }, 600);
         }
 
         function selectOption(index) {
             userAnswers[currentQuestionIndex] = index;
-            // Immediate re-render (no skeleton) since they just clicked an option on the current question
             const qData = currentTestQuestions[currentQuestionIndex];
             const optionsContainer = document.getElementById('options-container');
             optionsContainer.innerHTML = '';
@@ -1857,7 +1910,7 @@
 
         function navigateQuestion(dir) {
             currentQuestionIndex += dir;
-            renderQuestion(); // Triggers the skeleton loading animation for the new question
+            renderQuestion(); 
         }
 
         function submitTest() {
@@ -1867,7 +1920,6 @@
 
             const percentage = (score / currentTestQuestions.length) * 100;
 
-            // Save to LocalStorage
             let reportData = JSON.parse(localStorage.getItem('eduNovaReports')) || [];
             let subjectSelect = document.getElementById('mcq-subject');
             let chapterSelect = document.getElementById('mcq-chapter');
@@ -1882,7 +1934,12 @@
             });
             localStorage.setItem('eduNovaReports', JSON.stringify(reportData));
 
-            // Display UI
+            if (currentUser && firebaseConfig.apiKey !== "YOUR_FIREBASE_API_KEY") {
+                db.collection('users').doc(currentUser.uid).update({
+                    totalScore: firebase.firestore.FieldValue.increment(score)
+                }).catch(err => console.log("Leaderboard error:", err));
+            }
+
             document.getElementById('quiz-content').style.display = 'none';
             document.getElementById('timer-display').style.display = 'none';
             const resultsScreen = document.getElementById('results-content');
@@ -1948,11 +2005,9 @@
             window.scrollTo(0,0);
         }
 
-        // --- NEW: Real AI Integration using Gemini API ---
-        
-        // !--- IMPORTANT ---! 
-        // Replace "YOUR_GEMINI_API_KEY" with your actual API key from Google AI Studio.
-        // It's free to get one. 
+        // ==========================================
+        // 7. GEMINI AI CHATBOT LOGIC
+        // ==========================================
         const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY";
 
         function toggleChat() { document.getElementById('chat-window').classList.toggle('active'); }
@@ -1965,8 +2020,6 @@
             if(text === '') return;
             addChatMessage(text, 'user');
             inputField.value = '';
-            
-            // Artificial delay before Bot typing
             setTimeout(() => { generateBotResponse(text); }, 400);
         }
 
@@ -1974,7 +2027,7 @@
             const chatMessages = document.getElementById('chat-messages');
             const msgDiv = document.createElement('div');
             msgDiv.className = `msg msg-${sender}`;
-            msgDiv.innerHTML = text; // allow HTML for loading icon
+            msgDiv.innerHTML = text;
             chatMessages.appendChild(msgDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
@@ -1982,7 +2035,6 @@
         async function generateBotResponse(input) {
             const lowerInput = input.toLowerCase();
 
-            // Check if user has updated the API key yet. If not, use the hardcoded fallbacks.
             if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY") {
                 let response = "";
                 if (lowerInput.includes('note') || lowerInput.includes('pdf') || lowerInput.includes('material')) {
@@ -1998,13 +2050,12 @@
                 } else if (lowerInput.includes('hi') || lowerInput.includes('hello') || lowerInput.includes('hey')) {
                     response = "Hi there! Welcome to EduNova. Are you looking for Notes, Mock Tests, or Previous Papers today?";
                 } else {
-                    response = "That's a great question! I am still learning.<br><br><span style='font-size: 0.8rem; color: var(--primary);'><b>Dev Note:</b> Add your Gemini API Key in the code to unlock real AI responses!</span> 💡";
+                    response = "That's a great question! I am still learning.<br><br><span style='font-size: 0.8rem; color: var(--primary);'><b>Dev Note:</b> Add your Gemini API Key in the HTML code to unlock real AI responses!</span> 💡";
                 }
                 addChatMessage(response, 'bot');
                 return;
             }
 
-            // If API key is present, use REAL AI (Gemini)
             addChatMessage('<i class="fas fa-circle-notch fa-spin"></i> Thinking...', 'bot');
             const chatMessages = document.getElementById('chat-messages');
             const loadingMsg = chatMessages.lastChild;
@@ -2014,11 +2065,7 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ 
-                            parts: [{ 
-                                text: "You are EduBot, a highly helpful, friendly, and concise study assistant for Class 10 students using the EduNova dashboard. Keep answers short, encouraging, and easy to understand. Do not use complex formatting. The user asks: " + input 
-                            }] 
-                        }]
+                        contents: [{ parts: [{ text: "You are EduBot, a highly helpful, friendly, and concise study assistant for Class 10 students using the EduNova dashboard. Keep answers short, encouraging, and easy to understand. Do not use complex formatting. The user asks: " + input }] }]
                     })
                 });
                 
@@ -2027,13 +2074,11 @@
                 if(data.candidates && data.candidates[0].content.parts[0].text) {
                     let aiText = data.candidates[0].content.parts[0].text;
                     loadingMsg.remove();
-                    // Basic formatting to convert markdown bold to HTML
                     aiText = aiText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); 
                     addChatMessage(aiText, 'bot');
                 } else {
                     throw new Error("No text in response");
                 }
-                
             } catch(error) {
                 console.error("Gemini API Error:", error);
                 loadingMsg.remove();
@@ -2041,13 +2086,15 @@
             }
         }
 
-        // --- Dynamic Scroll Reveal Class Adder (To preserve original HTML) ---
+
+        // ==========================================
+        // 8. SCROLL REVEAL & CUSTOM CURSOR LOGIC
+        // ==========================================
         document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.card').forEach(card => card.classList.add('reveal'));
-            reveal(); // Initialize check on load
+            document.querySelectorAll('.card, .video-card').forEach(card => card.classList.add('reveal'));
+            reveal(); 
         });
 
-        // --- Scroll Reveal Logic ---
         function reveal() {
             var reveals = document.querySelectorAll(".reveal");
             for (var i = 0; i < reveals.length; i++) {
@@ -2061,27 +2108,24 @@
         }
         window.addEventListener("scroll", reveal);
 
-        // --- Custom Cursor Logic ---
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', (e) => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
         
-        // Add hover effect to interactive elements
-        const interactables = document.querySelectorAll('a, button, .card, .card-btn, .switch, input, select, summary');
+        const interactables = document.querySelectorAll('a, button, .card, .card-btn, .switch, input, select, summary, .user-profile-nav, .video-card');
         interactables.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
         });
 
-        // --- 3D Tilt Logic Initialization ---
         VanillaTilt.init(document.querySelectorAll(".card"), {
-            max: 12,           // Maximum tilt rotation (degrees)
-            speed: 400,        // Speed of the enter/exit transition
-            glare: true,       // if it should have a "glare" effect
-            "max-glare": 0.15, // the maximum "glare" opacity (1 = 100%, 0.5 = 50%)
-            scale: 1.05        // slight scale up on hover
+            max: 12,           
+            speed: 400,        
+            glare: true,       
+            "max-glare": 0.15, 
+            scale: 1.05        
         });
     </script>
 </body>
