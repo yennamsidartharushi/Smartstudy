@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -156,9 +156,7 @@
         .card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(124, 58, 237, 0.05)); opacity: 0; transition: opacity 0.4s ease; z-index: -1; }
         .card:hover::before { opacity: 1; }
         .card:hover { box-shadow: 0 20px 40px var(--primary-glow); border-color: var(--primary); }
-        
-        /* Smaller Icons Requirement */
-        .card i { font-size: 2.5rem; margin-bottom: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; transition: transform 0.4s ease; transform: translateZ(30px); }
+        .card i { font-size: 3.5rem; margin-bottom: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; transition: transform 0.4s ease; transform: translateZ(30px); }
         .card:hover i { transform: scale(1.1) translateZ(40px); }
         .card h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--text-main); font-weight: 600; transform: translateZ(20px); }
         .card p { color: var(--text-muted); font-size: 1rem; margin-bottom: 30px; flex-grow: 1; line-height: 1.6; transform: translateZ(10px); }
@@ -178,9 +176,7 @@
         .subject-list { display: flex; flex-direction: column; gap: 12px; }
         .subject-item { display: flex; align-items: center; gap: 15px; padding: 16px 20px; background: var(--light); border-radius: 16px; text-decoration: none; color: var(--text-main); font-weight: 500; transition: all 0.3s ease; border: 1px solid transparent; position: relative; overflow: hidden; }
         .subject-item:hover { background: var(--card-bg); border-color: var(--primary); transform: translateX(5px); color: var(--primary); box-shadow: 0 5px 15px var(--glass-shadow); }
-        
-        /* Smaller Icons Requirement */
-        .subject-item i { width: 25px; text-align: center; font-size: 1.1rem; color: var(--text-muted); transition: color 0.3s ease;}
+        .subject-item i { width: 30px; text-align: center; font-size: 1.3rem; color: var(--text-muted); transition: color 0.3s ease;}
         .subject-item:hover i { color: var(--primary); }
 
         /* --- PREMIUM MUSIC PLAYER STYLES --- */
@@ -211,9 +207,7 @@
         .video-card:hover img { transform: scale(1.08); }
         .play-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
         .video-card:hover .play-overlay { background: rgba(15, 23, 42, 0.2); }
-        
-        /* Smaller Icons Requirement */
-        .play-overlay i { font-size: 3rem; color: white; opacity: 0.9; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); drop-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .play-overlay i { font-size: 4rem; color: white; opacity: 0.9; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); drop-shadow: 0 4px 10px rgba(0,0,0,0.5); }
         .video-card:hover .play-overlay i { opacity: 1; transform: scale(1.15); color: var(--primary); }
         .lang-badge { position: absolute; top: 15px; left: 15px; background: var(--primary); color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.2); backdrop-filter: blur(4px); }
 
@@ -275,7 +269,7 @@
         /* --- Report Card Styles --- */
         .report-stats { display: flex; justify-content: space-around; background: var(--primary-glow); padding: 25px 15px; border-radius: 20px; margin-bottom: 25px; border: 1px solid var(--primary); }
         .stat-box { text-align: center; }
-        .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--primary); line-height: 1; margin-bottom: 5px; }
+        .stat-value { font-size: 2.2rem; font-weight: 700; color: var(--primary); line-height: 1; margin-bottom: 5px; }
         .stat-label { font-size: 0.9rem; color: var(--text-main); font-weight: 600; }
         .history-title { font-size: 1.1rem; color: var(--text-main); margin-bottom: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px;}
         .history-list { display: flex; flex-direction: column; gap: 12px; max-height: 25vh; overflow-y: auto; padding-right: 5px; }
@@ -310,13 +304,14 @@
         /* --- Footer & Squircle Dock --- */
         footer { background: var(--card-bg); border-top: 1px solid var(--border-color); color: var(--text-muted); text-align: center; padding: 40px 5%; margin-top: 50px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
         
-        .squircle-dock-container { display: inline-flex; align-items: flex-end; gap: 15px; padding: 12px; background: rgba(0, 0, 0, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 24px; border: 1px solid var(--border-color); box-shadow: var(--glass-shadow); margin-top: 10px; }
+        /* THIS IS THE FIX FOR THE FOOTER ICONS YOU ASKED FOR! */
+        .squircle-dock-container { display: inline-flex; align-items: flex-end; gap: 10px; padding: 10px; background: rgba(0, 0, 0, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 24px; border: 1px solid var(--border-color); box-shadow: var(--glass-shadow); margin-top: 10px; }
         body.dark-theme .squircle-dock-container { background: rgba(255, 255, 255, 0.05); }
-        .squircle-btn { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; clip-path: url(#squircleClip); -webkit-clip-path: url(#squircleClip); cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 20px rgba(0,0,0,0.1); text-decoration: none; }
+        .squircle-btn { width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; clip-path: url(#squircleClip); -webkit-clip-path: url(#squircleClip); cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 20px rgba(0,0,0,0.1); text-decoration: none; }
         .squircle-btn:hover { transform: scale(1.15) translateY(-8px); }
-        
-        /* Smaller Icons Requirement */
-        .squircle-btn svg { width: 24px; height: 24px; fill: white; }
+        .squircle-btn svg { width: 22px; height: 22px; fill: white; }
+        /* --------------------------------------------------- */
+
         .sq-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
         .sq-yt { background: linear-gradient(135deg, #ff0000, #cc0000); }
         .sq-github { background: linear-gradient(135deg, #333, #111); }
@@ -1182,7 +1177,6 @@
         // ==========================================
         window.addEventListener('load', () => {
             if(navigator.onLine) {
-                // Add a slight delay so the cool animation actually gets to show off a little bit
                 setTimeout(() => {
                     const loader = document.getElementById('app-loader');
                     loader.style.opacity = '0';
@@ -1661,17 +1655,282 @@
 
 
         // ==========================================
-        // 7. MCQ ENGINE LOGIC
+        // 7. MCQ ENGINE LOGIC (RESTORED & EXPANDED)
         // ==========================================
         const mcqData = {
             biology: {
                 lesson1: [
-                    { q: "The process of obtaining food and using it for energy is called", options: ["Respiration", "Nutrition", "Excretion", "Circulation"], ans: 1 },
-                    { q: "Nutrition in green plants is called", options: ["Heterotrophic", "Autotrophic", "Parasitic", "Saprophytic"], ans: 1 },
-                    { q: "The green pigment in plants responsible for photosynthesis is", options: ["Hemoglobin", "Chlorophyll", "Carotene", "Melanin"], ans: 1 },
-                    { q: "The main organ for photosynthesis is", options: ["Root", "Leaf", "Stem", "Flower"], ans: 1 },
-                    { q: "The gas absorbed by plants during photosynthesis is", options: ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"], ans: 1 },
-                    { q: "Plants store food in the form of", options: ["Glucose", "Starch", "Protein", "Fat"], ans: 1 }
+{ q: "The process of taking food into the body is called", options: ["Digestion", "Ingestion", "Assimilation", "Absorption"], ans: 1 },
+{ q: "Breaking down complex food into simple soluble form is", options: ["Digestion", "Respiration", "Excretion", "Circulation"], ans: 0 },
+{ q: "The process of absorbing digested food into blood is", options: ["Assimilation", "Absorption", "Digestion", "Egestion"], ans: 1 },
+{ q: "Utilization of absorbed food by cells is called", options: ["Digestion", "Assimilation", "Absorption", "Respiration"], ans: 1 },
+{ q: "Removal of undigested food is called", options: ["Egestion", "Excretion", "Assimilation", "Absorption"], ans: 0 },
+{ q: "Nutrition in Amoeba is", options: ["Holozoic", "Saprophytic", "Parasitic", "Autotrophic"], ans: 0 },
+{ q: "Temporary finger-like projections in Amoeba are", options: ["Cilia", "Flagella", "Pseudopodia", "Tentacles"], ans: 2 },
+{ q: "Food vacuole in Amoeba helps in", options: ["Respiration", "Digestion", "Movement", "Reproduction"], ans: 1 },
+{ q: "Human nutrition is", options: ["Autotrophic", "Saprophytic", "Holozoic", "Parasitic"], ans: 2 },
+{ q: "The first step of digestion in humans occurs in", options: ["Stomach", "Mouth", "Small intestine", "Esophagus"], ans: 1 },
+
+{ q: "Saliva contains the enzyme", options: ["Pepsin", "Trypsin", "Amylase", "Lipase"], ans: 2 },
+{ q: "Salivary amylase digests", options: ["Proteins", "Fats", "Starch", "Vitamins"], ans: 2 },
+{ q: "The food pipe is called", options: ["Trachea", "Esophagus", "Larynx", "Bronchus"], ans: 1 },
+{ q: "Peristalsis occurs in", options: ["Heart", "Esophagus", "Lungs", "Kidney"], ans: 1 },
+{ q: "The largest gland in human body is", options: ["Pancreas", "Liver", "Salivary gland", "Thyroid"], ans: 1 },
+{ q: "Bile juice is produced by", options: ["Stomach", "Liver", "Pancreas", "Intestine"], ans: 1 },
+{ q: "Bile juice helps in digestion of", options: ["Proteins", "Carbohydrates", "Fats", "Minerals"], ans: 2 },
+{ q: "Bile is stored in", options: ["Pancreas", "Gall bladder", "Stomach", "Kidney"], ans: 1 },
+{ q: "Protein digestion starts in", options: ["Mouth", "Stomach", "Small intestine", "Large intestine"], ans: 1 },
+{ q: "Pepsin digests", options: ["Carbohydrates", "Proteins", "Fats", "Vitamins"], ans: 1 },
+
+{ q: "Hydrochloric acid in stomach kills", options: ["Enzymes", "Bacteria", "Cells", "Food"], ans: 1 },
+{ q: "Pancreatic juice contains enzyme for", options: ["All nutrients", "Only proteins", "Only fats", "Only carbohydrates"], ans: 0 },
+{ q: "Trypsin digests", options: ["Proteins", "Fats", "Starch", "Glucose"], ans: 0 },
+{ q: "Lipase digests", options: ["Proteins", "Fats", "Carbohydrates", "Vitamins"], ans: 1 },
+{ q: "Amylase digests", options: ["Fats", "Proteins", "Starch", "Minerals"], ans: 2 },
+{ q: "Maximum digestion occurs in", options: ["Mouth", "Stomach", "Small intestine", "Large intestine"], ans: 2 },
+{ q: "Finger-like projections in small intestine are", options: ["Villi", "Cilia", "Nephrons", "Alveoli"], ans: 0 },
+{ q: "Villi increase", options: ["Length", "Surface area", "Volume", "Weight"], ans: 1 },
+{ q: "Absorption of digested food occurs in", options: ["Stomach", "Small intestine", "Large intestine", "Mouth"], ans: 1 },
+{ q: "Water absorption occurs mainly in", options: ["Small intestine", "Large intestine", "Stomach", "Esophagus"], ans: 1 },
+
+{ q: "Undigested food is expelled through", options: ["Mouth", "Anus", "Urethra", "Nose"], ans: 1 },
+{ q: "Teeth used for cutting are", options: ["Molars", "Premolars", "Incisors", "Canines"], ans: 2 },
+{ q: "Teeth used for tearing are", options: ["Incisors", "Molars", "Canines", "Premolars"], ans: 2 },
+{ q: "Grinding teeth are", options: ["Molars", "Canines", "Incisors", "All"], ans: 0 },
+{ q: "Adult humans have teeth", options: ["20", "28", "30", "32"], ans: 3 },
+{ q: "Milk teeth number", options: ["20", "24", "28", "32"], ans: 0 },
+{ q: "Tongue helps in", options: ["Digestion", "Taste", "Speech", "All of these"], ans: 3 },
+{ q: "Papillae are present on", options: ["Teeth", "Tongue", "Stomach", "Liver"], ans: 1 },
+{ q: "Taste buds detect", options: ["Touch", "Taste", "Smell", "Pain"], ans: 1 },
+{ q: "Nutrition in fungi is", options: ["Saprophytic", "Autotrophic", "Holozoic", "Parasitic"], ans: 0 },
+
+{ q: "Nutrition in tapeworm is", options: ["Autotrophic", "Saprophytic", "Parasitic", "Holozoic"], ans: 2 },
+{ q: "Green plants prepare food using", options: ["Sunlight", "Water", "CO2", "All of these"], ans: 3 },
+{ q: "Photosynthesis occurs in", options: ["Chloroplast", "Mitochondria", "Nucleus", "Ribosome"], ans: 0 },
+{ q: "Oxygen released during photosynthesis comes from", options: ["CO2", "Water", "Chlorophyll", "Glucose"], ans: 1 },
+{ q: "Stomata are present on", options: ["Roots", "Stem", "Leaves", "Flowers"], ans: 2 },
+{ q: "Stomata help in", options: ["Gas exchange", "Water loss", "Photosynthesis", "All"], ans: 3 },
+{ q: "Opening and closing of stomata is controlled by", options: ["Guard cells", "Xylem", "Phloem", "Mesophyll"], ans: 0 },
+{ q: "Transport of water occurs through", options: ["Phloem", "Xylem", "Cambium", "Cortex"], ans: 1 },
+{ q: "Transport of food occurs through", options: ["Xylem", "Phloem", "Root hair", "Cambium"], ans: 1 },
+{ q: "Minerals are absorbed by", options: ["Stem", "Leaves", "Root hairs", "Flowers"], ans: 2 },
+
+{ q: "Glucose is stored as", options: ["Protein", "Fat", "Starch", "Vitamin"], ans: 2 },
+{ q: "Carnivorous plants obtain nitrogen from", options: ["Air", "Water", "Insects", "Soil"], ans: 2 },
+{ q: "Example of insectivorous plant", options: ["Rose", "Lotus", "Pitcher plant", "Mango"], ans: 2 },
+{ q: "Pitcher plant traps insects using", options: ["Leaves", "Roots", "Flowers", "Stem"], ans: 0 },
+{ q: "Symbiotic nutrition is seen in", options: ["Lichen", "Mango", "Neem", "Rose"], ans: 0 },
+{ q: "Lichen is association of", options: ["Algae and fungus", "Bacteria and algae", "Plant and animal", "Fungus and bacteria"], ans: 0 },
+{ q: "Nitrogen fixation occurs in", options: ["Root nodules", "Leaves", "Stem", "Flowers"], ans: 0 },
+{ q: "Rhizobium bacteria live in", options: ["Leaves", "Stem", "Roots of legumes", "Flowers"], ans: 2 },
+{ q: "Energy currency of cell is", options: ["ADP", "ATP", "DNA", "RNA"], ans: 1 },
+{ q: "Balanced diet contains", options: ["Carbohydrates", "Proteins", "Fats", "All nutrients"], ans: 3 },
+ 
+{ q: "Carbohydrates are mainly a source of", options: ["Energy", "Growth", "Repair", "Protection"], ans: 0 },
+{ q: "Proteins are essential for", options: ["Energy only", "Body building", "Digestion", "Breathing"], ans: 1 },
+{ q: "Fats provide", options: ["Instant energy", "Stored energy", "No energy", "Vitamins"], ans: 1 },
+{ q: "Vitamins are needed in", options: ["Large amounts", "Moderate amounts", "Small amounts", "No amounts"], ans: 2 },
+{ q: "Minerals help in", options: ["Bone formation", "Blood formation", "Body functions", "All of these"], ans: 3 },
+
+{ q: "Deficiency of Vitamin C causes", options: ["Rickets", "Scurvy", "Night blindness", "Beriberi"], ans: 1 },
+{ q: "Deficiency of Vitamin D causes", options: ["Rickets", "Scurvy", "Anemia", "Goiter"], ans: 0 },
+{ q: "Vitamin A deficiency leads to", options: ["Night blindness", "Rickets", "Scurvy", "Diabetes"], ans: 0 },
+{ q: "Iron deficiency causes", options: ["Anemia", "Goiter", "Obesity", "Diarrhea"], ans: 0 },
+{ q: "Iodine deficiency causes", options: ["Rickets", "Goiter", "Scurvy", "Asthma"], ans: 1 },
+
+{ q: "Roughage is also called", options: ["Fiber", "Fat", "Protein", "Mineral"], ans: 0 },
+{ q: "Roughage helps in", options: ["Digestion", "Prevent constipation", "Movement of food", "All of these"], ans: 3 },
+{ q: "Water is important for", options: ["Transport", "Digestion", "Temperature control", "All of these"], ans: 3 },
+{ q: "Obesity is caused by excess intake of", options: ["Proteins", "Fats", "Minerals", "Water"], ans: 1 },
+{ q: "Kwashiorkor disease is due to lack of", options: ["Protein", "Carbohydrate", "Fat", "Vitamin"], ans: 0 },
+
+{ q: "Marasmus occurs due to deficiency of", options: ["Protein only", "Energy only", "Protein and energy", "Vitamin"], ans: 2 },
+{ q: "Balanced diet prevents", options: ["Deficiency diseases", "Obesity", "Weakness", "All"], ans: 3 },
+{ q: "Energy in food is measured in", options: ["Calories", "Meters", "Grams", "Liters"], ans: 0 },
+{ q: "The digestive system begins at", options: ["Mouth", "Stomach", "Intestine", "Anus"], ans: 0 },
+{ q: "The digestive system ends at", options: ["Stomach", "Intestine", "Anus", "Liver"], ans: 2 },
+
+{ q: "Food pipe connects mouth to", options: ["Liver", "Stomach", "Heart", "Lungs"], ans: 1 },
+{ q: "Stomach is a", options: ["Muscular sac", "Bone", "Gland", "Tube"], ans: 0 },
+{ q: "Gastric juice contains", options: ["HCl", "Pepsin", "Mucus", "All"], ans: 3 },
+{ q: "Mucus protects stomach lining from", options: ["Acid", "Food", "Water", "Enzymes"], ans: 0 },
+{ q: "Pancreas produces", options: ["Insulin", "Digestive enzymes", "Hormones", "All"], ans: 3 },
+
+{ q: "Small intestine is the", options: ["Shortest part", "Longest part", "Hardest part", "Widest part"], ans: 1 },
+{ q: "Large intestine mainly absorbs", options: ["Water", "Proteins", "Fats", "Carbohydrates"], ans: 0 },
+{ q: "Appendix is attached to", options: ["Small intestine", "Large intestine", "Stomach", "Esophagus"], ans: 1 },
+{ q: "Rectum stores", options: ["Digested food", "Undigested waste", "Enzymes", "Water"], ans: 1 },
+{ q: "Anus controls removal of", options: ["Urine", "Feces", "Sweat", "Saliva"], ans: 1 },
+
+{ q: "Herbivores eat", options: ["Plants", "Animals", "Both", "None"], ans: 0 },
+{ q: "Carnivores eat", options: ["Plants", "Animals", "Both", "Fruits"], ans: 1 },
+{ q: "Omnivores eat", options: ["Plants only", "Animals only", "Both plants and animals", "Fruits only"], ans: 2 },
+{ q: "Cow is a", options: ["Carnivore", "Herbivore", "Omnivore", "Parasite"], ans: 1 },
+{ q: "Lion is a", options: ["Herbivore", "Omnivore", "Carnivore", "Saprophyte"], ans: 2 },
+
+{ q: "Human beings are", options: ["Herbivores", "Carnivores", "Omnivores", "Parasites"], ans: 2 },
+{ q: "Teeth adapted for grinding are large in", options: ["Herbivores", "Carnivores", "Omnivores", "Birds"], ans: 0 },
+{ q: "Sharp canine teeth are prominent in", options: ["Herbivores", "Carnivores", "Omnivores", "Fishes"], ans: 1 },
+{ q: "Cellulose is digested by", options: ["Humans", "Bacteria in herbivores", "Carnivores", "Birds"], ans: 1 },
+{ q: "Ruminants chew cud", options: ["Once", "Twice", "Thrice", "Never"], ans: 1 },
+
+{ q: "Four chambers stomach is present in", options: ["Cow", "Human", "Dog", "Cat"], ans: 0 },
+{ q: "Rumen is part of", options: ["Human stomach", "Ruminant stomach", "Intestine", "Pancreas"], ans: 1 },
+{ q: "Cud is", options: ["Undigested food", "Partially digested food", "Fully digested food", "Water"], ans: 1 },
+{ q: "Symbiotic bacteria help ruminants digest", options: ["Protein", "Fat", "Cellulose", "Sugar"], ans: 2 },
+{ q: "Food chain starts with", options: ["Consumers", "Producers", "Decomposers", "Animals"], ans: 1 },
+
+{ q: "Green plants are", options: ["Producers", "Consumers", "Decomposers", "Parasites"], ans: 0 },
+{ q: "Animals that eat plants are", options: ["Primary consumers", "Secondary consumers", "Producers", "Decomposers"], ans: 0 },
+{ q: "Animals that eat animals are", options: ["Primary consumers", "Secondary consumers", "Producers", "Decomposers"], ans: 1 },
+{ q: "Fungi act as", options: ["Producers", "Consumers", "Decomposers", "Parasites"], ans: 2 },
+{ q: "Energy flow in ecosystem is", options: ["Cyclic", "Unidirectional", "Random", "None"], ans: 1 }
+            ], 
+ 
+                respiration: [
+{ q: "Respiration is the process of", options: ["Breathing only", "Energy release from food", "Digestion", "Circulation"], ans: 1 },
+{ q: "Cellular respiration occurs in", options: ["Nucleus", "Mitochondria", "Ribosome", "Chloroplast"], ans: 1 },
+{ q: "Mitochondria are called", options: ["Powerhouse of cell", "Control center", "Protein factory", "Storage unit"], ans: 0 },
+{ q: "Breathing involves", options: ["Inhalation only", "Exhalation only", "Both inhalation and exhalation", "None"], ans: 2 },
+{ q: "Inhalation means", options: ["Breathing out", "Breathing in", "Holding breath", "None"], ans: 1 },
+
+{ q: "Exhalation means", options: ["Breathing in", "Breathing out", "Holding breath", "None"], ans: 1 },
+{ q: "Air enters the body through", options: ["Mouth only", "Nose only", "Both nose and mouth", "Skin"], ans: 2 },
+{ q: "Nasal cavity warms the air by", options: ["Blood vessels", "Hair only", "Bones", "Muscles"], ans: 0 },
+{ q: "Tiny hair in nose are called", options: ["Cilia", "Villi", "Nephrons", "Alveoli"], ans: 0 },
+{ q: "Pharynx connects", options: ["Nose to stomach", "Nose to trachea", "Lungs to heart", "Mouth to intestine"], ans: 1 },
+
+{ q: "Voice box is called", options: ["Pharynx", "Larynx", "Trachea", "Bronchus"], ans: 1 },
+{ q: "Windpipe is called", options: ["Larynx", "Trachea", "Pharynx", "Esophagus"], ans: 1 },
+{ q: "Trachea is supported by", options: ["Bones", "Cartilage rings", "Muscles", "Ligaments"], ans: 1 },
+{ q: "Trachea divides into", options: ["Bronchi", "Alveoli", "Bronchioles", "Villi"], ans: 0 },
+{ q: "Bronchi lead to", options: ["Heart", "Lungs", "Stomach", "Kidney"], ans: 1 },
+
+{ q: "Small branches of bronchi are", options: ["Bronchioles", "Alveoli", "Capillaries", "Nephrons"], ans: 0 },
+{ q: "Gas exchange occurs in", options: ["Bronchi", "Trachea", "Alveoli", "Pharynx"], ans: 2 },
+{ q: "Alveoli are surrounded by", options: ["Muscles", "Bones", "Capillaries", "Cartilage"], ans: 2 },
+{ q: "Number of lungs in humans", options: ["One", "Two", "Three", "Four"], ans: 1 },
+{ q: "Lungs are located in", options: ["Abdominal cavity", "Thoracic cavity", "Cranial cavity", "Pelvic cavity"], ans: 1 },
+
+{ q: "Diaphragm is a", options: ["Bone", "Muscle", "Gland", "Nerve"], ans: 1 },
+{ q: "During inhalation diaphragm", options: ["Moves up", "Moves down", "Stays still", "Disappears"], ans: 1 },
+{ q: "During exhalation diaphragm", options: ["Moves up", "Moves down", "Stays still", "Expands"], ans: 0 },
+{ q: "Oxygen in blood is carried by", options: ["Plasma", "Hemoglobin", "Platelets", "WBC"], ans: 1 },
+{ q: "Carbon dioxide is carried mainly as", options: ["Gas only", "Dissolved in plasma", "Carbaminohemoglobin", "All"], ans: 3 },
+
+{ q: "Exchange of gases between blood and cells is", options: ["External respiration", "Internal respiration", "Breathing", "Diffusion"], ans: 1 },
+{ q: "Energy released in respiration is stored as", options: ["ATP", "ADP", "DNA", "RNA"], ans: 0 },
+{ q: "Aerobic respiration requires", options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"], ans: 0 },
+{ q: "Anaerobic respiration occurs without", options: ["Water", "Food", "Oxygen", "Energy"], ans: 2 },
+{ q: "End product of aerobic respiration is", options: ["CO2 and water", "Lactic acid", "Alcohol", "Glucose"], ans: 0 },
+
+{ q: "Anaerobic respiration in yeast produces", options: ["Lactic acid", "Alcohol", "Water", "Oxygen"], ans: 1 },
+{ q: "Anaerobic respiration in muscles produces", options: ["Alcohol", "CO2", "Lactic acid", "Glucose"], ans: 2 },
+{ q: "Respiration releases", options: ["Energy", "Heat", "CO2", "All"], ans: 3 },
+{ q: "Glucose is broken down during", options: ["Digestion", "Respiration", "Excretion", "Circulation"], ans: 1 },
+{ q: "Respiratory rate is number of breaths per", options: ["Second", "Minute", "Hour", "Day"], ans: 1 },
+
+{ q: "Normal adult respiratory rate is about", options: ["5/min", "12-20/min", "40/min", "60/min"], ans: 1 },
+{ q: "Breathing is controlled by", options: ["Heart", "Brain", "Kidney", "Liver"], ans: 1 },
+{ q: "Medulla oblongata regulates", options: ["Digestion", "Breathing", "Vision", "Hearing"], ans: 1 },
+{ q: "Smoking damages", options: ["Alveoli", "Heart", "Kidney", "Liver"], ans: 0 },
+{ q: "Tar from smoking affects", options: ["Lungs", "Brain", "Bones", "Skin"], ans: 0 },
+
+{ q: "Carbon monoxide binds with", options: ["Oxygen", "Hemoglobin", "CO2", "Water"], ans: 1 },
+{ q: "Carbon monoxide reduces", options: ["Blood pressure", "Oxygen transport", "Digestion", "Heart rate"], ans: 1 },
+{ q: "Asthma affects", options: ["Kidney", "Heart", "Airways", "Brain"], ans: 2 },
+{ q: "Pneumonia affects", options: ["Alveoli", "Bones", "Skin", "Muscles"], ans: 0 },
+{ q: "Tuberculosis affects", options: ["Lungs", "Liver", "Kidney", "Brain"], ans: 0 },
+
+{ q: "Plants respire through", options: ["Stomata", "Lenticels", "Roots", "All"], ans: 3 },
+{ q: "Stomata are found on", options: ["Leaves", "Roots", "Stem", "Flowers"], ans: 0 },
+{ q: "Lenticels are found on", options: ["Roots", "Stem", "Leaves", "Flowers"], ans: 1 },
+{ q: "Plants respire", options: ["Day only", "Night only", "Day and night", "Never"], ans: 2 },
+{ q: "Respiration in plants produces", options: ["Oxygen", "CO2", "Nitrogen", "Hydrogen"], ans: 1 }
+
+],
+                circulation: [
+{ q: "Circulation means transport of", options: ["Food only", "Gases only", "Materials throughout body", "Water only"], ans: 2 },
+{ q: "Circulatory system consists of", options: ["Heart", "Blood", "Blood vessels", "All"], ans: 3 },
+{ q: "Human heart is located in", options: ["Right chest", "Left chest", "Center of chest", "Abdomen"], ans: 2 },
+{ q: "Heart is a", options: ["Bone", "Muscle", "Gland", "Nerve"], ans: 1 },
+{ q: "Size of heart is about", options: ["Football", "Fist", "Palm", "Head"], ans: 1 },
+
+{ q: "Human heart has chambers", options: ["2", "3", "4", "5"], ans: 2 },
+{ q: "Upper chambers are called", options: ["Ventricles", "Atria", "Valves", "Arteries"], ans: 1 },
+{ q: "Lower chambers are called", options: ["Atria", "Ventricles", "Valves", "Capillaries"], ans: 1 },
+{ q: "Right atrium receives", options: ["Oxygenated blood", "Deoxygenated blood", "Mixed blood", "Pure oxygen"], ans: 1 },
+{ q: "Left atrium receives", options: ["Oxygenated blood", "Deoxygenated blood", "Mixed blood", "CO2"], ans: 0 },
+
+{ q: "Right ventricle pumps blood to", options: ["Body", "Lungs", "Kidney", "Brain"], ans: 1 },
+{ q: "Left ventricle pumps blood to", options: ["Lungs", "Body", "Heart", "Liver"], ans: 1 },
+{ q: "Wall of left ventricle is", options: ["Thin", "Thick", "Absent", "Flexible"], ans: 1 },
+{ q: "Pulmonary artery carries", options: ["Oxygenated blood", "Deoxygenated blood", "Mixed blood", "CO2 only"], ans: 1 },
+{ q: "Pulmonary vein carries", options: ["Oxygenated blood", "Deoxygenated blood", "Mixed blood", "Nitrogen"], ans: 0 },
+
+{ q: "Largest artery in body", options: ["Pulmonary artery", "Aorta", "Coronary artery", "Carotid artery"], ans: 1 },
+{ q: "Valves in heart prevent", options: ["Blood formation", "Backflow of blood", "Clotting", "Pumping"], ans: 1 },
+{ q: "Lub-dub sound is due to", options: ["Heart muscles", "Valves closing", "Blood flow", "Breathing"], ans: 1 },
+{ q: "Heart beats per minute in adults", options: ["20-30", "40-50", "60-80", "100-120"], ans: 2 },
+{ q: "Instrument to measure heart rate", options: ["Thermometer", "Stethoscope", "Barometer", "Microscope"], ans: 1 },
+
+{ q: "Blood vessels that carry blood away from heart", options: ["Veins", "Arteries", "Capillaries", "Valves"], ans: 1 },
+{ q: "Blood vessels that carry blood toward heart", options: ["Arteries", "Veins", "Capillaries", "Bronchi"], ans: 1 },
+{ q: "Exchange of materials occurs in", options: ["Arteries", "Veins", "Capillaries", "Heart"], ans: 2 },
+{ q: "Arteries have walls", options: ["Thin", "Thick", "Very thin", "Absent"], ans: 1 },
+{ q: "Veins have walls", options: ["Thin", "Thick", "Rigid", "No walls"], ans: 0 },
+
+{ q: "Veins contain", options: ["Valves", "No valves", "Bones", "Muscles"], ans: 0 },
+{ q: "Blood pressure is highest in", options: ["Veins", "Arteries", "Capillaries", "Heart"], ans: 1 },
+{ q: "Normal blood pressure is about", options: ["80/40", "120/80", "200/100", "60/30"], ans: 1 },
+{ q: "Device to measure blood pressure", options: ["Thermometer", "Sphygmomanometer", "Stethoscope", "Barometer"], ans: 1 },
+{ q: "Blood consists of", options: ["Plasma", "Cells", "Platelets", "All"], ans: 3 },
+
+{ q: "Liquid part of blood is", options: ["Serum", "Plasma", "Lymph", "Water"], ans: 1 },
+{ q: "RBC stands for", options: ["Red blood cells", "Rapid body cells", "Respiratory blood cells", "None"], ans: 0 },
+{ q: "RBC contains", options: ["Hemoglobin", "Chlorophyll", "Insulin", "Melanin"], ans: 0 },
+{ q: "Hemoglobin carries", options: ["CO2", "Oxygen", "Nitrogen", "Water"], ans: 1 },
+{ q: "WBC stands for", options: ["White blood cells", "Weak blood cells", "Water body cells", "None"], ans: 0 },
+
+{ q: "WBC helps in", options: ["Oxygen transport", "Immunity", "Clotting", "Digestion"], ans: 1 },
+{ q: "Platelets help in", options: ["Immunity", "Clotting", "Transport", "Digestion"], ans: 1 },
+{ q: "Low hemoglobin causes", options: ["Anemia", "Diabetes", "Asthma", "Obesity"], ans: 0 },
+{ q: "Blood group discovered by", options: ["Einstein", "Landsteiner", "Newton", "Darwin"], ans: 1 },
+{ q: "Universal donor blood group", options: ["A", "B", "AB", "O"], ans: 3 },
+
+{ q: "Universal recipient blood group", options: ["A", "B", "AB", "O"], ans: 2 },
+{ q: "Lymph is similar to", options: ["Blood plasma", "RBC", "WBC", "Platelets"], ans: 0 },
+{ q: "Lymph lacks", options: ["Proteins", "RBC", "WBC", "Water"], ans: 1 },
+{ q: "Lymph helps in", options: ["Fat absorption", "Immunity", "Fluid balance", "All"], ans: 3 },
+{ q: "Double circulation occurs in", options: ["Fish", "Frog", "Human", "Snake"], ans: 2 },
+
+{ q: "Pulmonary circulation is between", options: ["Heart and lungs", "Heart and body", "Lungs and body", "Brain and heart"], ans: 0 },
+{ q: "Systemic circulation is between", options: ["Heart and lungs", "Heart and body", "Lungs and body", "Kidney and heart"], ans: 1 },
+{ q: "Fish have circulation", options: ["Double", "Single", "Open", "None"], ans: 1 },
+{ q: "Frogs have heart chambers", options: ["2", "3", "4", "5"], ans: 1 },
+{ q: "Birds have heart chambers", options: ["2", "3", "4", "5"], ans: 2 },
+
+{ q: "Coronary arteries supply blood to", options: ["Lungs", "Heart muscle", "Brain", "Kidney"], ans: 1 },
+{ q: "Blockage of coronary artery causes", options: ["Stroke", "Heart attack", "Asthma", "Diabetes"], ans: 1 },
+{ q: "Pacemaker regulates", options: ["Breathing", "Heartbeat", "Digestion", "Temperature"], ans: 1 },
+{ q: "Artificial pacemaker is used when", options: ["Heart stops", "Irregular heartbeat", "High BP", "Low BP"], ans: 1 },
+{ q: "Exercise increases", options: ["Heart rate", "Blood flow", "Oxygen supply", "All"], ans: 3 }
+
+],
+                lesson4: [
+                    { q: "The structural and functional unit of the kidney is", options: ["Neuron", "Nephron", "Alveoli", "Villi"], ans: 1 },
+                    { q: "The process of removing metabolic waste from the body is called", options: ["Digestion", "Respiration", "Excretion", "Reproduction"], ans: 2 },
+                    { q: "Artificial kidney is used in the process of", options: ["Dialysis", "Osmosis", "Diffusion", "Filtration"], ans: 0 }
+                ],
+                lesson5: [
+                    { q: "The central nervous system consists of", options: ["Brain and Spinal cord", "Brain and Nerves", "Spinal cord and Nerves", "Only Brain"], ans: 0 },
+                    { q: "The gap between two neurons is called", options: ["Dendrite", "Axon", "Synapse", "Impulse"], ans: 2 },
+                    { q: "Which hormone regulates the sugar level in the blood?", options: ["Adrenaline", "Insulin", "Thyroxine", "Testosterone"], ans: 1 }
+                ],
+                lesson6: [
+                    { q: "The male reproductive part of a flower is", options: ["Carpel", "Pistil", "Stamen", "Ovary"], ans: 2 },
+                    { q: "Asexual reproduction in amoeba takes place by", options: ["Budding", "Fragmentation", "Binary fission", "Spore formation"], ans: 2 },
+                    { q: "The fusion of male and female gametes is called", options: ["Pollination", "Fertilization", "Germination", "Reproduction"], ans: 1 }
                 ]
             },
             physics: {
@@ -1686,7 +1945,14 @@
             const subject = document.getElementById('mcq-subject').value;
             const chapterSelect = document.getElementById('mcq-chapter');
             if(subject === 'biology') {
-                chapterSelect.innerHTML = `<option value="all">All Biology Chapters</option><option value="lesson1">Lesson 1: Nutrition</option>`;
+                chapterSelect.innerHTML = `
+                    <option value="all">All Biology Chapters</option>
+                    <option value="lesson1">Lesson 1: Nutrition</option>
+                    <option value="lesson2">Lesson 2: Respiration</option>
+                    <option value="lesson3">Lesson 3: Circulation</option>
+                    <option value="lesson4">Lesson 4: Excretion</option>
+                    <option value="lesson5">Lesson 5: Coordination</option>
+                    <option value="lesson6">Lesson 6: Reproduction</option>`;
                 chapterSelect.disabled = false;
             } else if (subject === 'physics') {
                 chapterSelect.innerHTML = `<option value="all">All Physics Chapters</option><option value="light_reflection">Lesson 1: Light Reflection & Refraction</option>`;
