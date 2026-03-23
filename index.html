@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -74,7 +74,6 @@
         @keyframes fadeInUP { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.95) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
         @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0px); } }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
 
         /* --- Navigation Bar --- */
         nav {
@@ -157,7 +156,9 @@
         .card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(124, 58, 237, 0.05)); opacity: 0; transition: opacity 0.4s ease; z-index: -1; }
         .card:hover::before { opacity: 1; }
         .card:hover { box-shadow: 0 20px 40px var(--primary-glow); border-color: var(--primary); }
-        .card i { font-size: 3.5rem; margin-bottom: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; transition: transform 0.4s ease; transform: translateZ(30px); }
+        
+        /* Smaller Icons Requirement */
+        .card i { font-size: 2.5rem; margin-bottom: 20px; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; transition: transform 0.4s ease; transform: translateZ(30px); }
         .card:hover i { transform: scale(1.1) translateZ(40px); }
         .card h3 { font-size: 1.5rem; margin-bottom: 15px; color: var(--text-main); font-weight: 600; transform: translateZ(20px); }
         .card p { color: var(--text-muted); font-size: 1rem; margin-bottom: 30px; flex-grow: 1; line-height: 1.6; transform: translateZ(10px); }
@@ -177,10 +178,30 @@
         .subject-list { display: flex; flex-direction: column; gap: 12px; }
         .subject-item { display: flex; align-items: center; gap: 15px; padding: 16px 20px; background: var(--light); border-radius: 16px; text-decoration: none; color: var(--text-main); font-weight: 500; transition: all 0.3s ease; border: 1px solid transparent; position: relative; overflow: hidden; }
         .subject-item:hover { background: var(--card-bg); border-color: var(--primary); transform: translateX(5px); color: var(--primary); box-shadow: 0 5px 15px var(--glass-shadow); }
-        .subject-item i { width: 30px; text-align: center; font-size: 1.3rem; color: var(--text-muted); transition: color 0.3s ease;}
+        
+        /* Smaller Icons Requirement */
+        .subject-item i { width: 25px; text-align: center; font-size: 1.1rem; color: var(--text-muted); transition: color 0.3s ease;}
         .subject-item:hover i { color: var(--primary); }
 
-        /* --- NEW: YouTube Horizontal Row --- */
+        /* --- PREMIUM MUSIC PLAYER STYLES --- */
+        .music-player-wrapper { text-align: center; padding: 10px; }
+        .album-art-container { position: relative; width: 200px; height: 200px; margin: 0 auto 30px; }
+        .album-art-img { width: 100%; height: 100%; border-radius: 50%; border: 5px solid var(--card-bg); box-shadow: 0 15px 35px var(--primary-glow); object-fit: cover; animation: spinVinyl 10s linear infinite; animation-play-state: paused; transition: all 0.3s ease; }
+        .album-art-img.playing { animation-play-state: running; border-color: var(--primary); }
+        .vinyl-hole { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 30px; height: 30px; background: var(--card-bg); border-radius: 50%; border: 2px solid var(--border-color); z-index: 2; }
+        .music-info h2 { font-size: 1.5rem; color: var(--text-main); margin-bottom: 5px; font-weight: 600; }
+        .music-info p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 25px; }
+        .music-progress { width: 100%; height: 8px; background: var(--light); border-radius: 10px; cursor: pointer; border: 1px solid var(--border-color); position: relative; overflow: hidden; }
+        .music-progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 10px; transition: width 0.1s linear; }
+        .music-time { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-top: 8px; margin-bottom: 25px; }
+        .music-controls { display: flex; align-items: center; justify-content: center; gap: 25px; }
+        .music-btn { background: var(--light); border: 1px solid var(--border-color); width: 50px; height: 50px; border-radius: 50%; font-size: 1.2rem; color: var(--text-main); cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; }
+        .music-btn:hover { background: var(--card-bg); border-color: var(--primary); color: var(--primary); transform: scale(1.05); }
+        .play-pause-btn { width: 70px; height: 70px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-size: 1.8rem; border: none; box-shadow: 0 10px 20px var(--primary-glow); }
+        .play-pause-btn:hover { background: linear-gradient(135deg, var(--secondary), var(--primary)); color: white; transform: scale(1.1); box-shadow: 0 15px 30px var(--primary-glow); }
+        @keyframes spinVinyl { 100% { transform: rotate(360deg); } }
+
+        /* --- YouTube Horizontal Row --- */
         .video-row { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; scroll-snap-type: x mandatory; scrollbar-width: none; }
         .video-row::-webkit-scrollbar { display: none; }
         .video-card { flex: 0 0 calc(33.333% - 14px); height: 220px; border-radius: 16px; position: relative; overflow: hidden; cursor: pointer; scroll-snap-align: start; box-shadow: var(--glass-shadow); border: 1px solid var(--border-color); transition: transform 0.3s ease; }
@@ -190,7 +211,9 @@
         .video-card:hover img { transform: scale(1.08); }
         .play-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.4); display: flex; align-items: center; justify-content: center; transition: background 0.3s; }
         .video-card:hover .play-overlay { background: rgba(15, 23, 42, 0.2); }
-        .play-overlay i { font-size: 4rem; color: white; opacity: 0.9; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); drop-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        
+        /* Smaller Icons Requirement */
+        .play-overlay i { font-size: 3rem; color: white; opacity: 0.9; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); drop-shadow: 0 4px 10px rgba(0,0,0,0.5); }
         .video-card:hover .play-overlay i { opacity: 1; transform: scale(1.15); color: var(--primary); }
         .lang-badge { position: absolute; top: 15px; left: 15px; background: var(--primary); color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.2); backdrop-filter: blur(4px); }
 
@@ -200,38 +223,6 @@
         .iframe-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
         .video-close { position: absolute; top: -45px; right: 0; background: var(--card-bg); color: var(--text-main); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; border: 1px solid var(--border-color); transition: all 0.3s ease; z-index: 10; }
         .video-close:hover { background: #EF4444; color: white; transform: rotate(90deg); }
-
-        /* --- Custom Music Player Modal --- */
-        .music-player-container { text-align: center; }
-        .album-art-container { width: 160px; height: 160px; margin: 0 auto 25px auto; border-radius: 50%; overflow: hidden; border: 4px solid var(--card-bg); box-shadow: 0 10px 30px var(--primary-glow); position: relative; display: flex; justify-content: center; align-items: center;}
-        .album-art-container::after { content: ''; position: absolute; width: 35px; height: 35px; background: var(--card-bg); border-radius: 50%; border: 2px solid var(--border-color); }
-        .album-art { width: 100%; height: 100%; object-fit: cover; animation: spin 8s linear infinite; animation-play-state: paused; }
-        .album-art.playing { animation-play-state: running; }
-        .track-title { font-size: 1.3rem; font-weight: 700; color: var(--text-main); margin-bottom: 5px; }
-        .track-artist { font-size: 0.95rem; color: var(--primary); margin-bottom: 25px; font-weight: 500;}
-        .music-progress { width: 100%; height: 6px; background: var(--border-color); border-radius: 10px; margin-bottom: 10px; cursor: pointer; position: relative; overflow: hidden; }
-        .music-progress-filled { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0%; transition: width 0.1s linear; border-radius: 10px;}
-        .time-display { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 25px; font-weight: 600; }
-        .music-controls { display: flex; justify-content: center; align-items: center; gap: 25px; margin-bottom: 30px; }
-        .ctrl-btn { background: var(--light); border: none; width: 45px; height: 45px; border-radius: 50%; color: var(--text-main); font-size: 1.1rem; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; justify-content: center; align-items: center; border: 1px solid var(--border-color); }
-        .ctrl-btn:hover { background: var(--card-bg); color: var(--primary); transform: translateY(-3px); box-shadow: 0 8px 15px var(--glass-shadow); border-color: var(--primary);}
-        .ctrl-btn.play-pause { width: 65px; height: 65px; font-size: 1.6rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; box-shadow: 0 10px 20px var(--primary-glow); border: none;}
-        .ctrl-btn.play-pause:hover { transform: translateY(-5px) scale(1.05); box-shadow: 0 15px 25px var(--primary-glow); }
-        .playlist-header { text-align: left; font-size: 1rem; font-weight: 600; color: var(--text-main); margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px dashed var(--border-color);}
-        .playlist-container { text-align: left; max-height: 200px; overflow-y: auto; padding-right: 5px; display: flex; flex-direction: column; gap: 8px;}
-        .playlist-item { display: flex; align-items: center; gap: 15px; padding: 12px 15px; border-radius: 14px; cursor: pointer; transition: all 0.3s; background: var(--light); border: 1px solid transparent; }
-        .playlist-item:hover { transform: translateX(5px); border-color: var(--primary); background: var(--card-bg); }
-        .playlist-item.active { background: var(--card-bg); border-color: var(--primary); box-shadow: 0 5px 15px var(--glass-shadow); }
-        .playlist-item-icon { width: 30px; height: 30px; border-radius: 50%; background: var(--primary-glow); display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 0.8rem; }
-        .playlist-info { flex: 1; }
-        .pl-title { font-weight: 600; color: var(--text-main); font-size: 0.95rem; margin-bottom: 3px;}
-        .pl-artist { font-size: 0.8rem; color: var(--text-muted); }
-        .music-wave { display: flex; align-items: center; gap: 3px; height: 15px; opacity: 0; }
-        .playlist-item.active .music-wave { opacity: 1; }
-        .wave-bar { width: 3px; background: var(--primary); border-radius: 3px; animation: soundWave 1.2s ease-in-out infinite alternate; }
-        .wave-bar:nth-child(2) { animation-delay: 0.2s; }
-        .wave-bar:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes soundWave { 0% { height: 3px; } 100% { height: 15px; } }
 
         /* --- Leaderboard Styles --- */
         .leaderboard-list { display: flex; flex-direction: column; gap: 10px; }
@@ -284,7 +275,7 @@
         /* --- Report Card Styles --- */
         .report-stats { display: flex; justify-content: space-around; background: var(--primary-glow); padding: 25px 15px; border-radius: 20px; margin-bottom: 25px; border: 1px solid var(--primary); }
         .stat-box { text-align: center; }
-        .stat-value { font-size: 2.2rem; font-weight: 700; color: var(--primary); line-height: 1; margin-bottom: 5px; }
+        .stat-value { font-size: 1.8rem; font-weight: 700; color: var(--primary); line-height: 1; margin-bottom: 5px; }
         .stat-label { font-size: 0.9rem; color: var(--text-main); font-weight: 600; }
         .history-title { font-size: 1.1rem; color: var(--text-main); margin-bottom: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px;}
         .history-list { display: flex; flex-direction: column; gap: 12px; max-height: 25vh; overflow-y: auto; padding-right: 5px; }
@@ -306,7 +297,7 @@
         .switch-timer input { opacity: 0; width: 0; height: 0; }
         .slider-timer { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-color); transition: .4s; border-radius: 34px; }
         .slider-timer:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .input:checked + .slider-timer { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
+        input:checked + .slider-timer { background: linear-gradient(135deg, var(--primary), var(--secondary)); }
         input:checked + .slider-timer:before { transform: translateX(22px); }
         .range-container { display: flex; flex-direction: column; gap: 10px; }
         .range-header { display: flex; justify-content: space-between; align-items: center; font-weight: 600; font-size: 0.95rem; }
@@ -316,14 +307,19 @@
         .start-test-btn { width: 100%; padding: 15px; border: none; border-radius: 12px; margin-top: 10px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 20px var(--primary-glow); }
         .start-test-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 25px var(--primary-glow); }
 
-        /* --- Footer & Instagram Button --- */
+        /* --- Footer & Squircle Dock --- */
         footer { background: var(--card-bg); border-top: 1px solid var(--border-color); color: var(--text-muted); text-align: center; padding: 40px 5%; margin-top: 50px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
-        .creator-connect { display: flex; justify-content: center; align-items: center; }
-        .insta-profile-btn { display: flex; align-items: center; gap: 12px; background: var(--light); padding: 6px 24px 6px 6px; border-radius: 50px; text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 1rem; border: 1px solid var(--border-color); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .insta-profile-btn:hover { transform: translateY(-5px) scale(1.05); background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: #FFF; box-shadow: 0 15px 30px rgba(220, 39, 67, 0.3); border-color: transparent; }
-        .insta-pic { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #FFF; transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
-        .insta-profile-btn:hover .insta-pic { transform: rotate(360deg); }
-        .insta-icon { font-size: 1.3rem; }
+        
+        .squircle-dock-container { display: inline-flex; align-items: flex-end; gap: 15px; padding: 12px; background: rgba(0, 0, 0, 0.05); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 24px; border: 1px solid var(--border-color); box-shadow: var(--glass-shadow); margin-top: 10px; }
+        body.dark-theme .squircle-dock-container { background: rgba(255, 255, 255, 0.05); }
+        .squircle-btn { width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; clip-path: url(#squircleClip); -webkit-clip-path: url(#squircleClip); cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 10px 20px rgba(0,0,0,0.1); text-decoration: none; }
+        .squircle-btn:hover { transform: scale(1.15) translateY(-8px); }
+        
+        /* Smaller Icons Requirement */
+        .squircle-btn svg { width: 24px; height: 24px; fill: white; }
+        .sq-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+        .sq-yt { background: linear-gradient(135deg, #ff0000, #cc0000); }
+        .sq-github { background: linear-gradient(135deg, #333, #111); }
 
         /* --- WhatsApp Floating Button --- */
         .whatsapp-float { position: fixed; bottom: 30px; right: 30px; background: linear-gradient(135deg, #25D366, #128C7E); color: #FFF; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); z-index: 1000; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); text-decoration: none; }
@@ -365,12 +361,7 @@
         body.dark-theme .review-opt.wrong { color: #F87171; }
 
         /* --- Skeleton Loader Styles --- */
-        .skeleton {
-            background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-highlight) 50%, var(--skeleton-base) 75%);
-            background-size: 200% 100%;
-            animation: skeletonLoading 1.5s infinite;
-            border-radius: 8px;
-        }
+        .skeleton { background: linear-gradient(90deg, var(--skeleton-base) 25%, var(--skeleton-highlight) 50%, var(--skeleton-base) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 8px; }
         @keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
         .skeleton-text { height: 28px; width: 90%; margin-bottom: 10px; }
         .skeleton-text.short { width: 60%; margin-bottom: 25px; }
@@ -400,23 +391,9 @@
 
         /* --- EXACT JELLY BUTTON CSS --- */
         .Btn {
-            position: relative;
-            width: 150px;
-            height: 55px;
-            border-radius: 45px;
-            border: none;
-            background-color: rgb(151, 95, 255);
-            color: white;
-            box-shadow: 0px 10px 10px rgb(210, 187, 253) inset,
-            0px 5px 10px rgba(5, 5, 5, 0.212),
-            0px -10px 10px rgb(124, 54, 255) inset;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
+            position: relative; width: 150px; height: 55px; border-radius: 45px; border: none; background-color: rgb(151, 95, 255); color: white;
+            box-shadow: 0px 10px 10px rgb(210, 187, 253) inset, 0px 5px 10px rgba(5, 5, 5, 0.212), 0px -10px 10px rgb(124, 54, 255) inset;
+            cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 600; text-decoration: none;
         }
         .Btn::before { width: 70%; height: 2px; position: absolute; background-color: rgba(250, 250, 250, 0.678); content: ""; filter: blur(1px); top: 7px; border-radius: 50%; }
         .Btn::after { width: 70%; height: 2px; position: absolute; background-color: rgba(250, 250, 250, 0.137); content: ""; filter: blur(1px); bottom: 7px; border-radius: 50%; }
@@ -431,10 +408,174 @@
         /* --- Scroll Reveal Styles --- */
         .reveal { opacity: 0; transform: translateY(60px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ========================================================= */
+        /* --- CAR LOADER CSS / OFFLINE ANIMATION STYLES --- */
+        /* ========================================================= */
+        #app-loader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: var(--light);
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
+            z-index: 99999;
+            transition: opacity 0.5s ease;
+        }
+
+        .car-loader-container { position: relative; width: 380px; height: 380px; margin: auto; display: flex; align-items: center; justify-content: center; transform: scale(0.8); }
+        .car-container { position: absolute; width: 380px; height: 380px; }
+        .car { position: absolute; width: 220px; height: 110px; background-color: #911717; left: 30px; top: 150px; clip-path: polygon(6% 0%, 80% 0%, 100% 50%, 100% 100%, 0% 100%); }
+        .car::before { content: ""; position: absolute; width: 220px; height: 45px; background-color: #ba1c1c; left: 0px; top: 5px; border-top: 4px solid #630909; border-bottom: 2px solid #630909; }
+        .car::after { content: ""; position: absolute; width: 2px; height: 110px; background-color: #630909; left: 140px; top: 5px; transform: rotate(3deg); box-shadow: -65px 5px #630909, 78px 5px #630909; }
+        .front-part { position: absolute; width: 100px; height: 55px; background-color: #911717; right: 30px; top: 205px; clip-path: polygon(0% 0%, 100% 20%, 100% 100%, 0% 100%); }
+        .front-part2 { position: absolute; width: 100px; height: 10px; background-color: rgb(154, 11, 11); right: 30px; transform: rotate(6.3deg); top: 212px; border-bottom: 2px solid #630909; }
+        .front-part2::after { content: ""; position: absolute; width: 10px; height: 8px; background-color: rgba(251, 243, 205, 0.686); right: 22px; top: -4px; box-shadow: inset 0px -3px #000000c9; }
+        .front-part2::before { content: ""; position: absolute; width: 95px; height: 5px; background-color: #d41111; top: -5px; border-radius: 50% 50% 0% 0%; }
+        .front-part3 { position: absolute; background-color: #3d090965; width: 320px; height: 30px; bottom: 120px; left: 30px; box-shadow: inset 0px 12px rgba(252, 72, 72, 0.147); }
+        .front-part3::before { content: ""; position: absolute; background-color: #f984843b; width: 220px; height: 8px; bottom: 46px; left: 0px; }
+        .bottom-part { position: absolute; width: 320px; height: 20px; background-color: #630909; left: 30px; top: 260px; }
+        .bottom-part::before { content: ""; position: absolute; width: 50px; height: 25px; background-color: #864343; left: -8px; top: -5px; border-radius: 5px 0px 0px 10px; box-shadow: inset -5px -8px rgba(0, 0, 0, 0.409), inset -5px 3px rgba(255, 255, 255, 0.324); }
+        .wheel-container { position: absolute; width: 100px; height: 46px; background-color: black; left: 40px; top: 234px; clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%); box-shadow: 100px 0px; }
+        .wheel-container2 { left: 235px; }
+        .wheel-back { position: absolute; background-color: rgb(33, 9, 9); width: 30px; height: 70px; left: 6px; top: 175px; border-radius: 8px; transform: rotate(4deg); box-shadow: inset 6px -1px 0px -2px rgb(101, 101, 101), inset 0px 5px rgb(96, 96, 96), inset 0px 30px 0px -4px #2b2b2b; }
+        .wheel-break { width: 30px; height: 30px; position: absolute; border-radius: 50%; background-color: rgb(183, 189, 211); bottom: 25px; left: 25px; }
+        .wheel-break::after { content: ""; position: absolute; background-color: rgb(183, 0, 0); width: 8px; height: 15px; right: -1px; top: 8px; border-radius: 0% 100% 100% 0% / 0% 50% 50% 0%; }
+        .wheel-break::before { content: ""; position: absolute; width: 15px; height: 15px; border-radius: 50%; background-color: rgb(0, 0, 0); top: 3.5px; left: 3.5px; border: 4px solid rgb(90, 100, 134); }
+        .wheel-break2 { width: 30px; height: 30px; position: absolute; border-radius: 50%; background-color: rgb(183, 189, 211); bottom: 25px; left: 25px; }
+        .wheel-break2::after { content: ""; position: absolute; background-color: rgb(183, 0, 0); width: 10px; height: 25px; left: -2px; top: 3px; border-radius: 100% 0% 0% 100% / 50% 0% 0% 50%; }
+        .wheel-break2::before { content: ""; position: absolute; width: 15px; height: 15px; border-radius: 50%; background-color: rgb(0, 0, 0); top: 3.5px; left: 3.5px; border: 4px solid rgb(90, 100, 134); }
+        .window { width: 55px; height: 40px; position: absolute; background-color: black; top: 160px; left: 45px; transform: skew(-5deg); border-radius: 6px; box-shadow: inset 0px 0px 0px 2px rgb(61, 61, 61); }
+        .window::before { content: ""; width: 48px; height: 40px; position: absolute; background-color: black; top: 0px; left: 72px; border-radius: 6px; box-shadow: inset 0px 0px 0px 2px rgb(61, 61, 61); }
+        .window::after { content: ""; width: 30px; height: 40px; position: absolute; background-color: black; top: 0px; left: 132px; border-radius: 6px 6px 0px 6px; box-shadow: inset 2px 0px rgb(61, 61, 61), inset 0px 2px rgb(61, 61, 61); }
+        .window2 { width: 53px; height: 20px; position: absolute; background-color: black; top: 180px; left: 180px; border-radius: 0% 100% 10% 0% / 0% 80% 10% 4%; box-shadow: inset 0px -2px rgb(61, 61, 61); }
+        .window2::before { content: ""; position: absolute; width: 15px; height: 42px; background-color: black; top: -18px; right: 11px; transform: rotate(-37deg); border-radius: 0% 10% 0% 100%; box-shadow: inset -2px 0px rgb(61, 61, 61); }
+        .window2::after { content: ""; position: absolute; width: 10px; height: 36px; background-color: rgb(60, 60, 61); top: -18px; right: 25px; transform: skew(37deg); box-shadow: -60px 0px rgb(60, 60, 61), -130px 0px rgb(60, 60, 61); }
+        .window3 { width: 4px; height: 25px; position: absolute; background-color: #bbbcbc52; top: 173px; left: 189px; transform: skew(38deg); box-shadow: -60px 0px #bbbcbc52, -129px -1px #bbbcbc52; }
+        .window3::before { content: ""; width: 3px; height: 55px; position: absolute; background-color: black; top: -22px; left: 42px; }
+        .details { position: absolute; width: 60px; height: 4px; background-color: black; top: 220px; left: 40px; box-shadow: 150px 0px; }
+        .details::before { content: ""; position: absolute; width: 50px; height: 4px; background-color: black; top: 0px; right: -70px; box-shadow: 15px 45px 0px 0px #6f6f6f, 70px 45px 0px 0px #6f6f6f, 50px 45px 0px 0px #6f6f6f, 20px 50px 0px 1px #3b3b3b, 66px 50px 0px 1px #3b3b3b, 20px 50px 0px 5px, 66px 50px 0px 5px; }
+        .details::after { content: ""; position: absolute; width: 70px; height: 4px; background-color: black; right: -230px; transform: rotate(5deg); bottom: -3px; }
+        .details2 { position: absolute; width: 60px; height: 8px; background-color: #c42525; top: 228px; left: 60px; box-shadow: 195px 2px #c42525; border-radius: 17% 18% 26% 26% / 100% 100% 0% 0%; }
+        .details2::before { content: ""; position: absolute; width: 5px; height: 54px; background-color: #c42525; transform: rotate(24deg); left: -8.7px; box-shadow: 178.1px -79px #c42525; }
+        .details2::after { content: ""; position: absolute; width: 4px; height: 54px; background-color: #9c1717; transform: rotate(-24deg); left: 65px; box-shadow: 178.1px 79px #9c1717; }
+        .details4 { position: absolute; width: 50px; height: 3px; background-color: #f75f5f8c; top: 233px; left: 64px; box-shadow: 195px 2px #f75f5f8c; border-radius: 17% 18% 26% 26% / 100% 100% 0% 0%; }
+        .details4::before { content: ""; position: absolute; width: 3px; height: 50px; background-color: #f75f5f8c; transform: rotate(24deg); left: -11px; top: -2px; box-shadow: 178.1px -77px 0px -0.5px #f75f5f8c; }
+        .details4::after { content: ""; position: absolute; width: 2px; height: 50px; background-color: #f75f5f8c; transform: rotate(-24deg); left: 60px; top: -2px; box-shadow: 177px 81px #f75f5f8c; }
+        .details3 { position: absolute; width: 20px; height: 15px; background-color: black; bottom: 175px; right: 146px; box-shadow: inset 0px 2px #424141, inset -2px 0px #1d1515, inset 0px 10px rgb(37, 37, 37); border-radius: 4px 4px 0px 4px; }
+        .details3::before { position: absolute; content: ""; width: 10px; height: 4px; background-color: rgba(0, 0, 0, 0.858); left: -41px; top: 30px; box-shadow: -67px 0px; }
+        .details3::after { position: absolute; content: ""; width: 2px; height: 2px; background-color: rgba(179, 178, 178, 0.858); left: -41px; top: 30px; box-shadow: -67px 0px rgb(167, 167, 167); }
+        .bumper { position: absolute; width: 20px; height: 35px; background-color: black; bottom: 100px; right: 23px; border-radius: 0% 20% 20% 0%; box-shadow: inset -4px 0px rgb(79, 79, 79); }
+        .bumper::before { content: ""; position: absolute; width: 20px; height: 3px; background-color: rgb(105, 105, 105); box-shadow: 0px 14px 0px -0.3px rgba(251, 251, 251, 0.315); }
+        .bumper::after { content: ""; position: absolute; width: 3px; height: 25px; background-color: rgb(69, 69, 69); rotate: 8deg; top: 3px; left: -2px; }
+        .bumper2 { position: absolute; width: 25px; height: 5px; background-color: rgb(39, 39, 39); bottom: 101px; right: 23px; rotate: 5deg; }
+        .details5 { position: absolute; width: 100px; height: 2px; background-color: rgb(187, 187, 187); bottom: 107px; left: 138px; }
+        .details5::before { content: ""; position: absolute; width: 20px; height: 10px; background-color: rgba(255, 255, 255, 0.096); top: -80px; left: -125px; transform: rotate(5deg); box-shadow: inset 0px -3px rgba(255, 255, 255, 0.24), 0px 40px 0px 1px black; }
+        .details5::after { content: ""; position: absolute; width: 170px; height: 1px; background-color: rgb(0, 0, 0); top: -120px; left: -98px; box-shadow: 0px -2px 0px 1px; }
+        .wheel-logo { width: 0; height: 0; border-style: solid; border-width: 0 1px 4px 1px; border-color: transparent transparent white transparent; z-index: 1; transform: scale(1); }
+        .wheel-logo::before { content: ""; position: absolute; width: 0; height: 0; border-style: solid; border-width: 0 1px 4px 1px; border-color: transparent transparent white transparent; transform: rotate(-65deg); right: 1px; }
+        .wheel-logo::after { content: ""; position: absolute; width: 0; height: 0; border-style: solid; border-width: 0 1px 4px 1px; border-color: transparent transparent white transparent; transform: rotate(65deg); left: 1px; }
+        .head-lights { position: absolute; width: 16px; height: 20px; background-color: rgb(212, 207, 166); left: 334px; bottom: 140px; box-shadow: inset 3px 0px #840f0f, inset -5px 0px #9a4e4e, inset -5px 0px #ad2121; }
+        .head-lights::before { content: ""; position: absolute; width: 4px; height: 15px; background-color: #840f0f; left: 11px; bottom: 0px; }
+        .head-lights::after { content: ""; position: absolute; width: 8px; height: 8px; background-color: #840f0f86; left: 3px; bottom: 0px; box-shadow: -1px -13px 0px -1px rgba(254, 254, 235, 0.568); }
+        .tail-lights { position: absolute; width: 4px; height: 10px; background-color: rgb(252, 3, 3); right: 348px; bottom: 125px; box-shadow: inset -2px 0px rgb(214, 0, 0); }
+        .tail-lights::before { content: ""; position: absolute; width: 14px; height: 16px; background-color: rgba(255, 0, 0, 0.288); left: -4px; }
+        .extra-lighting-details { position: absolute; background-color: rgba(255, 255, 255, 0.712); height: 1.5px; width: 50px; bottom: 145px; left: 65px; box-shadow: 195px 2px rgba(255, 255, 255, 0.712); }
+        .extra-lighting-details::before { content: ""; position: absolute; background-color: rgba(255, 255, 255, 0.288); height: 2px; width: 115px; top: 10px; left: 65px; box-shadow: -30px -35px 0px 1px rgba(255, 255, 255, 0.205); }
+        .extra-lighting-details::after { content: ""; position: absolute; background-color: rgba(255, 255, 255, 0.568); height: 2px; width: 80px; top: -22px; left: 190px; rotate: 8deg; box-shadow: 0px -3px rgba(0, 0, 0, 0.349); }
+        .extra-lighting-details2 { position: absolute; background-color: rgba(0, 0, 0, 0.226); height: 12px; width: 10px; bottom: 165px; left: 220px; rotate: 15deg; }
+        .extra-lighting-details2::before { content: ""; position: absolute; background-color: rgba(0, 0, 0, 0.308); height: 8px; width: 10px; bottom: 5px; left: 0px; rotate: -15deg; }
+        .extra-lighting-details3 { position: absolute; background-color: rgba(255, 255, 255, 0.089); height: 45px; width: 5px; bottom: 175px; left: 100px; rotate: 5deg; box-shadow: 10px 0px rgba(255, 255, 255, 0.144), 65px -5px rgba(255, 255, 255, 0.144); }
+        .extra-lighting-details3::before { content: ""; position: absolute; background-color: rgba(255, 255, 255, 0.418); height: 1px; width: 25px; bottom: -33px; left: 240px; rotate: -5deg; box-shadow: 1px -12px rgba(255, 255, 255, 0.541); }
+        .street { position: absolute; width: 600px; height: 450px; bottom: 0px; z-index: -1; overflow: hidden; }
+        .line { position: absolute; width: 100%; height: 4px; background-color: black; bottom: 62px; }
+        .obstacles { position: absolute; width: 20px; height: 15px; background-color: black; border-radius: 40% 40% 0% 0%; bottom: 60px; left: 110%; }
+        .wheel-ring { position: absolute; width: 60px; height: 60px; border-radius: 50%; left: 10px; top: 10px; border: 6px solid rgb(34, 34, 34); box-shadow: 0px 0px 0px 4px rgb(63, 63, 63), inset 0px 0px 0px 2px rgb(0, 0, 0); display: flex; justify-content: center; align-items: center; }
+        .wheel-ring2 { left: 10px; top: 10px; }
+        .container-wheel2 { width: 80px; height: 80px; position: absolute; bottom: 60px; left: 245px; }
+        .container-wheel1 { width: 80px; height: 80px; position: absolute; bottom: 60px; left: 50px; }
+        .wheel-center { position: absolute; width: 20px; height: 20px; border-radius: 50%; background-color: rgb(255, 255, 255); box-shadow: inset 0px 0px 0px 5px, inset 0px 0px 0px 6px rgb(191, 191, 191), inset 0px 0px 0px 12px black; }
+        .wheel-center2 { position: absolute; width: 50px; height: 50px; border-radius: 50%; z-index: 1; border: 1px solid white; }
+        .wheel-ring-stick { position: absolute; width: 4px; height: 18px; background-color: black; top: 32px; left: 19px; transform: rotate(15deg); }
+        .wheel-ring-stick::before { content: ""; position: absolute; width: 4px; height: 18px; background-color: black; top: -2px; left: 8px; transform: rotate(-20deg); }
+        .wheel-ring-stick2 { transform: rotate(82deg); left: 8px; top: 16px; }
+        .wheel-ring-stick3 { left: 34px; top: 25px; transform: rotate(-55deg); }
+        .wheel-ring-stick4 { top: 2px; left: 17px; transform: rotate(155deg); }
+        .wheel-ring-stick5 { top: 7px; left: 36px; transform: rotate(225deg); }
+
+        @keyframes spinning { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .wheel-ring1 { animation: spinning 1s linear infinite; }
+        .wheel-ring2 { animation: spinning 1s linear infinite; }
+        .container-wheel1 { animation: bounce1 3s infinite; }
+        .container-wheel2 { animation: bounce2 3s infinite; }
+        @keyframes bounce1 { 0%, 50% { transform: translateY(0px); } 52% { transform: translateY(-5px); } 65% { transform: translateY(0px); } }
+        @keyframes bounce2 { 0%, 28% { transform: translateY(0px); } 30% { transform: translateY(-5px); } 45% { transform: translateY(0px); } }
+        .car-container { animation: lift 3s infinite cubic-bezier(0.96, 0.5, 0.27, 0.55); transform-origin: center; }
+        @keyframes lift { 0%, 30% { transform: rotate(0deg) translateY(0px); } 32% { transform: rotate(-1.5deg) translateY(-2px); } 48%, 50% { transform: rotate(0deg) translateY(0px); } 56.5% { transform: rotate(1deg) translateY(-1px); } 68% { transform: rotate(0deg) translateY(0px); } }
+        .obstacles { animation: displacement 3s linear infinite; }
+        @keyframes displacement { 0% { left: 110%; } 100% { left: -40%; } }
     </style>
 </head>
 <body>
 
+    <div id="app-loader">
+        <div class="car-loader-container">
+            <div class="car-container">
+              <div class="car"></div>
+              <div class="front-part"></div>
+              <div class="front-part2"></div>
+              <div class="front-part3"></div>
+              <div class="bottom-part"></div>
+              <div class="wheel-container wheel-container1"></div>
+              <div class="wheel-container wheel-container2"></div>
+              <div class="wheel-back"></div>
+              <div class="window"></div>
+              <div class="window2"></div>
+              <div class="window3"></div>
+              <div class="details"></div>
+              <div class="details2"></div>
+              <div class="details3"></div>
+              <div class="details4"></div>
+              <div class="details5"></div>
+              <div class="bumper"></div>
+              <div class="bumper2"></div>
+              <div class="head-lights"></div>
+              <div class="tail-lights"></div>
+              <div class="extra-lighting-details"></div>
+              <div class="extra-lighting-details2"></div>
+              <div class="extra-lighting-details3"></div>
+            </div>
+            <div class="container-wheel1">
+              <div class="wheel-break"></div>
+              <div class="wheel-ring wheel-ring1">
+                <div class="wheel-center"></div>
+                <div class="wheel-center2"></div>
+                <div class="wheel-ring-stick"></div>
+                <div class="wheel-ring-stick wheel-ring-stick2"></div>
+                <div class="wheel-ring-stick wheel-ring-stick3"></div>
+                <div class="wheel-ring-stick wheel-ring-stick4"></div>
+                <div class="wheel-ring-stick wheel-ring-stick5"></div>
+                <div class="wheel-logo"></div>
+              </div>
+            </div>
+            <div class="container-wheel2">
+              <div class="wheel-break2"></div>
+              <div class="wheel-ring2 wheel-ring">
+                <div class="wheel-center"></div>
+                <div class="wheel-center2"></div>
+                <div class="wheel-ring-stick"></div>
+                <div class="wheel-ring-stick wheel-ring-stick2"></div>
+                <div class="wheel-ring-stick wheel-ring-stick3"></div>
+                <div class="wheel-ring-stick wheel-ring-stick4"></div>
+                <div class="wheel-ring-stick wheel-ring-stick5"></div>
+                <div class="wheel-logo"></div>
+              </div>
+            </div>
+            <div class="street">
+              <div class="line"></div>
+              <div class="obstacles"></div>
+            </div>
+        </div>
+        <div id="offline-text" style="display: none; position: absolute; bottom: 20%; font-size: 1.2rem; font-weight: 600; color: var(--text-main); text-align: center;">You are offline.<br><span style="font-size:0.9rem; color: var(--text-muted); font-weight: 400;">Waiting for connection to resume...</span></div>
+    </div>
     <div class="custom-cursor" id="custom-cursor"></div>
 
     <nav id="main-nav">
@@ -481,7 +622,7 @@
                 <p>Your one-stop premium dashboard for Class 10 SSC. Access notes, tests, video lectures, and track your syllabus progress all in one place.</p>
                 <div style="margin-top: 30px;">
                     <a href="#dashboard" class="Btn" style="text-decoration: none;">
-                        Get started        
+                        Jelly Button
                     </a>
                 </div>
             </div>
@@ -515,6 +656,13 @@
                     <h3>Global Leaderboard</h3>
                     <p>Compete with students globally. See who holds the top 10 spots!</p>
                     <div class="card-btn" style="color: #F59E0B;">View Ranks</div>
+                </div>
+                
+                <div class="card reveal" onclick="openModal('modal-music')" role="button" tabindex="0">
+                    <i class="fas fa-headphones-alt" style="color: #8B5CF6;"></i>
+                    <h3>Lo-Fi & Relax</h3>
+                    <p>Chill background music to keep your mood fresh during study breaks.</p>
+                    <div class="card-btn" style="color: #8B5CF6;">Play Beats</div>
                 </div>
 
                 <div class="card reveal" onclick="openModal('modal-questions')" role="button" tabindex="0">
@@ -572,13 +720,6 @@
                     <p>Complete set of state board textbooks stored safely on Drive.</p>
                     <div class="card-btn">Select Subject</div>
                 </div>
-                
-                <div class="card reveal" onclick="openModal('modal-music')" role="button" tabindex="0">
-                    <i class="fas fa-headphones-alt" style="color: #8B5CF6;"></i>
-                    <h3>Study Beats</h3>
-                    <p>Lofi music & chill beats to refresh your mood during breaks.</p>
-                    <div class="card-btn" style="color: #8B5CF6;">Listen Now</div>
-                </div>
 
             </div>
         </section>
@@ -608,11 +749,30 @@
 
         <footer class="reveal">
             <p>&copy; 2026 EduNova. Built for Students.</p>
-            <div class="creator-connect">
-                <a href="https://www.instagram.com/y._siddartha_/" target="_blank" class="insta-profile-btn" aria-label="Follow Siddartha on Instagram">
-                    <img src="sidhuinstgramlogo.jpg" alt="Siddartha" class="insta-pic" onerror="this.src='https://ui-avatars.com/api/?name=Siddartha&background=random'">
-                    <i class="fab fa-instagram insta-icon"></i>
-                    <span>y._siddartha_</span>
+            
+            <svg width="0" height="0" style="position: absolute;">
+              <defs>
+                <clipPath id="squircleClip" clipPathUnits="objectBoundingBox">
+                  <path d="M 0,0.5 C 0,0 0,0 0.5,0 S 1,0 1,0.5 1,1 0.5,1 0,1 0,0.5"></path>
+                </clipPath>
+              </defs>
+            </svg>
+
+            <div class="squircle-dock-container">
+                <a href="https://www.instagram.com/y._siddartha_/" target="_blank" class="squircle-btn sq-ig" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                    </svg>
+                </a>
+                <a href="https://youtube.com/" target="_blank" class="squircle-btn sq-yt" aria-label="YouTube">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"></path>
+                    </svg>
+                </a>
+                <a href="https://github.com/" target="_blank" class="squircle-btn sq-github" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
+                    </svg>
                 </a>
             </div>
         </footer>
@@ -673,6 +833,43 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="modal-music">
+        <div class="modal-content" style="max-width: 400px; text-align: center;">
+            <div class="modal-header" style="border: none; padding-bottom: 0;">
+                <h3><i class="fas fa-headphones-alt" style="color: #8B5CF6;"></i> Break Time Beats</h3>
+                <button class="close-btn" onclick="closeModal('modal-music')"><i class="fas fa-times"></i></button>
+            </div>
+            
+            <div class="music-player-wrapper">
+                <div class="album-art-container">
+                    <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=400&q=80" alt="Lo-Fi Art" class="album-art-img" id="music-thumbnail">
+                    <div class="vinyl-hole"></div>
+                </div>
+                
+                <div class="music-info">
+                    <h2 id="music-title">Focus Vibes</h2>
+                    <p id="music-artist">EduNova Radio</p>
+                </div>
+
+                <div class="music-progress" id="music-progress-container" onclick="setMusicProgress(event)">
+                    <div class="music-progress-bar" id="music-progress-bar"></div>
+                </div>
+                <div class="music-time">
+                    <span id="music-current-time">0:00</span>
+                    <span id="music-duration">0:00</span>
+                </div>
+
+                <div class="music-controls">
+                    <button class="music-btn" onclick="prevTrack()"><i class="fas fa-step-backward"></i></button>
+                    <button class="music-btn play-pause-btn" onclick="togglePlayMusic()"><i class="fas fa-play" id="music-play-icon"></i></button>
+                    <button class="music-btn" onclick="nextTrack()"><i class="fas fa-step-forward"></i></button>
+                </div>
+            </div>
+
+            <audio id="audio-player" preload="metadata"></audio>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="modal-timer">
         <div class="modal-content" style="text-align: center;">
             <div class="modal-header">
@@ -723,14 +920,79 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="modal-questions"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-award" style="color: #F59E0B;"></i> Important Questions</h3><button class="close-btn" onclick="closeModal('modal-questions')"><i class="fas fa-times"></i></button></div><div style="max-height: 65vh; overflow-y: auto; padding-right: 5px;"><p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Repeated questions from the last 10 years of SSC TS Board Exams.</p><details class="premium-accordion"><summary><i class="fas fa-square-root-variable"></i> Mathematics</summary><div class="accordion-content"><h4>1. Real Numbers</h4><ul><li>Prove that √3 is irrational.</li></ul></div></details></div></div></div>
-    
-    <div class="modal-overlay" id="modal-videos"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-play-circle" style="color: #EF4444;"></i> Video Classes</h3><button class="close-btn" onclick="closeModal('modal-videos')"><i class="fas fa-times"></i></button></div><div class="subject-list"><a href="https://youtube.com/results?search_query=ssc+class+10+maths" target="_blank" class="subject-item"><i class="fab fa-youtube" style="color: #EF4444;"></i> Mathematics</a><a href="https://youtube.com/results?search_query=ssc+class+10+physics" target="_blank" class="subject-item"><i class="fab fa-youtube" style="color: #EF4444;"></i> Physical Science</a></div></div></div>
-    <div class="modal-overlay" id="modal-notes"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-book-reader"></i> Smart Notes</h3><button class="close-btn" onclick="closeModal('modal-notes')"><i class="fas fa-times"></i></button></div><div class="subject-list"><a href="#" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a><a href="#" class="subject-item"><i class="fas fa-flask"></i> Science</a></div></div></div>
-    <div class="modal-overlay" id="modal-syllabus"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-bullseye"></i> Blueprints</h3><button class="close-btn" onclick="closeModal('modal-syllabus')"><i class="fas fa-times"></i></button></div><div class="subject-list"><a href="#" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a><a href="#" class="subject-item"><i class="fas fa-globe-asia"></i> Social Studies</a></div></div></div>
-    <div class="modal-overlay" id="modal-papers"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-file-alt"></i> Previous Papers</h3><button class="close-btn" onclick="closeModal('modal-papers')"><i class="fas fa-times"></i></button></div><div class="subject-list"><a href="#" class="subject-item"><i class="fas fa-calculator"></i> Mathematics (2023)</a><a href="#" class="subject-item"><i class="fas fa-flask"></i> Science (2024)</a></div></div></div>
-    <div class="modal-overlay" id="modal-books"><div class="modal-content"><div class="modal-header"><h3><i class="fas fa-book"></i> Textbooks</h3><button class="close-btn" onclick="closeModal('modal-books')"><i class="fas fa-times"></i></button></div><div class="subject-list"><a href="#" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a><a href="#" class="subject-item"><i class="fas fa-flask"></i> Science</a></div></div></div>
-    
+    <div class="modal-overlay" id="modal-questions">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-award" style="color: #F59E0B;"></i> Important Questions</h3>
+                <button class="close-btn" onclick="closeModal('modal-questions')" aria-label="Close Questions"><i class="fas fa-times"></i></button>
+            </div>
+            <div style="max-height: 65vh; overflow-y: auto; padding-right: 5px;">
+                <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px;">Repeated questions from the last 10 years of SSC TS Board Exams.</p>
+                <details class="premium-accordion"><summary><i class="fas fa-square-root-variable"></i> Mathematics</summary><div class="accordion-content"><h4>1. Real Numbers</h4><ul><li>Prove that √3 is irrational.</li><li>Prove that √5 is irrational.</li><li>Show that 3 + 2√5 is irrational.</li><li>Find HCF and LCM of 306 and 657 using Euclid’s algorithm.</li><li>Use Euclid’s Division Algorithm to find the HCF of 135 and 225.</li></ul><h4>2. Polynomials</h4><ul><li>Find the zeroes of the quadratic polynomial x² - 7x + 10.</li><li>Find the zeroes of the quadratic polynomial x² - 5x + 6.</li><li>Verify the relationship between zeroes and coefficients.</li></ul><h4>3. Pair of Linear Equations</h4><ul><li>Solve the system: 2x + 3y = 13 and 3x - y = 5.</li></ul><h4>4. Quadratic Equations</h4><ul><li>Solve using quadratic formula: x² - 7x + 10 = 0.</li><li>Solve using quadratic formula: x² - 5x + 6 = 0.</li></ul><h4>5. Arithmetic Progressions</h4><ul><li>Find the sum of first 20 terms of an AP: 3, 7, 11, 15...</li><li>Find the 20th term of AP: 3, 7, 11, 15...</li><li>Find the sum of first 30 terms of AP.</li></ul><h4>6. Trigonometry</h4><ul><li>Prove the trigonometric identity: 1/sinθ - 1/cscθ = 0.</li><li>Prove that (1 - tan²θ) / (1 + tan²θ) = cos 2θ.</li></ul><h4>7. Coordinate Geometry & Statistics</h4><ul><li>Find area of triangle formed by points (5,2), (4,7), (7,-4).</li><li>Find mean, median, and mode of grouped data.</li></ul><h4>8. Mensuration</h4><ul><li>Find the surface area and volume of a cone.</li></ul></div></details>
+                <details class="premium-accordion"><summary><i class="fas fa-flask"></i> Science</summary><div class="accordion-content"><h4>Physics</h4><ul><li>State Ohm’s Law and explain with a graph.</li><li>Difference between AC and DC current.</li><li>Explain the Electric Motor with a labelled diagram.</li><li>What is the refraction of light?</li><li>Define focal length and power of a lens. Find focal length when power is given.</li></ul><h4>Chemistry</h4><ul><li>Write types of chemical reactions with examples.</li><li>Explain corrosion and rancidity.</li><li>Write the chemical properties of acids and bases.</li><li>Explain the electrolysis of water with a diagram.</li></ul><h4>Biology</h4><ul><li>Explain the Human Digestive System with a diagram.</li><li>Explain Respiration in human beings.</li><li>Describe Blood circulation in the human heart.</li><li>Explain Reproduction in plants.</li><li>Explain the Human reproductive system.</li></ul></div></details>
+                <details class="premium-accordion"><summary><i class="fas fa-globe-asia"></i> Social Studies</summary><div class="accordion-content"><h4>History</h4><ul><li>Causes and results of World War I.</li><li>Consequences & effects of World War II.</li><li>Importance of the Bandung Conference.</li></ul><h4>Civics</h4><ul><li>What is Democracy? Explain its features.</li><li>Functions of the Election Commission.</li></ul><h4>Geography</h4><ul><li>Explain major rivers of India.</li><li>Explain types of soils in India.</li><li>Explain Water resources in India.</li></ul><h4>Economics</h4><ul><li>What is Globalisation? Explain.</li><li>Role of Banks in economic development.</li></ul></div></details>
+                <details class="premium-accordion"><summary><i class="fas fa-language"></i> English & Hindi</summary><div class="accordion-content"><h4>English</h4><ul><li>Write a summary of "The Dear Departed".</li><li>Character sketch of Mrs. Slater.</li><li>Write a Notice for a school event.</li><li>Write an Invitation letter for a school function.</li><li>Change Active voice to Passive voice.</li><li>Write an Essay on Environmental Pollution.</li><li>Write a letter to the headmaster requesting leave.</li></ul><h4>Hindi</h4><ul><li>Write सारांश (Summary) of a lesson.</li><li>पत्र लेखन (Letter writing).</li><li>निबंध लेखन (Essay writing) on पर्यावरण संरक्षण (Environment).</li><li>अपठित गद्यांश (Unseen passage).</li><li>कविता का भावार्थ (Poem explanation).</li></ul></div></details>
+                <details class="premium-accordion"><summary><i class="fas fa-pen-nib"></i> Important Diagrams to Practice</summary><div class="accordion-content" style="text-align: center;"><p style="text-align: left; margin-bottom: 15px;">Make sure to practice labeling these highly repeated diagrams:</p><h4>1. Human Digestive System</h4><br>
+
+
+
+[Image of the human digestive system]
+
+<br><h4>2. Electric Motor</h4><br>
+
+
+
+[Image of an electric motor diagram]
+
+<br><h4>3. Human Heart</h4><br>
+
+
+
+[Image of the human heart internal structure]
+
+<br><h4>4. Refraction through Lens</h4><br><br><h4>5. Neuron Structure</h4><br>
+
+
+
+[Image of a neuron structure diagram]
+
+</div></details>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-videos">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-play-circle" style="color: #EF4444;"></i> Video Classes</h3>
+                <button class="close-btn" onclick="closeModal('modal-videos')" aria-label="Close Videos"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="subject-list">
+                <a href="https://youtube.com/results?search_query=ssc+class+10+maths" target="_blank" class="subject-item"><i class="fab fa-youtube" style="color: #EF4444;"></i> Mathematics</a>
+                <a href="https://youtube.com/results?search_query=ssc+class+10+physics" target="_blank" class="subject-item"><i class="fab fa-youtube" style="color: #EF4444;"></i> Physical Science</a>
+                <a href="https://youtube.com/results?search_query=ssc+class+10+biology" target="_blank" class="subject-item"><i class="fab fa-youtube" style="color: #EF4444;"></i> Biological Science</a>
+                <a href="https://youtube.com/results?search_query=ssc+class+10+social" target="_blank" class="subject-item"><i class="fab fa-youtube" style="color: #EF4444;"></i> Social Studies</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-notes">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-book-reader"></i> Smart Notes</h3>
+                <button class="close-btn" onclick="closeModal('modal-notes')" aria-label="Close Notes"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="subject-list">
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a>
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-flask"></i> Physical Science</a>
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-dna"></i> Biological Science</a>
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-globe-asia"></i> Social Studies</a>
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-language"></i> English</a>
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-om"></i> Telugu / Hindi</a>
+            </div>
+        </div>
+    </div>
+
     <div class="modal-overlay" id="modal-tracker">
         <div class="modal-content">
             <div class="modal-header">
@@ -741,8 +1003,69 @@
                 <h4 class="tracker-section-title">Biological Science</h4>
                 <label class="tracker-item" id="lbl-bio1"><input type="checkbox" id="bio1" onchange="saveProgress()"> Lesson 1: Nutrition</label>
                 <label class="tracker-item" id="lbl-bio2"><input type="checkbox" id="bio2" onchange="saveProgress()"> Lesson 2: Respiration</label>
+                <label class="tracker-item" id="lbl-bio3"><input type="checkbox" id="bio3" onchange="saveProgress()"> Lesson 3: Circulation</label>
+                <label class="tracker-item" id="lbl-bio4"><input type="checkbox" id="bio4" onchange="saveProgress()"> Lesson 4: Excretion</label>
+                <label class="tracker-item" id="lbl-bio5"><input type="checkbox" id="bio5" onchange="saveProgress()"> Lesson 5: Coordination</label>
+                <label class="tracker-item" id="lbl-bio6"><input type="checkbox" id="bio6" onchange="saveProgress()"> Lesson 6: Reproduction</label>
+                <label class="tracker-item" id="lbl-bio7"><input type="checkbox" id="bio7" onchange="saveProgress()"> Lesson 7: Life Processes</label>
+                <label class="tracker-item" id="lbl-bio8"><input type="checkbox" id="bio8" onchange="saveProgress()"> Lesson 8: Heredity</label>
+                <label class="tracker-item" id="lbl-bio9"><input type="checkbox" id="bio9" onchange="saveProgress()"> Lesson 9: Environment</label>
+                <label class="tracker-item" id="lbl-bio10"><input type="checkbox" id="bio10" onchange="saveProgress()"> Lesson 10: Natural Resources</label>
+
                 <h4 class="tracker-section-title" style="margin-top: 20px;">Physical Science</h4>
                 <label class="tracker-item" id="lbl-phy1"><input type="checkbox" id="phy1" onchange="saveProgress()"> Ch 1: Heat</label>
+                <label class="tracker-item" id="lbl-phy2"><input type="checkbox" id="phy2" onchange="saveProgress()"> Ch 2: Acids, Bases & Salts</label>
+                <label class="tracker-item" id="lbl-phy3"><input type="checkbox" id="phy3" onchange="saveProgress()"> Ch 3: Refraction of Light</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-syllabus">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-bullseye"></i> Blueprints</h3>
+                <button class="close-btn" onclick="closeModal('modal-syllabus')" aria-label="Close Syllabus"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="subject-list">
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a>
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-flask"></i> Science (Phy & Bio)</a>
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-globe-asia"></i> Social Studies</a>
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-language"></i> Languages</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-papers">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-alt"></i> Previous Papers</h3>
+                <button class="close-btn" onclick="closeModal('modal-papers')" aria-label="Close Papers"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="subject-list">
+                <a href="2023-science-paper.html" class="subject-item"><i class="fas fa-calculator"></i> Physical science (2023)</a>
+                <a href="2024-science-paper.html" class="subject-item"><i class="fas fa-flask"></i> Physical Science (2024)</a>
+                <a href="2025-science-paper.html" class="subject-item"><i class="fas fa-flask"></i> Physical Science (2025)</a>
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-dna"></i> Biological Science</a>
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-globe-asia"></i> Social Studies</a>
+                <a href="#" target="_blank" class="subject-item"><i class="fas fa-language"></i> English</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-books">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-book"></i> Textbooks</h3>
+                <button class="close-btn" onclick="closeModal('modal-books')" aria-label="Close Books"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="subject-list">
+                <a href="https://drive.google.com/file/d/1YIke_RvoC7IEZ30ClbNUVtUEDHl_IScZ/preview" target="_blank" class="subject-item"><i class="fas fa-calculator"></i> Mathematics</a>
+                <a href="https://drive.google.com/file/d/1RFNzvLATarkwva0zQ_HwcycYDbPlMZw9/preview" target="_blank" class="subject-item"><i class="fas fa-flask"></i> Physical Science</a>
+                <a href="https://drive.google.com/file/d/1BolgtZ3bLeKYVIY0roBJPDCSyT4bopsU/preview" target="_blank" class="subject-item"><i class="fas fa-dna"></i> Biological Science</a>
+                <a href="https://drive.google.com/file/d/1pTVee0lq0uf9V9kwOWI_Ye2BiAfbFP-L/preview" target="_blank" class="subject-item"><i class="fas fa-globe-asia"></i> Social Studies</a>
+                <a href="https://drive.google.com/file/d/1yE9IfzPApK5UDDuF8rDZM21jSUSqVtYx/preview" target="_blank" class="subject-item"><i class="fas fa-language"></i> English</a>
+                <a href="https://drive.google.com/file/d/1SMfecAzbpT9vm_qbVh2KmyrrbQSUQIXv/preview" target="_blank" class="subject-item"><i class="fas fa-om"></i> Telugu </a>
+                <a href="https://drive.google.com/file/d/1SMfecAzbpT9vm_qbVh2KmyrrbQSUQIXv/preview" target="_blank" class="subject-item"><i class="fas fa-om"></i>  Hindi</a>
             </div>
         </div>
     </div>
@@ -827,41 +1150,6 @@
         </div>
     </div>
 
-
-    <div class="modal-overlay" id="modal-music">
-        <div class="modal-content music-player-container">
-            <div class="modal-header" style="border-bottom: none;">
-                <h3><i class="fas fa-headphones-alt" style="color: #8B5CF6;"></i> Lofi Chill Zone</h3>
-                <button class="close-btn" onclick="closeModal('modal-music')" title="Music keeps playing in background!"><i class="fas fa-times"></i></button>
-            </div>
-
-            <div class="album-art-container">
-                <img src="https://images.unsplash.com/photo-1518609878373-06d740f60d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Lofi Beats Art" class="album-art" id="music-cover">
-            </div>
-
-            <div class="track-title" id="music-title">Midnight Study</div>
-            <div class="track-artist" id="music-artist">Lofi Vibes</div>
-
-            <div class="music-progress" id="music-progress-container" onclick="seekMusic(event)">
-                <div class="music-progress-filled" id="music-progress-bar"></div>
-            </div>
-            <div class="time-display">
-                <span id="current-time">0:00</span>
-                <span id="duration-time">0:00</span>
-            </div>
-
-            <div class="music-controls">
-                <button class="ctrl-btn" onclick="prevTrack()"><i class="fas fa-backward"></i></button>
-                <button class="ctrl-btn play-pause" onclick="togglePlayPause()" id="play-pause-btn"><i class="fas fa-play" style="margin-left: 3px;"></i></button>
-                <button class="ctrl-btn" onclick="nextTrack()"><i class="fas fa-forward"></i></button>
-            </div>
-
-            <div class="playlist-header"><i class="fas fa-list-music"></i> Playlist</div>
-            <div class="playlist-container" id="playlist-container">
-                </div>
-        </div>
-    </div>
-
     <a href="https://wa.me/?text=Hey!%20I'm%20using%20EduNova%20to%20prepare%20for%20board%20exams.%20It%20has%20free%20notes,%20mock%20tests,%20video%20classes%20and%20previous%20papers%20without%20any%20lag.%20Check%20it%20out!%20https://edu-nova-714d82.netlify.app/" target="_blank" class="whatsapp-float" aria-label="Share on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
@@ -889,6 +1177,36 @@
     </div>
 
     <script>
+        // ==========================================
+        // 0. LOADER & OFFLINE LISTENER LOGIC
+        // ==========================================
+        window.addEventListener('load', () => {
+            if(navigator.onLine) {
+                // Add a slight delay so the cool animation actually gets to show off a little bit
+                setTimeout(() => {
+                    const loader = document.getElementById('app-loader');
+                    loader.style.opacity = '0';
+                    setTimeout(() => loader.style.display = 'none', 500);
+                }, 800);
+            }
+        });
+
+        window.addEventListener('offline', () => {
+            const loader = document.getElementById('app-loader');
+            const offlineText = document.getElementById('offline-text');
+            loader.style.display = 'flex';
+            setTimeout(() => loader.style.opacity = '1', 10);
+            offlineText.style.display = 'block';
+        });
+
+        window.addEventListener('online', () => {
+            const loader = document.getElementById('app-loader');
+            const offlineText = document.getElementById('offline-text');
+            offlineText.style.display = 'none';
+            loader.style.opacity = '0';
+            setTimeout(() => loader.style.display = 'none', 500);
+        });
+
         // ==========================================
         // 1. FIREBASE INITIALIZATION & AUTH LOGIC
         // ==========================================
@@ -1034,12 +1352,7 @@
             if (event.target.classList.contains('modal-overlay')) {
                 event.target.classList.remove('active');
                 document.body.style.overflow = 'auto';
-                
-                // Stop video if the video modal is closed by clicking outside
-                if (event.target.id === 'modal-video-player') {
-                    document.getElementById('yt-iframe').src = "";
-                }
-                // Note: We DO NOT stop the music player if its modal is closed, allowing background playback!
+                if (event.target.id === 'modal-video-player') document.getElementById('yt-iframe').src = "";
             }
         }
 
@@ -1051,34 +1364,133 @@
 
         function closeVideoModal() {
             const iframe = document.getElementById('yt-iframe');
-            iframe.src = ""; // Stops the video from playing in background
+            iframe.src = ""; 
             closeModal('modal-video-player');
         }
         
         const themeInput = document.getElementById('theme-input');
         const bodyElement = document.body;
         themeInput.addEventListener('change', () => {
-            if(themeInput.checked) {
-                bodyElement.classList.add('dark-theme');
-            } else {
-                bodyElement.classList.remove('dark-theme');
-            }
+            if(themeInput.checked) { bodyElement.classList.add('dark-theme'); } 
+            else { bodyElement.classList.remove('dark-theme'); }
             if(window.scoreChartInstance) loadReportCard();
         });
 
 
         // ==========================================
-        // 3. POMODORO TIMER LOGIC
+        // 3. PREMIUM MUSIC PLAYER LOGIC
         // ==========================================
-        let pomoInterval;
-        let isTimerRunning = false;
-        let pomoMode = 'pomodoro'; 
-        let timerTimeRemaining = 25 * 60; 
+        const audioPlayer = document.getElementById('audio-player');
+        const playIcon = document.getElementById('music-play-icon');
+        const vinylImg = document.getElementById('music-thumbnail');
+        const progressBar = document.getElementById('music-progress-bar');
+        const progressContainer = document.getElementById('music-progress-container');
+        const currentTimeEl = document.getElementById('music-current-time');
+        const durationEl = document.getElementById('music-duration');
+
+        const tracks = [
+            {
+                title: "Focus Ambient",
+                artist: "EduNova Beats",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+                cover: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=400&q=80"
+            },
+            {
+                title: "Chill Study Lofi",
+                artist: "EduNova Relax",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+                cover: "https://images.unsplash.com/photo-1558021211-6d1403321394?auto=format&fit=crop&w=400&q=80"
+            },
+            {
+                title: "Deep Concentration",
+                artist: "EduNova Focus",
+                src: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3",
+                cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=400&q=80"
+            }
+        ];
+
+        let currentMusicIndex = 0;
+        let isMusicPlaying = false;
+
+        function loadMusic(index) {
+            audioPlayer.src = tracks[index].src;
+            document.getElementById('music-title').innerText = tracks[index].title;
+            document.getElementById('music-artist').innerText = tracks[index].artist;
+            vinylImg.src = tracks[index].cover;
+        }
+
+        function togglePlayMusic() {
+            if (isMusicPlaying) {
+                audioPlayer.pause();
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+                vinylImg.classList.remove('playing');
+            } else {
+                audioPlayer.play();
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+                vinylImg.classList.add('playing');
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        function nextTrack() {
+            currentMusicIndex = (currentMusicIndex + 1) % tracks.length;
+            loadMusic(currentMusicIndex);
+            if (isMusicPlaying) audioPlayer.play();
+        }
+
+        function prevTrack() {
+            currentMusicIndex = (currentMusicIndex - 1 + tracks.length) % tracks.length;
+            loadMusic(currentMusicIndex);
+            if (isMusicPlaying) audioPlayer.play();
+        }
+
+        audioPlayer.addEventListener('timeupdate', () => {
+            const current = audioPlayer.currentTime;
+            const duration = audioPlayer.duration;
+            
+            if (duration) {
+                const progressPercent = (current / duration) * 100;
+                progressBar.style.width = `${progressPercent}%`;
+                
+                let curMins = Math.floor(current / 60);
+                let curSecs = Math.floor(current % 60);
+                if(curSecs < 10) curSecs = `0${curSecs}`;
+                currentTimeEl.innerText = `${curMins}:${curSecs}`;
+            }
+        });
+
+        audioPlayer.addEventListener('loadeddata', () => {
+            let durMins = Math.floor(audioPlayer.duration / 60);
+            let durSecs = Math.floor(audioPlayer.duration % 60);
+            if(durSecs < 10) durSecs = `0${durSecs}`;
+            durationEl.innerText = `${durMins}:${durSecs}`;
+        });
+
+        audioPlayer.addEventListener('ended', nextTrack);
+
+        function setMusicProgress(e) {
+            const width = progressContainer.clientWidth;
+            const clickX = e.offsetX;
+            const duration = audioPlayer.duration;
+            audioPlayer.currentTime = (clickX / width) * duration;
+        }
+
+        loadMusic(currentMusicIndex);
+
+        // ==========================================
+        // 4. POMODORO TIMER LOGIC
+        // ==========================================
+        let pomoIntervalMain;
+        let isTimerRunningMain = false;
+        let pomoModeMain = 'pomodoro'; 
+        let timerTimeRemainingMain = 25 * 60; 
 
         function setTimerMode(mode) {
-            clearInterval(pomoInterval);
-            isTimerRunning = false;
-            pomoMode = mode;
+            clearInterval(pomoIntervalMain);
+            isTimerRunningMain = false;
+            pomoModeMain = mode;
             document.getElementById('pomodoro-start-btn').innerText = "Start";
             
             document.getElementById('btn-pomodoro').classList.remove('active');
@@ -1087,10 +1499,10 @@
             
             const circle = document.getElementById('timer-circle-ui');
             if(mode === 'break') {
-                timerTimeRemaining = 5 * 60;
+                timerTimeRemainingMain = 5 * 60;
                 circle.classList.add('break-mode');
             } else {
-                timerTimeRemaining = 25 * 60;
+                timerTimeRemainingMain = 25 * 60;
                 circle.classList.remove('break-mode');
             }
             updateTimerUI();
@@ -1098,42 +1510,39 @@
 
         function toggleTimer() {
             const btn = document.getElementById('pomodoro-start-btn');
-            if (isTimerRunning) {
-                clearInterval(pomoInterval);
+            if (isTimerRunningMain) {
+                clearInterval(pomoIntervalMain);
                 btn.innerText = "Resume";
             } else {
                 btn.innerText = "Pause";
-                pomoInterval = setInterval(() => {
-                    timerTimeRemaining--;
+                pomoIntervalMain = setInterval(() => {
+                    timerTimeRemainingMain--;
                     updateTimerUI();
-                    if(timerTimeRemaining <= 0) {
-                        clearInterval(pomoInterval);
-                        isTimerRunning = false;
+                    if(timerTimeRemainingMain <= 0) {
+                        clearInterval(pomoIntervalMain);
+                        isTimerRunningMain = false;
                         btn.innerText = "Start";
-                        alert(pomoMode === 'pomodoro' ? "Focus time over! Take a break." : "Break is over! Time to focus.");
+                        alert(pomoModeMain === 'pomodoro' ? "Focus time over! Take a break." : "Break is over! Time to focus.");
                     }
                 }, 1000);
             }
-            isTimerRunning = !isTimerRunning;
+            isTimerRunningMain = !isTimerRunningMain;
         }
 
-        function resetTimer() {
-            setTimerMode(pomoMode);
-        }
+        function resetTimer() { setTimerMode(pomoModeMain); }
 
         function updateTimerUI() {
-            let m = Math.floor(timerTimeRemaining / 60).toString().padStart(2, '0');
-            let s = (timerTimeRemaining % 60).toString().padStart(2, '0');
+            let m = Math.floor(timerTimeRemainingMain / 60).toString().padStart(2, '0');
+            let s = (timerTimeRemainingMain % 60).toString().padStart(2, '0');
             document.getElementById('pomodoro-time').innerText = `${m}:${s}`;
-            
-            let totalSeconds = pomoMode === 'pomodoro' ? 25 * 60 : 5 * 60;
-            let percentage = (timerTimeRemaining / totalSeconds) * 360;
+            let totalSeconds = pomoModeMain === 'pomodoro' ? 25 * 60 : 5 * 60;
+            let percentage = (timerTimeRemainingMain / totalSeconds) * 360;
             document.getElementById('timer-circle-ui').style.setProperty('--timer-deg', `${percentage}deg`);
         }
 
 
         // ==========================================
-        // 4. CHART.JS & LOCAL REPORT CARD
+        // 5. CHART.JS & LOCAL REPORT CARD
         // ==========================================
         window.scoreChartInstance = null; 
         
@@ -1144,7 +1553,6 @@
             const chartWrapper = document.getElementById('chart-container-wrapper');
             
             let reports = JSON.parse(localStorage.getItem('eduNovaReports')) || [];
-            
             totalTestsEl.innerText = reports.length;
             
             if(reports.length === 0) {
@@ -1206,24 +1614,14 @@
                     }]
                 },
                 options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
+                    responsive: true, maintainAspectRatio: false,
                     scales: { 
                         y: { beginAtZero: true, max: 100, grid: { color: gridColor }, ticks: { color: textColor } },
                         x: { grid: { display: false }, ticks: { color: textColor } }
                     },
                     plugins: { 
                         legend: { display: false },
-                        tooltip: {
-                            backgroundColor: isDark ? '#1E293B' : '#FFF',
-                            titleColor: isDark ? '#FFF' : '#1E293B',
-                            bodyColor: isDark ? '#94A3B8' : '#64748B',
-                            borderColor: '#4F46E5',
-                            borderWidth: 1,
-                            padding: 10,
-                            displayColors: false,
-                            callbacks: { label: function(context) { return `Score: ${context.parsed.y}%`; } }
-                        }
+                        tooltip: { backgroundColor: isDark ? '#1E293B' : '#FFF', titleColor: isDark ? '#FFF' : '#1E293B', bodyColor: isDark ? '#94A3B8' : '#64748B', borderColor: '#4F46E5', borderWidth: 1, padding: 10, displayColors: false, callbacks: { label: function(context) { return `Score: ${context.parsed.y}%`; } } }
                     }
                 }
             });
@@ -1231,7 +1629,7 @@
 
 
         // ==========================================
-        // 5. SYLLABUS TRACKER
+        // 6. SYLLABUS TRACKER
         // ==========================================
         document.addEventListener('DOMContentLoaded', loadProgress);
         function saveProgress() {
@@ -1263,7 +1661,7 @@
 
 
         // ==========================================
-        // 6. MCQ ENGINE LOGIC
+        // 7. MCQ ENGINE LOGIC
         // ==========================================
         const mcqData = {
             biology: {
@@ -1271,42 +1669,27 @@
                     { q: "The process of obtaining food and using it for energy is called", options: ["Respiration", "Nutrition", "Excretion", "Circulation"], ans: 1 },
                     { q: "Nutrition in green plants is called", options: ["Heterotrophic", "Autotrophic", "Parasitic", "Saprophytic"], ans: 1 },
                     { q: "The green pigment in plants responsible for photosynthesis is", options: ["Hemoglobin", "Chlorophyll", "Carotene", "Melanin"], ans: 1 },
-                ],
-                lesson2: [
-                    { q: "The process of releasing energy from food is called", options: ["Digestion", "Respiration", "Excretion", "Circulation"], ans: 1 },
-                    { q: "The gas required for respiration is", options: ["Nitrogen", "Oxygen", "Hydrogen", "Carbon dioxide"], ans: 1 },
-                    { q: "The gas released during respiration is", options: ["Oxygen", "Nitrogen", "Carbon dioxide", "Hydrogen"], ans: 2 }
+                    { q: "The main organ for photosynthesis is", options: ["Root", "Leaf", "Stem", "Flower"], ans: 1 },
+                    { q: "The gas absorbed by plants during photosynthesis is", options: ["Oxygen", "Carbon dioxide", "Nitrogen", "Hydrogen"], ans: 1 },
+                    { q: "Plants store food in the form of", options: ["Glucose", "Starch", "Protein", "Fat"], ans: 1 }
                 ]
             },
             physics: {
                 light_reflection: [
                     { q: "Light travels in a...", options: ["Straight line", "Curved line", "Zig-zag path", "Circular path"], ans: 0 },
-                    { q: "According to laws of reflection, angle of incidence is equal to...", options: ["Angle of refraction", "Angle of reflection", "Critical angle", "90 degrees"], ans: 1 },
-                ],
-                acids_bases: [
-                    { q: "Acids turn blue litmus paper to...", options: ["Red", "Green", "Yellow", "Colourless"], ans: 0 },
-                    { q: "The pH value of a neutral solution is...", options: ["0", "14", "7", "10"], ans: 2 },
+                    { q: "According to laws of reflection, angle of incidence is equal to...", options: ["Angle of refraction", "Angle of reflection", "Critical angle", "90 degrees"], ans: 1 }
                 ]
             }
-        };
+        }; 
 
         function updateChapterOptions() {
             const subject = document.getElementById('mcq-subject').value;
             const chapterSelect = document.getElementById('mcq-chapter');
-            
             if(subject === 'biology') {
-                chapterSelect.innerHTML = `
-                    <option value="all">All Biology Chapters</option>
-                    <option value="lesson1">Lesson 1: Nutrition</option>
-                    <option value="lesson2">Lesson 2: Respiration</option>
-                `;
+                chapterSelect.innerHTML = `<option value="all">All Biology Chapters</option><option value="lesson1">Lesson 1: Nutrition</option>`;
                 chapterSelect.disabled = false;
             } else if (subject === 'physics') {
-                chapterSelect.innerHTML = `
-                    <option value="all">All Physics Chapters</option>
-                    <option value="light_reflection">Lesson 1: Light Reflection & Refraction</option>
-                    <option value="acids_bases">Lesson 2: Acids, Bases & Salts</option>
-                `;
+                chapterSelect.innerHTML = `<option value="all">All Physics Chapters</option><option value="light_reflection">Lesson 1: Light Reflection & Refraction</option>`;
                 chapterSelect.disabled = false;
             } else {
                 chapterSelect.innerHTML = '<option value="" disabled selected>Select subject first...</option>';
@@ -1356,18 +1739,14 @@
                     let m = Math.floor(testTimeRemaining / 60).toString().padStart(2, '0');
                     let s = (testTimeRemaining % 60).toString().padStart(2, '0');
                     document.getElementById('time-remaining').innerText = `${m}:${s}`;
-                    
                     if(testTimeRemaining <= 60) timerDisplay.classList.add('warning');
-                    
                     if(testTimeRemaining <= 0) {
                         clearInterval(examTimerInterval);
                         alert("Time's up! Submitting test automatically.");
                         submitTest();
                     }
                 }, 1000);
-            } else {
-                timerDisplay.style.display = 'none';
-            }
+            } else { timerDisplay.style.display = 'none'; }
 
             closeModal('modal-mcq');
             document.getElementById('main-content').style.display = 'none';
@@ -1384,16 +1763,8 @@
             const questionContainer = document.getElementById('question-text');
             const optionsContainer = document.getElementById('options-container');
 
-            questionContainer.innerHTML = `
-                <div class="skeleton skeleton-text"></div>
-                <div class="skeleton skeleton-text short"></div>
-            `;
-            optionsContainer.innerHTML = `
-                <div class="skeleton skeleton-btn"></div>
-                <div class="skeleton skeleton-btn"></div>
-                <div class="skeleton skeleton-btn"></div>
-                <div class="skeleton skeleton-btn"></div>
-            `;
+            questionContainer.innerHTML = `<div class="skeleton skeleton-text"></div><div class="skeleton skeleton-text short"></div>`;
+            optionsContainer.innerHTML = `<div class="skeleton skeleton-btn"></div><div class="skeleton skeleton-btn"></div><div class="skeleton skeleton-btn"></div><div class="skeleton skeleton-btn"></div>`;
             
             document.getElementById('prev-btn').style.visibility = 'hidden';
             document.getElementById('next-btn').style.display = 'none';
@@ -1403,9 +1774,7 @@
                 const qData = currentTestQuestions[currentQuestionIndex];
                 document.getElementById('current-q-num').innerText = currentQuestionIndex + 1;
                 document.getElementById('total-q-num').innerText = currentTestQuestions.length;
-                
                 questionContainer.innerText = `${currentQuestionIndex + 1}. ${qData.q}`;
-                
                 optionsContainer.innerHTML = '';
                 qData.options.forEach((optText, index) => {
                     const btn = document.createElement('button');
@@ -1414,9 +1783,7 @@
                     btn.onclick = () => selectOption(index);
                     optionsContainer.appendChild(btn);
                 });
-
                 document.getElementById('prev-btn').style.visibility = currentQuestionIndex > 0 ? 'visible' : 'hidden';
-                
                 if(currentQuestionIndex === currentTestQuestions.length - 1) {
                     document.getElementById('next-btn').style.display = 'none';
                     document.getElementById('submit-btn').style.display = 'block';
@@ -1441,90 +1808,59 @@
             });
         }
 
-        function navigateQuestion(dir) {
-            currentQuestionIndex += dir;
-            renderQuestion(); 
-        }
+        function navigateQuestion(dir) { currentQuestionIndex += dir; renderQuestion(); }
 
         function submitTest() {
             clearInterval(examTimerInterval);
             let score = 0;
             userAnswers.forEach((ans, idx) => { if(ans === currentTestQuestions[idx].ans) score++; });
-
             const percentage = (score / currentTestQuestions.length) * 100;
 
             let reportData = JSON.parse(localStorage.getItem('eduNovaReports')) || [];
             let subjectSelect = document.getElementById('mcq-subject');
             let chapterSelect = document.getElementById('mcq-chapter');
-            
             reportData.push({
                 date: new Date().toLocaleDateString(),
                 subject: subjectSelect.options[subjectSelect.selectedIndex].text,
                 chapter: chapterSelect.options[chapterSelect.selectedIndex].text,
-                score: score,
-                total: currentTestQuestions.length,
-                percentage: Math.round(percentage)
+                score: score, total: currentTestQuestions.length, percentage: Math.round(percentage)
             });
             localStorage.setItem('eduNovaReports', JSON.stringify(reportData));
 
             if (currentUser && firebaseConfig.apiKey !== "YOUR_FIREBASE_API_KEY") {
-                db.collection('users').doc(currentUser.uid).update({
-                    totalScore: firebase.firestore.FieldValue.increment(score)
-                }).catch(err => console.log("Leaderboard error:", err));
+                db.collection('users').doc(currentUser.uid).update({ totalScore: firebase.firestore.FieldValue.increment(score) }).catch(err => console.log(err));
             }
 
             document.getElementById('quiz-content').style.display = 'none';
             document.getElementById('timer-display').style.display = 'none';
             const resultsScreen = document.getElementById('results-content');
             resultsScreen.style.display = 'block';
-            
             document.getElementById('score-correct').innerText = score;
             document.getElementById('score-total').innerText = currentTestQuestions.length;
-            
             document.getElementById('score-circle').style.setProperty('--percentage', percentage);
             
             const msgEl = document.getElementById('score-message');
             if(percentage === 100) { msgEl.innerText = "Perfect Score! Excellent Work."; msgEl.style.color = "#10B981"; }
             else if(percentage >= 70) { msgEl.innerText = "Great job! Keep it up."; msgEl.style.color = "var(--primary)"; }
-            else { msgEl.innerText = "Good effort. Review the notes and try again!"; msgEl.style.color = "#F59E0B"; }
+            else { msgEl.innerText = "Good effort. Try again!"; msgEl.style.color = "#F59E0B"; }
         }
 
         function showReview() {
             document.getElementById('results-content').style.display = 'none';
-            const reviewContainer = document.getElementById('review-content');
-            reviewContainer.style.display = 'block';
-            
+            document.getElementById('review-content').style.display = 'block';
             const reviewList = document.getElementById('review-list');
             reviewList.innerHTML = '';
-            
             currentTestQuestions.forEach((q, idx) => {
                 let userAns = userAnswers[idx];
                 let correctAns = q.ans;
-                
                 let reviewItem = document.createElement('div');
                 reviewItem.className = 'review-item';
-                
-                let questionText = document.createElement('div');
-                questionText.className = 'review-q';
-                questionText.innerText = `Q${idx + 1}: ${q.q}`;
-                reviewItem.appendChild(questionText);
-                
+                reviewItem.innerHTML = `<div class="review-q">Q${idx + 1}: ${q.q}</div>`;
                 q.options.forEach((opt, optIdx) => {
-                    let optDiv = document.createElement('div');
-                    let optClass = "review-opt";
-                    let icon = "";
-                    
-                    if (optIdx === correctAns) {
-                        optClass += " correct";
-                        icon = '<i class="fas fa-check-circle" style="float:right;"></i>';
-                    } else if (optIdx === userAns && userAns !== correctAns) {
-                        optClass += " wrong";
-                        icon = '<i class="fas fa-times-circle" style="float:right;"></i>';
-                    }
-                    
-                    optDiv.className = optClass;
-                    optDiv.innerHTML = `${String.fromCharCode(65 + optIdx)}) ${opt} ${icon}`;
-                    reviewItem.appendChild(optDiv);
+                    let optClass = "review-opt"; let icon = "";
+                    if (optIdx === correctAns) { optClass += " correct"; icon = '<i class="fas fa-check-circle" style="float:right;"></i>'; } 
+                    else if (optIdx === userAns && userAns !== correctAns) { optClass += " wrong"; icon = '<i class="fas fa-times-circle" style="float:right;"></i>'; }
+                    reviewItem.innerHTML += `<div class="${optClass}">${String.fromCharCode(65 + optIdx)}) ${opt} ${icon}</div>`;
                 });
                 reviewList.appendChild(reviewItem);
             });
@@ -1537,169 +1873,6 @@
             document.getElementById('main-content').style.display = 'block';
             window.scrollTo(0,0);
         }
-
-       // ==========================================
-        // 7. NEW: MUSIC PLAYER (LOFI CHILL ZONE) - BUG FIXED
-        // ==========================================
-        const musicTracks = [
-            {
-                title: "Chikiri Chikiri",
-                artist: "Chillhop Music",
-                src: "Chikiri Chikiri.mp3",
-                cover: "Chikiri Chikiri.jpg"
-            },
-            {
-                title: "Aaya Sher",
-                artist: "Lofi Vibes",
-                src: "Aaya Sher.mp3",
-                cover: "Aaya Sher.jpg"
-            },
-            {
-                title: "Rainy Afternoon",
-                artist: "Focus Beats",
-                src: "https://cdn.pixabay.com/download/audio/2022/03/15/audio_13a1e2fbc2.mp3",
-                cover: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-            },
-            {
-                title: "Deep Concentration",
-                artist: "Study Music",
-                src: "https://cdn.pixabay.com/download/audio/2022/01/18/audio_d0a13f69d2.mp3",
-                cover: "https://images.unsplash.com/photo-1495360010541-f48722b34f7d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-            }
-        ];
-
-        let currentMusicIndex = 0;
-        let isMusicPlaying = false;
-        let audioPlayer = new Audio();
-        audioPlayer.preload = "metadata"; // Prevents lag by loading metadata early
-
-        function initMusicPlayer() {
-            renderPlaylist();
-            // Load the first track but DO NOT auto-play it to respect browser rules
-            loadTrack(currentMusicIndex, false);
-            
-            audioPlayer.addEventListener('timeupdate', updateProgressBar);
-            audioPlayer.addEventListener('ended', nextTrack);
-            audioPlayer.addEventListener('loadedmetadata', () => {
-                document.getElementById('duration-time').innerText = formatTime(audioPlayer.duration);
-            });
-        }
-
-        function loadTrack(index, playInstantly = false) {
-            const track = musicTracks[index];
-            audioPlayer.src = track.src;
-            document.getElementById('music-title').innerText = track.title;
-            document.getElementById('music-artist').innerText = track.artist;
-            document.getElementById('music-cover').src = track.cover;
-            
-            // Update playlist active state UI
-            document.querySelectorAll('.playlist-item').forEach((item, i) => {
-                item.classList.remove('active');
-                if(i === index) item.classList.add('active');
-            });
-            
-            if (playInstantly) {
-                safePlay();
-            }
-        }
-
-        // Safe play wrapper to handle browser promise rejections without crashing
-        function safePlay() {
-            const playPromise = audioPlayer.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    isMusicPlaying = true;
-                    updateMusicUI();
-                }).catch(error => {
-                    console.warn("Browser blocked autoplay. User needs to click play.", error);
-                    isMusicPlaying = false;
-                    updateMusicUI();
-                });
-            }
-        }
-
-        function togglePlayPause() {
-            if (isMusicPlaying) {
-                audioPlayer.pause();
-                isMusicPlaying = false;
-                updateMusicUI();
-            } else {
-                safePlay();
-            }
-        }
-
-        function updateMusicUI() {
-            const btn = document.getElementById('play-pause-btn');
-            const cover = document.getElementById('music-cover');
-            if (isMusicPlaying) {
-                btn.innerHTML = '<i class="fas fa-pause"></i>';
-                cover.classList.add('playing');
-            } else {
-                btn.innerHTML = '<i class="fas fa-play" style="margin-left: 3px;"></i>';
-                cover.classList.remove('playing');
-            }
-        }
-
-        function nextTrack() {
-            currentMusicIndex = (currentMusicIndex + 1) % musicTracks.length;
-            loadTrack(currentMusicIndex, isMusicPlaying); // Keep playing if it was already playing
-        }
-
-        function prevTrack() {
-            currentMusicIndex = (currentMusicIndex - 1 + musicTracks.length) % musicTracks.length;
-            loadTrack(currentMusicIndex, isMusicPlaying);
-        }
-
-        function playSpecificTrack(index) {
-            currentMusicIndex = index;
-            loadTrack(currentMusicIndex, true); // Force play because the user clicked a specific song
-        }
-
-        function updateProgressBar() {
-            const { duration, currentTime } = audioPlayer;
-            if(!duration) return;
-            const percent = (currentTime / duration) * 100;
-            document.getElementById('music-progress-bar').style.width = `${percent}%`;
-            document.getElementById('current-time').innerText = formatTime(currentTime);
-        }
-
-        function seekMusic(e) {
-            const width = document.getElementById('music-progress-container').clientWidth;
-            const clickX = e.offsetX;
-            const duration = audioPlayer.duration;
-            audioPlayer.currentTime = (clickX / width) * duration;
-        }
-
-        function formatTime(seconds) {
-            let min = Math.floor(seconds / 60);
-            let sec = Math.floor(seconds % 60);
-            return `${min}:${sec < 10 ? '0' : ''}${sec}`;
-        }
-
-        function renderPlaylist() {
-            const container = document.getElementById('playlist-container');
-            container.innerHTML = '';
-            musicTracks.forEach((track, index) => {
-                const item = document.createElement('div');
-                item.className = 'playlist-item';
-                item.onclick = () => playSpecificTrack(index);
-                item.innerHTML = `
-                    <div class="playlist-item-icon"><i class="fas fa-music"></i></div>
-                    <div class="playlist-info">
-                        <div class="pl-title">${track.title}</div>
-                        <div class="pl-artist">${track.artist}</div>
-                    </div>
-                    <div class="music-wave">
-                        <div class="wave-bar"></div><div class="wave-bar"></div><div class="wave-bar"></div>
-                    </div>
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        // Initialize music player on load
-        document.addEventListener('DOMContentLoaded', initMusicPlayer);
-
 
         // ==========================================
         // 8. GEMINI AI CHATBOT LOGIC
@@ -1730,24 +1903,8 @@
 
         async function generateBotResponse(input) {
             const lowerInput = input.toLowerCase();
-
             if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY") {
-                let response = "";
-                if (lowerInput.includes('note') || lowerInput.includes('pdf') || lowerInput.includes('material')) {
-                    response = "You can find all easy-to-understand notes for every subject in the 'Smart Notes' section on the dashboard! 📚";
-                } else if (lowerInput.includes('test') || lowerInput.includes('mcq') || lowerInput.includes('mock') || lowerInput.includes('practice')) {
-                    response = "Want to test your knowledge? Click on 'MCQ Mock Tests' to practice chapter-wise questions with a built-in timer! ⏱️";
-                } else if (lowerInput.includes('video') || lowerInput.includes('class') || lowerInput.includes('lecture') || lowerInput.includes('youtube')) {
-                    response = "Visual learner? Tap the 'Video Masterclasses' card to watch top-rated YouTube explanations for your subjects! 🎥";
-                } else if (lowerInput.includes('music') || lowerInput.includes('lofi') || lowerInput.includes('song')) {
-                    response = "Need to relax? Click the 'Study Beats' card on the dashboard to listen to our premium Lofi tracks while you study! 🎧";
-                } else if (lowerInput.includes('create') || lowerInput.includes('who') || lowerInput.includes('owner')) {
-                    response = "EduNova was proudly built by Siddartha! You can connect with him directly on Instagram by clicking his profile link at the bottom of the page. 🚀";
-                } else if (lowerInput.includes('hi') || lowerInput.includes('hello') || lowerInput.includes('hey')) {
-                    response = "Hi there! Welcome to EduNova. Are you looking for Notes, Mock Tests, Study Beats, or Previous Papers today?";
-                } else {
-                    response = "That's a great question! I am still learning.<br><br><span style='font-size: 0.8rem; color: var(--primary);'><b>Dev Note:</b> Add your Gemini API Key in the HTML code to unlock real AI responses!</span> 💡";
-                }
+                let response = "That's a great question! I am still learning.<br><br><span style='font-size: 0.8rem; color: var(--primary);'><b>Dev Note:</b> Add your Gemini API Key in the HTML code to unlock real AI responses!</span> 💡";
                 addChatMessage(response, 'bot');
                 return;
             }
@@ -1758,25 +1915,17 @@
 
             try {
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{ parts: [{ text: "You are EduBot, a highly helpful, friendly, and concise study assistant for Class 10 students using the EduNova dashboard. Keep answers short, encouraging, and easy to understand. Do not use complex formatting. The user asks: " + input }] }]
-                    })
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: "You are EduBot... User asks: " + input }] }] })
                 });
-                
                 const data = await response.json();
-                
                 if(data.candidates && data.candidates[0].content.parts[0].text) {
                     let aiText = data.candidates[0].content.parts[0].text;
                     loadingMsg.remove();
                     aiText = aiText.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>'); 
                     addChatMessage(aiText, 'bot');
-                } else {
-                    throw new Error("No text in response");
-                }
+                } else { throw new Error("No text in response"); }
             } catch(error) {
-                console.error("Gemini API Error:", error);
                 loadingMsg.remove();
                 addChatMessage("Oops! My AI circuits are a bit busy right now. Please try again later. 🤖", 'bot');
             }
@@ -1810,19 +1959,13 @@
             cursor.style.top = e.clientY + 'px';
         });
         
-        const interactables = document.querySelectorAll('a, button, .card, .card-btn, .switch, input, select, summary, .user-profile-nav, .video-card, .playlist-item, .music-progress');
+        const interactables = document.querySelectorAll('a, button, .card, .card-btn, .switch, input, select, summary, .user-profile-nav, .video-card, .music-btn, .music-progress, .squircle-btn');
         interactables.forEach(el => {
             el.addEventListener('mouseenter', () => cursor.classList.add('cursor-hover'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-hover'));
         });
 
-        VanillaTilt.init(document.querySelectorAll(".card"), {
-            max: 12,           
-            speed: 400,        
-            glare: true,       
-            "max-glare": 0.15, 
-            scale: 1.05        
-        });
+        VanillaTilt.init(document.querySelectorAll(".card"), { max: 12, speed: 400, glare: true, "max-glare": 0.15, scale: 1.05 });
     </script>
 </body>
 </html>
