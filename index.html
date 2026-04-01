@@ -1,4 +1,4 @@
-   <!DOCTYPE html>
+     <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -937,7 +937,7 @@
 
 
 
-[Image of an electric motor diagram]
+ electric motor diagram.jpg 
 
 <br><h4>3. Human Heart</h4><br>
 
@@ -1205,13 +1205,14 @@
         // 1. FIREBASE INITIALIZATION & AUTH LOGIC
         // ==========================================
         const firebaseConfig = {
-            apiKey: "YOUR_FIREBASE_API_KEY",
-            authDomain: "your-project.firebaseapp.com",
-            projectId: "your-project",
-            storageBucket: "your-project.appspot.com",
-            messagingSenderId: "YOUR_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
+  apiKey: "AIzaSyBPx-vq-U49-eVShAmqtl76gZxkNrzab5c",
+  authDomain: "studio-8663990014-66c3b.firebaseapp.com",
+  projectId: "studio-8663990014-66c3b",
+  storageBucket: "studio-8663990014-66c3b.firebasestorage.app",
+  messagingSenderId: "1058628689901",
+  appId: "1:1058628689901:web:232aba87b6c85d56ef91e4"
+};
+
         
         if (!firebase.apps.length) {
             firebase.initializeApp(firebaseConfig);
@@ -1248,7 +1249,7 @@
         });
 
         function signInWithGoogle() {
-            if (firebaseConfig.apiKey === "YOUR_FIREBASE_API_KEY") {
+            if (firebaseConfig.apiKey === "AIzaSyAq0jNRp-OsKl9-wr260PcHJQgu6t_07Kw") {
                 alert("Developer Note: You need to add your real Firebase Config in the HTML file for Google Sign-In to work!");
                 return;
             }
@@ -1295,7 +1296,7 @@
             const container = document.getElementById('leaderboard-container');
             container.innerHTML = '<p style="text-align:center; color: var(--text-muted);">Loading live scores...</p>';
             
-            if (firebaseConfig.apiKey === "YOUR_FIREBASE_API_KEY") {
+            if (firebaseConfig.apiKey === "AIzaSyBPx-vq-U49-eVShAmqtl76gZxkNrzab5c") {
                 container.innerHTML = '<p style="text-align:center; color: #EF4444;">Developer Note: Add Firebase config to see real scores.</p>';
                 return;
             }
@@ -2143,7 +2144,7 @@
         // ==========================================
         // 8. GEMINI AI CHATBOT LOGIC
         // ==========================================
-        const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY";
+        const GEMINI_API_KEY = "AIzaSyAq0jNRp-OsKl9-wr260PcHJQgu6t_07Kw";
 
         function toggleChat() { document.getElementById('chat-window').classList.toggle('active'); }
         function handleChatKeyPress(e) { if(e.key === 'Enter') sendMessage(); }
@@ -2169,7 +2170,7 @@
 
         async function generateBotResponse(input) {
             const lowerInput = input.toLowerCase();
-            if (GEMINI_API_KEY === "YOUR_GEMINI_API_KEY") {
+            if (GEMINI_API_KEY === "AIzaSyBPx-vq-U49-eVShAmqtl76gZxkNrzab5c") {
                 let response = "That's a great question! I am still learning.<br><br><span style='font-size: 0.8rem; color: var(--primary);'><b>Dev Note:</b> Add your Gemini API Key in the HTML code to unlock real AI responses!</span> 💡";
                 addChatMessage(response, 'bot');
                 return;
